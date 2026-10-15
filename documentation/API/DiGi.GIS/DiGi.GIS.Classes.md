@@ -2647,6 +2647,299 @@ Implements [Solve\(\)](https://learn.microsoft.com/en-us/dotnet/api/digi.core.in
 [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')  
 True if a shape was successfully determined; otherwise, false\.
 
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult'></a>
+
+## BuildingSolarRadiationResult Class
+
+Represents the stored solar radiation of one building: one [SurfaceSolarRadiation](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation') per receiving surface, keyed by the solved building model, the neighbour radius and the solver version\.
+
+The key is `(CountyId, BuildingModelId, Radius, SolverVersion)`. The weather members ([WeatherSourceType](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingSolarRadiationResult.WeatherSourceType 'DiGi\.GIS\.Classes\.BuildingSolarRadiationResult\.WeatherSourceType'), [WeatherSourceId](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingSolarRadiationResult.WeatherSourceId 'DiGi\.GIS\.Classes\.BuildingSolarRadiationResult\.WeatherSourceId'), [WeatherPeriodStart](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingSolarRadiationResult.WeatherPeriodStart 'DiGi\.GIS\.Classes\.BuildingSolarRadiationResult\.WeatherPeriodStart'), [WeatherPeriodEnd](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingSolarRadiationResult.WeatherPeriodEnd 'DiGi\.GIS\.Classes\.BuildingSolarRadiationResult\.WeatherPeriodEnd')) describe the stored summary values only, not the key: the hourly shading factors are weather-independent, so a summary for another weather source is rebuilt from them without a new solve.
+
+```csharp
+public class BuildingSolarRadiationResult : DiGi.Core.Classes.SerializableResult, DiGi.GIS.Interfaces.IGISSerializableObject, DiGi.GIS.Interfaces.IGISObject, DiGi.Core.Interfaces.IObject, DiGi.Core.Interfaces.ISerializableObject, DiGi.Core.Interfaces.ICloneableObject<DiGi.Core.Interfaces.ISerializableObject>, DiGi.Core.Interfaces.ICloneableObject
+```
+
+Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → [DiGi\.Core\.Classes\.Object](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.object 'DiGi\.Core\.Classes\.Object') → [DiGi\.Core\.Classes\.SerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.serializableobject 'DiGi\.Core\.Classes\.SerializableObject') → [DiGi\.Core\.Classes\.SerializableResult](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.serializableresult 'DiGi\.Core\.Classes\.SerializableResult') → BuildingSolarRadiationResult
+
+Implements [IGISSerializableObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISSerializableObject 'DiGi\.GIS\.Interfaces\.IGISSerializableObject'), [IGISObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISObject 'DiGi\.GIS\.Interfaces\.IGISObject'), [DiGi\.Core\.Interfaces\.IObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iobject 'DiGi\.Core\.Interfaces\.IObject'), [DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject'), [DiGi\.Core\.Interfaces\.ICloneableObject&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1')[DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1'), [DiGi\.Core\.Interfaces\.ICloneableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject 'DiGi\.Core\.Interfaces\.ICloneableObject')
+### Constructors
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(DiGi.GIS.Classes.BuildingSolarRadiationResult)'></a>
+
+## BuildingSolarRadiationResult\(BuildingSolarRadiationResult\) Constructor
+
+Initializes a new instance of the [BuildingSolarRadiationResult](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingSolarRadiationResult 'DiGi\.GIS\.Classes\.BuildingSolarRadiationResult') class by copying an existing instance\.
+
+```csharp
+public BuildingSolarRadiationResult(DiGi.GIS.Classes.BuildingSolarRadiationResult? buildingSolarRadiationResult);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(DiGi.GIS.Classes.BuildingSolarRadiationResult).buildingSolarRadiationResult'></a>
+
+`buildingSolarRadiationResult` [BuildingSolarRadiationResult](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingSolarRadiationResult 'DiGi\.GIS\.Classes\.BuildingSolarRadiationResult')
+
+The [BuildingSolarRadiationResult](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingSolarRadiationResult 'DiGi\.GIS\.Classes\.BuildingSolarRadiationResult') to copy\.
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(string,int,long,double,int,DiGi.GIS.Enums.WeatherSourceType,string,System.Nullable_System.DateTimeOffset_,System.Nullable_System.DateTimeOffset_,string,System.Nullable_System.DateTimeOffset_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.SurfaceSolarRadiation_)'></a>
+
+## BuildingSolarRadiationResult\(string, int, long, double, int, WeatherSourceType, string, Nullable\<DateTimeOffset\>, Nullable\<DateTimeOffset\>, string, Nullable\<DateTimeOffset\>, IEnumerable\<SurfaceSolarRadiation\>\) Constructor
+
+Initializes a new instance of the [BuildingSolarRadiationResult](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingSolarRadiationResult 'DiGi\.GIS\.Classes\.BuildingSolarRadiationResult') class\.
+
+The constructor assigns the values and clones the surfaces, filtering nulls; it does not validate them. The write endpoint validates a result before storing it.
+
+```csharp
+public BuildingSolarRadiationResult(string? reference, int countyId, long buildingModelId, double radius, int solverVersion, DiGi.GIS.Enums.WeatherSourceType weatherSourceType, string? weatherSourceId, System.Nullable<System.DateTimeOffset> weatherPeriodStart, System.Nullable<System.DateTimeOffset> weatherPeriodEnd, string? userEmail, System.Nullable<System.DateTimeOffset> createdAt, System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.SurfaceSolarRadiation?>? surfaceSolarRadiations);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(string,int,long,double,int,DiGi.GIS.Enums.WeatherSourceType,string,System.Nullable_System.DateTimeOffset_,System.Nullable_System.DateTimeOffset_,string,System.Nullable_System.DateTimeOffset_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.SurfaceSolarRadiation_).reference'></a>
+
+`reference` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The `building_2d` reference of the building\.
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(string,int,long,double,int,DiGi.GIS.Enums.WeatherSourceType,string,System.Nullable_System.DateTimeOffset_,System.Nullable_System.DateTimeOffset_,string,System.Nullable_System.DateTimeOffset_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.SurfaceSolarRadiation_).countyId'></a>
+
+`countyId` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The id of the county part the building is filed under\.
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(string,int,long,double,int,DiGi.GIS.Enums.WeatherSourceType,string,System.Nullable_System.DateTimeOffset_,System.Nullable_System.DateTimeOffset_,string,System.Nullable_System.DateTimeOffset_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.SurfaceSolarRadiation_).buildingModelId'></a>
+
+`buildingModelId` [System\.Int64](https://learn.microsoft.com/en-us/dotnet/api/system.int64 'System\.Int64')
+
+The id of the solved building model; a regenerated model has a new id\.
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(string,int,long,double,int,DiGi.GIS.Enums.WeatherSourceType,string,System.Nullable_System.DateTimeOffset_,System.Nullable_System.DateTimeOffset_,string,System.Nullable_System.DateTimeOffset_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.SurfaceSolarRadiation_).radius'></a>
+
+`radius` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The neighbour radius, in m, as rounded by the producer \(0\.1 m\) so that it compares exactly\.
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(string,int,long,double,int,DiGi.GIS.Enums.WeatherSourceType,string,System.Nullable_System.DateTimeOffset_,System.Nullable_System.DateTimeOffset_,string,System.Nullable_System.DateTimeOffset_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.SurfaceSolarRadiation_).solverVersion'></a>
+
+`solverVersion` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The version of the solver, its options and the aggregation that produced the shading factors\.
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(string,int,long,double,int,DiGi.GIS.Enums.WeatherSourceType,string,System.Nullable_System.DateTimeOffset_,System.Nullable_System.DateTimeOffset_,string,System.Nullable_System.DateTimeOffset_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.SurfaceSolarRadiation_).weatherSourceType'></a>
+
+`weatherSourceType` [WeatherSourceType](DiGi.GIS.Enums.md#DiGi.GIS.Enums.WeatherSourceType 'DiGi\.GIS\.Enums\.WeatherSourceType')
+
+The kind of weather data the summary values were calculated from\.
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(string,int,long,double,int,DiGi.GIS.Enums.WeatherSourceType,string,System.Nullable_System.DateTimeOffset_,System.Nullable_System.DateTimeOffset_,string,System.Nullable_System.DateTimeOffset_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.SurfaceSolarRadiation_).weatherSourceId'></a>
+
+`weatherSourceId` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The id of the weather source, as an invariant string: the `epw_file` id for [EPW](DiGi.GIS.Enums.md#DiGi.GIS.Enums.WeatherSourceType.EPW 'DiGi\.GIS\.Enums\.WeatherSourceType\.EPW'), the provider or station id for [Live](DiGi.GIS.Enums.md#DiGi.GIS.Enums.WeatherSourceType.Live 'DiGi\.GIS\.Enums\.WeatherSourceType\.Live')\.
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(string,int,long,double,int,DiGi.GIS.Enums.WeatherSourceType,string,System.Nullable_System.DateTimeOffset_,System.Nullable_System.DateTimeOffset_,string,System.Nullable_System.DateTimeOffset_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.SurfaceSolarRadiation_).weatherPeriodStart'></a>
+
+`weatherPeriodStart` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The start of the weather period the summary covers, or null together with [weatherPeriodEnd](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(string,int,long,double,int,DiGi.GIS.Enums.WeatherSourceType,string,System.Nullable_System.DateTimeOffset_,System.Nullable_System.DateTimeOffset_,string,System.Nullable_System.DateTimeOffset_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.SurfaceSolarRadiation_).weatherPeriodEnd 'DiGi\.GIS\.Classes\.BuildingSolarRadiationResult\.BuildingSolarRadiationResult\(string, int, long, double, int, DiGi\.GIS\.Enums\.WeatherSourceType, string, System\.Nullable\<System\.DateTimeOffset\>, System\.Nullable\<System\.DateTimeOffset\>, string, System\.Nullable\<System\.DateTimeOffset\>, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.SurfaceSolarRadiation\>\)\.weatherPeriodEnd') for a typical year\.
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(string,int,long,double,int,DiGi.GIS.Enums.WeatherSourceType,string,System.Nullable_System.DateTimeOffset_,System.Nullable_System.DateTimeOffset_,string,System.Nullable_System.DateTimeOffset_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.SurfaceSolarRadiation_).weatherPeriodEnd'></a>
+
+`weatherPeriodEnd` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The end of the weather period the summary covers, or null together with [weatherPeriodStart](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(string,int,long,double,int,DiGi.GIS.Enums.WeatherSourceType,string,System.Nullable_System.DateTimeOffset_,System.Nullable_System.DateTimeOffset_,string,System.Nullable_System.DateTimeOffset_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.SurfaceSolarRadiation_).weatherPeriodStart 'DiGi\.GIS\.Classes\.BuildingSolarRadiationResult\.BuildingSolarRadiationResult\(string, int, long, double, int, DiGi\.GIS\.Enums\.WeatherSourceType, string, System\.Nullable\<System\.DateTimeOffset\>, System\.Nullable\<System\.DateTimeOffset\>, string, System\.Nullable\<System\.DateTimeOffset\>, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.SurfaceSolarRadiation\>\)\.weatherPeriodStart') for a typical year\.
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(string,int,long,double,int,DiGi.GIS.Enums.WeatherSourceType,string,System.Nullable_System.DateTimeOffset_,System.Nullable_System.DateTimeOffset_,string,System.Nullable_System.DateTimeOffset_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.SurfaceSolarRadiation_).userEmail'></a>
+
+`userEmail` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The email of the signed\-in user who stored the result\. The server sets it from the user's token, never from a client\.
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(string,int,long,double,int,DiGi.GIS.Enums.WeatherSourceType,string,System.Nullable_System.DateTimeOffset_,System.Nullable_System.DateTimeOffset_,string,System.Nullable_System.DateTimeOffset_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.SurfaceSolarRadiation_).createdAt'></a>
+
+`createdAt` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+When the result was stored\.
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(string,int,long,double,int,DiGi.GIS.Enums.WeatherSourceType,string,System.Nullable_System.DateTimeOffset_,System.Nullable_System.DateTimeOffset_,string,System.Nullable_System.DateTimeOffset_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.SurfaceSolarRadiation_).surfaceSolarRadiations'></a>
+
+`surfaceSolarRadiations` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[SurfaceSolarRadiation](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The stored radiation of each receiving surface\. Each item is cloned and null items are skipped\.
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(System.Text.Json.Nodes.JsonObject)'></a>
+
+## BuildingSolarRadiationResult\(JsonObject\) Constructor
+
+Initializes a new instance of the [BuildingSolarRadiationResult](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingSolarRadiationResult 'DiGi\.GIS\.Classes\.BuildingSolarRadiationResult') class from a JSON object\.
+
+```csharp
+public BuildingSolarRadiationResult(System.Text.Json.Nodes.JsonObject? jsonObject);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingSolarRadiationResult(System.Text.Json.Nodes.JsonObject).jsonObject'></a>
+
+`jsonObject` [System\.Text\.Json\.Nodes\.JsonObject](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.nodes.jsonobject 'System\.Text\.Json\.Nodes\.JsonObject')
+
+The JSON object containing the building solar radiation data\.
+### Properties
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.BuildingModelId'></a>
+
+## BuildingSolarRadiationResult\.BuildingModelId Property
+
+Gets the id of the solved building model; a regenerated model has a new id, so its stored result no longer matches\.
+
+```csharp
+public long BuildingModelId { get; }
+```
+
+#### Property Value
+[System\.Int64](https://learn.microsoft.com/en-us/dotnet/api/system.int64 'System\.Int64')
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.CountyId'></a>
+
+## BuildingSolarRadiationResult\.CountyId Property
+
+Gets the id of the county part the building is filed under\.
+
+```csharp
+public int CountyId { get; }
+```
+
+#### Property Value
+[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.CreatedAt'></a>
+
+## BuildingSolarRadiationResult\.CreatedAt Property
+
+Gets when the result was stored, or null\.
+
+```csharp
+public System.Nullable<System.DateTimeOffset> CreatedAt { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.Radius'></a>
+
+## BuildingSolarRadiationResult\.Radius Property
+
+Gets the neighbour radius, in m, as rounded by the producer \(0\.1 m\) so that it compares exactly\.
+
+```csharp
+public double Radius { get; }
+```
+
+#### Property Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.Reference'></a>
+
+## BuildingSolarRadiationResult\.Reference Property
+
+Gets the `building_2d` reference of the building\.
+
+```csharp
+public string? Reference { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.SolverVersion'></a>
+
+## BuildingSolarRadiationResult\.SolverVersion Property
+
+Gets the version of the solver, its options and the aggregation that produced the shading factors\. A stored result with an older version no longer matches\.
+
+```csharp
+public int SolverVersion { get; }
+```
+
+#### Property Value
+[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.SurfaceSolarRadiations'></a>
+
+## BuildingSolarRadiationResult\.SurfaceSolarRadiations Property
+
+Gets clones of the stored radiation of each receiving surface, or null\.
+
+```csharp
+public System.Collections.Generic.List<DiGi.GIS.Classes.SurfaceSolarRadiation>? SurfaceSolarRadiations { get; }
+```
+
+#### Property Value
+[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[SurfaceSolarRadiation](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.UserEmail'></a>
+
+## BuildingSolarRadiationResult\.UserEmail Property
+
+Gets the email of the signed\-in user who stored the result, or null\. The server sets it from the user's token, never from a client\.
+
+```csharp
+public string? UserEmail { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.WeatherPeriodEnd'></a>
+
+## BuildingSolarRadiationResult\.WeatherPeriodEnd Property
+
+Gets the end of the weather period the summary covers, or null \(together with [WeatherPeriodStart](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingSolarRadiationResult.WeatherPeriodStart 'DiGi\.GIS\.Classes\.BuildingSolarRadiationResult\.WeatherPeriodStart')\) for a typical year\.
+
+```csharp
+public System.Nullable<System.DateTimeOffset> WeatherPeriodEnd { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.WeatherPeriodStart'></a>
+
+## BuildingSolarRadiationResult\.WeatherPeriodStart Property
+
+Gets the start of the weather period the summary covers, or null \(together with [WeatherPeriodEnd](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingSolarRadiationResult.WeatherPeriodEnd 'DiGi\.GIS\.Classes\.BuildingSolarRadiationResult\.WeatherPeriodEnd')\) for a typical year\.
+
+```csharp
+public System.Nullable<System.DateTimeOffset> WeatherPeriodStart { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.WeatherSourceId'></a>
+
+## BuildingSolarRadiationResult\.WeatherSourceId Property
+
+Gets the id of the weather source, as an invariant string: the `epw_file` id for [EPW](DiGi.GIS.Enums.md#DiGi.GIS.Enums.WeatherSourceType.EPW 'DiGi\.GIS\.Enums\.WeatherSourceType\.EPW'), the provider or station id for [Live](DiGi.GIS.Enums.md#DiGi.GIS.Enums.WeatherSourceType.Live 'DiGi\.GIS\.Enums\.WeatherSourceType\.Live')\.
+
+```csharp
+public string? WeatherSourceId { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.BuildingSolarRadiationResult.WeatherSourceType'></a>
+
+## BuildingSolarRadiationResult\.WeatherSourceType Property
+
+Gets the kind of weather data the summary values were calculated from; [Undefined](DiGi.GIS.Enums.md#DiGi.GIS.Enums.WeatherSourceType.Undefined 'DiGi\.GIS\.Enums\.WeatherSourceType\.Undefined') when the member is missing\.
+
+```csharp
+public DiGi.GIS.Enums.WeatherSourceType WeatherSourceType { get; }
+```
+
+#### Property Value
+[WeatherSourceType](DiGi.GIS.Enums.md#DiGi.GIS.Enums.WeatherSourceType 'DiGi\.GIS\.Enums\.WeatherSourceType')
+
 <a name='DiGi.GIS.Classes.ComparisonTableConversionOptions'></a>
 
 ## ComparisonTableConversionOptions Class
@@ -8397,6 +8690,299 @@ public StatisticalYearlyDoubleData(System.Text.Json.Nodes.JsonObject? jsonObject
 `jsonObject` [System\.Text\.Json\.Nodes\.JsonObject](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.nodes.jsonobject 'System\.Text\.Json\.Nodes\.JsonObject')
 
 The JSON object containing the data for initialization\.
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation'></a>
+
+## SurfaceSolarRadiation Class
+
+Represents the stored solar radiation of one receiving surface \(an external wall or roof\) of a building: its summary values over the weather period and its weather\-independent hourly shading factors\.
+
+```csharp
+public class SurfaceSolarRadiation : DiGi.Core.Classes.SerializableObject, DiGi.GIS.Interfaces.IGISSerializableObject, DiGi.GIS.Interfaces.IGISObject, DiGi.Core.Interfaces.IObject, DiGi.Core.Interfaces.ISerializableObject, DiGi.Core.Interfaces.ICloneableObject<DiGi.Core.Interfaces.ISerializableObject>, DiGi.Core.Interfaces.ICloneableObject
+```
+
+Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → [DiGi\.Core\.Classes\.Object](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.object 'DiGi\.Core\.Classes\.Object') → [DiGi\.Core\.Classes\.SerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.serializableobject 'DiGi\.Core\.Classes\.SerializableObject') → SurfaceSolarRadiation
+
+Implements [IGISSerializableObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISSerializableObject 'DiGi\.GIS\.Interfaces\.IGISSerializableObject'), [IGISObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISObject 'DiGi\.GIS\.Interfaces\.IGISObject'), [DiGi\.Core\.Interfaces\.IObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iobject 'DiGi\.Core\.Interfaces\.IObject'), [DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject'), [DiGi\.Core\.Interfaces\.ICloneableObject&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1')[DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1'), [DiGi\.Core\.Interfaces\.ICloneableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject 'DiGi\.Core\.Interfaces\.ICloneableObject')
+### Constructors
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(DiGi.GIS.Classes.SurfaceSolarRadiation)'></a>
+
+## SurfaceSolarRadiation\(SurfaceSolarRadiation\) Constructor
+
+Initializes a new instance of the [SurfaceSolarRadiation](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation') class by copying an existing instance\.
+
+```csharp
+public SurfaceSolarRadiation(DiGi.GIS.Classes.SurfaceSolarRadiation? surfaceSolarRadiation);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(DiGi.GIS.Classes.SurfaceSolarRadiation).surfaceSolarRadiation'></a>
+
+`surfaceSolarRadiation` [SurfaceSolarRadiation](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation')
+
+The [SurfaceSolarRadiation](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation') to copy\.
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[])'></a>
+
+## SurfaceSolarRadiation\(string, double, Vector3D, double, double, double, double, double, double, double, double, byte\[\]\) Constructor
+
+Initializes a new instance of the [SurfaceSolarRadiation](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation') class\.
+
+The constructor assigns the values as given; quantizing solved shading factors into bytes is done by [ToSystem\_Bytes\(this IEnumerable&lt;double&gt;\)](DiGi.GIS.md#DiGi.GIS.Convert.ToSystem_Bytes(thisSystem.Collections.Generic.IEnumerable_double_) 'DiGi\.GIS\.Convert\.ToSystem\_Bytes\(this System\.Collections\.Generic\.IEnumerable\<double\>\)') before the call.
+
+```csharp
+public SurfaceSolarRadiation(string? reference, double area, DiGi.Geometry.Spatial.Classes.Vector3D? normal, double skyVisibility, double groundVisibility, double irradiation, double beam, double diffuse, double ground, double irradiationUnshaded, double energy, byte[]? shadingFactors);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[]).reference'></a>
+
+`reference` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The `GuidReference` string of the building component the surface belongs to\.
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[]).area'></a>
+
+`area` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The area of the surface, in m²\.
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[]).normal'></a>
+
+`normal` [DiGi\.Geometry\.Spatial\.Classes\.Vector3D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.spatial.classes.vector3d 'DiGi\.Geometry\.Spatial\.Classes\.Vector3D')
+
+The outward unit normal of the surface\. It is cloned\.
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[]).skyVisibility'></a>
+
+`skyVisibility` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The unblocked share of the isotropic sky view factor, 0\.\.1\.
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[]).groundVisibility'></a>
+
+`groundVisibility` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The unblocked share of the isotropic ground view factor, 0\.\.1\.
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[]).irradiation'></a>
+
+`irradiation` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The shaded irradiation over the weather period, in kWh/m² \(the sum of [beam](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[]).beam 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation\.SurfaceSolarRadiation\(string, double, DiGi\.Geometry\.Spatial\.Classes\.Vector3D, double, double, double, double, double, double, double, double, byte\[\]\)\.beam'), [diffuse](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[]).diffuse 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation\.SurfaceSolarRadiation\(string, double, DiGi\.Geometry\.Spatial\.Classes\.Vector3D, double, double, double, double, double, double, double, double, byte\[\]\)\.diffuse') and [ground](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[]).ground 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation\.SurfaceSolarRadiation\(string, double, DiGi\.Geometry\.Spatial\.Classes\.Vector3D, double, double, double, double, double, double, double, double, byte\[\]\)\.ground')\)\.
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[]).beam'></a>
+
+`beam` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The beam irradiation over the weather period, in kWh/m² of the whole surface\.
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[]).diffuse'></a>
+
+`diffuse` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The sky diffuse irradiation over the weather period, in kWh/m²\.
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[]).ground'></a>
+
+`ground` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The ground\-reflected irradiation over the weather period, in kWh/m²\.
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[]).irradiationUnshaded'></a>
+
+`irradiationUnshaded` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The irradiation over the weather period under an open sky, in kWh/m²\.
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[]).energy'></a>
+
+`energy` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The energy received by the whole surface over the weather period, in kWh\.
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(string,double,DiGi.Geometry.Spatial.Classes.Vector3D,double,double,double,double,double,double,double,double,byte[]).shadingFactors'></a>
+
+`shadingFactors` [System\.Byte](https://learn.microsoft.com/en-us/dotnet/api/system.byte 'System\.Byte')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')
+
+The quantized hourly shading factors, one byte per hour of the solar reference year, or null\. They are stored as base64\.
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(System.Text.Json.Nodes.JsonObject)'></a>
+
+## SurfaceSolarRadiation\(JsonObject\) Constructor
+
+Initializes a new instance of the [SurfaceSolarRadiation](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation') class from a JSON object\.
+
+```csharp
+public SurfaceSolarRadiation(System.Text.Json.Nodes.JsonObject? jsonObject);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SurfaceSolarRadiation(System.Text.Json.Nodes.JsonObject).jsonObject'></a>
+
+`jsonObject` [System\.Text\.Json\.Nodes\.JsonObject](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.nodes.jsonobject 'System\.Text\.Json\.Nodes\.JsonObject')
+
+The JSON object containing the surface solar radiation data\.
+### Properties
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.Area'></a>
+
+## SurfaceSolarRadiation\.Area Property
+
+Gets the area of the surface, in m²\.
+
+```csharp
+public double Area { get; }
+```
+
+#### Property Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.Beam'></a>
+
+## SurfaceSolarRadiation\.Beam Property
+
+Gets the beam irradiation over the weather period, in kWh/m² of the whole surface\.
+
+```csharp
+public double Beam { get; }
+```
+
+#### Property Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.Diffuse'></a>
+
+## SurfaceSolarRadiation\.Diffuse Property
+
+Gets the sky diffuse irradiation over the weather period, in kWh/m²\.
+
+```csharp
+public double Diffuse { get; }
+```
+
+#### Property Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.Energy'></a>
+
+## SurfaceSolarRadiation\.Energy Property
+
+Gets the energy received by the whole surface over the weather period, in kWh\.
+
+```csharp
+public double Energy { get; }
+```
+
+#### Property Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.Ground'></a>
+
+## SurfaceSolarRadiation\.Ground Property
+
+Gets the ground\-reflected irradiation over the weather period, in kWh/m²\.
+
+```csharp
+public double Ground { get; }
+```
+
+#### Property Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.GroundVisibility'></a>
+
+## SurfaceSolarRadiation\.GroundVisibility Property
+
+Gets the unblocked share of the isotropic ground view factor, 0\.\.1\.
+
+```csharp
+public double GroundVisibility { get; }
+```
+
+#### Property Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.Irradiation'></a>
+
+## SurfaceSolarRadiation\.Irradiation Property
+
+Gets the shaded irradiation over the weather period, in kWh/m² \(the sum of [Beam](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation.Beam 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation\.Beam'), [Diffuse](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation.Diffuse 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation\.Diffuse') and [Ground](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation.Ground 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation\.Ground')\)\.
+
+```csharp
+public double Irradiation { get; }
+```
+
+#### Property Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.IrradiationUnshaded'></a>
+
+## SurfaceSolarRadiation\.IrradiationUnshaded Property
+
+Gets the irradiation over the weather period under an open sky, in kWh/m²\.
+
+```csharp
+public double IrradiationUnshaded { get; }
+```
+
+#### Property Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.Normal'></a>
+
+## SurfaceSolarRadiation\.Normal Property
+
+Gets a copy of the outward unit normal of the surface, or null\.
+
+```csharp
+public DiGi.Geometry.Spatial.Classes.Vector3D? Normal { get; }
+```
+
+#### Property Value
+[DiGi\.Geometry\.Spatial\.Classes\.Vector3D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.spatial.classes.vector3d 'DiGi\.Geometry\.Spatial\.Classes\.Vector3D')
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.Reference'></a>
+
+## SurfaceSolarRadiation\.Reference Property
+
+Gets the `GuidReference` string of the building component the surface belongs to\.
+
+```csharp
+public string? Reference { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.ShadingFactors'></a>
+
+## SurfaceSolarRadiation\.ShadingFactors Property
+
+Gets a new array of the quantized hourly shading factors, or null when none are stored\.
+
+One byte per hour of the solar reference year (8 760 values, index = hour of the year, sampled at mid-hour), each `round(clamp(f, 0, 1) · 255)`; 0 where the sun is down. The factors depend on the sun position only, so they are valid for any weather source. Decode with [ToSystem\_Doubles\(this byte\[\]\)](DiGi.GIS.md#DiGi.GIS.Convert.ToSystem_Doubles(thisbyte[]) 'DiGi\.GIS\.Convert\.ToSystem\_Doubles\(this byte\[\]\)').
+
+```csharp
+public byte[]? ShadingFactors { get; }
+```
+
+#### Property Value
+[System\.Byte](https://learn.microsoft.com/en-us/dotnet/api/system.byte 'System\.Byte')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')
+
+<a name='DiGi.GIS.Classes.SurfaceSolarRadiation.SkyVisibility'></a>
+
+## SurfaceSolarRadiation\.SkyVisibility Property
+
+Gets the unblocked share of the isotropic sky view factor, 0\.\.1\.
+
+```csharp
+public double SkyVisibility { get; }
+```
+
+#### Property Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
 
 <a name='DiGi.GIS.Classes.TableConversionOptions'></a>
 

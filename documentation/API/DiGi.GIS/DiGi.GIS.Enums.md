@@ -1570,6 +1570,37 @@ Represents a municipality level statistical unit\.
 
 Represents a statistical town level statistical unit\.
 
+<a name='DiGi.GIS.Enums.WeatherSourceType'></a>
+
+## WeatherSourceType Enum
+
+Specifies the kind of weather data a stored solar radiation summary was calculated from\.
+
+The weather source describes the summary only: hourly shading factors depend on the sun position alone, so they are valid for any weather source.
+
+```csharp
+public enum WeatherSourceType
+```
+### Fields
+
+<a name='DiGi.GIS.Enums.WeatherSourceType.Undefined'></a>
+
+`Undefined` -1
+
+The weather source is not known\. A stored summary never carries this value; it is the default of a missing or unparsed member\.
+
+<a name='DiGi.GIS.Enums.WeatherSourceType.EPW'></a>
+
+`EPW` 0
+
+A typical\-year EnergyPlus weather file; the source id is the id of its `epw_file` row as an invariant integer string\.
+
+<a name='DiGi.GIS.Enums.WeatherSourceType.Live'></a>
+
+`Live` 1
+
+Measured weather data from a live provider; the source id names the provider or station\.
+
 <a name='DiGi.GIS.Enums.YearBuiltRelation'></a>
 
 ## YearBuiltRelation Enum

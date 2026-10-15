@@ -386,6 +386,52 @@ Point2D in EPSG:2180 Coordinate System
 [DiGi\.Geometry\.Spatial\.Classes\.Point3D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.spatial.classes.point3d 'DiGi\.Geometry\.Spatial\.Classes\.Point3D')  
 Point3D in EPSG:4326 Coordinate System
 
+<a name='DiGi.GIS.Convert.ToSystem_Bytes(thisSystem.Collections.Generic.IEnumerable_double_)'></a>
+
+## Convert\.ToSystem\_Bytes\(this IEnumerable\<double\>\) Method
+
+Quantizes shading factors into one byte each, as [ShadingFactors](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation.ShadingFactors 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation\.ShadingFactors') stores them\.
+
+Each value is clamped to [0, 1] and mapped to `round(f · 255)`, rounding a midpoint away from zero, so the step is 1/255 and the round-trip error through [ToSystem\_Doubles\(this byte\[\]\)](DiGi.GIS.md#DiGi.GIS.Convert.ToSystem_Doubles(thisbyte[]) 'DiGi\.GIS\.Convert\.ToSystem\_Doubles\(this byte\[\]\)') is at most 0.5/255. NaN maps to 0.
+
+```csharp
+public static byte[]? ToSystem_Bytes(this System.Collections.Generic.IEnumerable<double>? shadingFactors);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Convert.ToSystem_Bytes(thisSystem.Collections.Generic.IEnumerable_double_).shadingFactors'></a>
+
+`shadingFactors` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The shading factors, 0 \(unshaded\) to 1 \(fully shaded\)\.
+
+#### Returns
+[System\.Byte](https://learn.microsoft.com/en-us/dotnet/api/system.byte 'System\.Byte')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')  
+One byte per shading factor, in the same order, or null when [shadingFactors](DiGi.GIS.md#DiGi.GIS.Convert.ToSystem_Bytes(thisSystem.Collections.Generic.IEnumerable_double_).shadingFactors 'DiGi\.GIS\.Convert\.ToSystem\_Bytes\(this System\.Collections\.Generic\.IEnumerable\<double\>\)\.shadingFactors') is null\.
+
+<a name='DiGi.GIS.Convert.ToSystem_Doubles(thisbyte[])'></a>
+
+## Convert\.ToSystem\_Doubles\(this byte\[\]\) Method
+
+Decodes quantized shading factors, as stored in [ShadingFactors](DiGi.GIS.Classes.md#DiGi.GIS.Classes.SurfaceSolarRadiation.ShadingFactors 'DiGi\.GIS\.Classes\.SurfaceSolarRadiation\.ShadingFactors'), back into values from 0 to 1\.
+
+Each byte `b` maps to `b / 255`, the inverse of [ToSystem\_Bytes\(this IEnumerable&lt;double&gt;\)](DiGi.GIS.md#DiGi.GIS.Convert.ToSystem_Bytes(thisSystem.Collections.Generic.IEnumerable_double_) 'DiGi\.GIS\.Convert\.ToSystem\_Bytes\(this System\.Collections\.Generic\.IEnumerable\<double\>\)').
+
+```csharp
+public static double[]? ToSystem_Doubles(this byte[]? bytes);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Convert.ToSystem_Doubles(thisbyte[]).bytes'></a>
+
+`bytes` [System\.Byte](https://learn.microsoft.com/en-us/dotnet/api/system.byte 'System\.Byte')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')
+
+The quantized shading factors\.
+
+#### Returns
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')  
+One shading factor per byte, in the same order, or null when [bytes](DiGi.GIS.md#DiGi.GIS.Convert.ToSystem_Doubles(thisbyte[]).bytes 'DiGi\.GIS\.Convert\.ToSystem\_Doubles\(this byte\[\]\)\.bytes') is null\.
+
 <a name='DiGi.GIS.Convert.ToSystem_String(string,string)'></a>
 
 ## Convert\.ToSystem\_String\(string, string\) Method
