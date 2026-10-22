@@ -1,5 +1,4 @@
 ﻿using DiGi.Core.Classes;
-using DiGi.Geometry.Planar.Classes;
 using DiGi.GIS.Classes;
 using System;
 using System.Collections.Generic;
@@ -64,14 +63,14 @@ namespace DiGi.GIS
                 {
                     foreach (Building2D building2D in building2Ds_AdministrativeSubdivision)
                     {
-                        if (building2D == null || !building2D.IsOccupied() || building2D.PolygonalFace2D is not PolygonalFace2D polygonalFace2D)
+                        if (building2D.OccupancyArea() is not double occupancyArea_Building2D)
                         {
                             continue;
                         }
 
                         building2Ds.Add(building2D);
 
-                        occupancyArea += polygonalFace2D.GetArea() * building2D.Storeys;
+                        occupancyArea += occupancyArea_Building2D;
                     }
                 }
 
@@ -270,62 +269,19 @@ namespace DiGi.GIS
                     continue;
                 }
 
-                uint occupancy_AdministrativeSubdivision = occupancyCalculationResult_AdministrativeSubdivision.Occupancy.Value;
+                List<double> occupancyAreas_Building2D = building2Ds.ConvertAll(x => x.OccupancyArea() ?? 0);
 
-                double factor = occupancy_AdministrativeSubdivision / occupancyCalculationResult_AdministrativeSubdivision.OccupancyArea.Value;
-
-                List<Tuple<Building2D, double, uint>> tuples_Builidng2D = [];
-                foreach (Building2D building2D in building2Ds)
+                List<uint> occupancies_Building2D = occupancyAreas_Building2D.Occupancies(occupancyCalculationResult_AdministrativeSubdivision.Occupancy.Value);
+                if (occupancies_Building2D.Count != building2Ds.Count)
                 {
-                    if (building2D?.PolygonalFace2D is not PolygonalFace2D polygonalFace2D)
-                    {
-                        continue;
-                    }
-
-                    double occupancyArea = polygonalFace2D.GetArea() * building2D.Storeys;
-
-                    uint occupancy = 0;
-                    if (occupancy_AdministrativeSubdivision != 0)
-                    {
-                        occupancy = System.Convert.ToUInt32(Math.Floor(occupancyArea * factor));
-                        if (occupancy == 0)
-                        {
-                            occupancy++;
-                        }
-
-                        occupancy_AdministrativeSubdivision -= occupancy;
-                    }
-                    else
-                    {
-                        occupancy = 1;
-                    }
-
-                    tuples_Builidng2D.Add(new Tuple<Building2D, double, uint>(building2D, occupancyArea, occupancy));
+                    continue;
                 }
 
-                if (occupancy_AdministrativeSubdivision > 0)
+                for (int i = 0; i < building2Ds.Count; i++)
                 {
-                    Random random = new(System.Convert.ToInt32(occupancyCalculationResult_AdministrativeSubdivision.Occupancy.Value));
+                    OccupancyCalculationResult occupancyCalculationResult = new(occupancyAreas_Building2D[i], occupancies_Building2D[i]);
 
-                    Range<int> range = new(0, building2Ds.Count - 1);
-
-                    while (occupancy_AdministrativeSubdivision > 0)
-                    {
-                        int index = Core.Query.Random(random, range);
-
-                        Tuple<Building2D, double, uint> tuple = tuples_Builidng2D[index];
-
-                        tuples_Builidng2D[index] = new Tuple<Building2D, double, uint>(tuple.Item1, tuple.Item2, tuple.Item3 + 1);
-
-                        occupancy_AdministrativeSubdivision--;
-                    }
-                }
-
-                foreach (Tuple<Building2D, double, uint> tuple_Building2D in tuples_Builidng2D)
-                {
-                    OccupancyCalculationResult occupancyCalculationResult = new(tuple_Building2D.Item2, tuple_Building2D.Item3);
-
-                    gISModel.Update(tuple_Building2D.Item1, occupancyCalculationResult);
+                    gISModel.Update(building2Ds[i], occupancyCalculationResult);
                 }
             }
         }

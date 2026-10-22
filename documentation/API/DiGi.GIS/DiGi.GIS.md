@@ -3159,6 +3159,56 @@ The unit code to evaluate\.
 [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[MunicipalityType](DiGi.GIS.Enums.md#DiGi.GIS.Enums.MunicipalityType 'DiGi\.GIS\.Enums\.MunicipalityType')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')  
 The corresponding [MunicipalityType](DiGi.GIS.Enums.md#DiGi.GIS.Enums.MunicipalityType 'DiGi\.GIS\.Enums\.MunicipalityType') if applicable; otherwise, null\.
 
+<a name='DiGi.GIS.Query.Occupancies(thisSystem.Collections.Generic.IReadOnlyList_double_,uint)'></a>
+
+## Query\.Occupancies\(this IReadOnlyList\<double\>, uint\) Method
+
+Distributes the population of a subdivision over its buildings in proportion to their occupancy areas\.
+
+Each building receives `floor(occupancyArea × occupancy / Σ occupancyArea)`, raised to one only when the population is at least the number of buildings. An overshoot is removed one resident at a time from the buildings with the highest occupancy; a remainder is added one resident at a time to buildings drawn by a pseudo-random generator seeded with the number of buildings, so the result is reproducible. The sum of the result always equals [occupancy](DiGi.GIS.md#DiGi.GIS.Query.Occupancies(thisSystem.Collections.Generic.IReadOnlyList_double_,uint).occupancy 'DiGi\.GIS\.Query\.Occupancies\(this System\.Collections\.Generic\.IReadOnlyList\<double\>, uint\)\.occupancy').
+
+```csharp
+public static System.Collections.Generic.List<uint> Occupancies(this System.Collections.Generic.IReadOnlyList<double>? occupancyAreas, uint occupancy);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.Occupancies(thisSystem.Collections.Generic.IReadOnlyList_double_,uint).occupancyAreas'></a>
+
+`occupancyAreas` [System\.Collections\.Generic\.IReadOnlyList&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ireadonlylist-1 'System\.Collections\.Generic\.IReadOnlyList\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ireadonlylist-1 'System\.Collections\.Generic\.IReadOnlyList\`1')
+
+The occupancy areas of the buildings \(see [OccupancyArea\(this Building2D\)](DiGi.GIS.md#DiGi.GIS.Query.OccupancyArea(thisDiGi.GIS.Classes.Building2D) 'DiGi\.GIS\.Query\.OccupancyArea\(this DiGi\.GIS\.Classes\.Building2D\)')\); every value must be positive\.
+
+<a name='DiGi.GIS.Query.Occupancies(thisSystem.Collections.Generic.IReadOnlyList_double_,uint).occupancy'></a>
+
+`occupancy` [System\.UInt32](https://learn.microsoft.com/en-us/dotnet/api/system.uint32 'System\.UInt32')
+
+The population of the subdivision\.
+
+#### Returns
+[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[System\.UInt32](https://learn.microsoft.com/en-us/dotnet/api/system.uint32 'System\.UInt32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')  
+The occupancy of each building in the order of [occupancyAreas](DiGi.GIS.md#DiGi.GIS.Query.Occupancies(thisSystem.Collections.Generic.IReadOnlyList_double_,uint).occupancyAreas 'DiGi\.GIS\.Query\.Occupancies\(this System\.Collections\.Generic\.IReadOnlyList\<double\>, uint\)\.occupancyAreas'), or an empty list when there are no areas or their sum is not positive\.
+
+<a name='DiGi.GIS.Query.OccupancyArea(thisDiGi.GIS.Classes.Building2D)'></a>
+
+## Query\.OccupancyArea\(this Building2D\) Method
+
+Gets the occupancy area of a building: the footprint area multiplied by the number of storeys, with a building of zero storeys counted as one storey\.
+
+```csharp
+public static System.Nullable<double> OccupancyArea(this DiGi.GIS.Classes.Building2D? building2D);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.OccupancyArea(thisDiGi.GIS.Classes.Building2D).building2D'></a>
+
+`building2D` [Building2D](DiGi.GIS.Classes.md#DiGi.GIS.Classes.Building2D 'DiGi\.GIS\.Classes\.Building2D')
+
+The building to evaluate\.
+
+#### Returns
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')  
+The occupancy area, or `null` when the building is not occupied \(see [IsOccupied\(this Building2D\)](DiGi.GIS.md#DiGi.GIS.Query.IsOccupied(thisDiGi.GIS.Classes.Building2D) 'DiGi\.GIS\.Query\.IsOccupied\(this DiGi\.GIS\.Classes\.Building2D\)')\), has no footprint, or its footprint area is not positive\.
+
 <a name='DiGi.GIS.Query.OrtoDatas(thisDiGi.GIS.Classes.Building2D,string)'></a>
 
 ## Query\.OrtoDatas\(this Building2D, string\) Method
