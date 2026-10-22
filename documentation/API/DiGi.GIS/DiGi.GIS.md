@@ -573,7 +573,7 @@ The building footprints, in the same coordinate system as the points \(EPSG:2180
 
 `maxDistance` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
 
-The maximum distance, in m, from a point outside every footprint to the footprint it is assigned to\. The default, 10 m, is provisional: PRG entrance points usually sit just outside the wall, but the value has not yet been measured on a county's PRG points against its BDOT10k footprints \(DiGi\.GIS\#10\)\.
+The maximum distance, in m, from a point outside every footprint to the footprint it is assigned to\. The default is 10 m: PRG entrance points usually sit just outside the wall, and 10 m was kept as the confirmed default \(DiGi\.GIS\.PostgreSQL\#104\) rather than re\-measured on a county import\.
 
 <a name='DiGi.GIS.Create.AddressPointMatchResult(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.AddressPoint_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_,double,double).tolerance'></a>
 

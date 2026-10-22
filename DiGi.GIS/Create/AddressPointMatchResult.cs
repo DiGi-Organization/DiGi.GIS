@@ -20,12 +20,11 @@ namespace DiGi.GIS
         /// </summary>
         /// <param name="addressPoints">The address points to assign. Null items are skipped.</param>
         /// <param name="building2Ds">The building footprints, in the same coordinate system as the points (EPSG:2180). Null buildings and buildings without a footprint are skipped.</param>
-        /// <param name="maxDistance">The maximum distance, in m, from a point outside every footprint to the footprint it is assigned to. The default, 10 m, is provisional: PRG entrance points usually sit just outside the wall, but the value has not yet been measured on a county's PRG points against its BDOT10k footprints (DiGi.GIS#10).</param>
+        /// <param name="maxDistance">The maximum distance, in m, from a point outside every footprint to the footprint it is assigned to. The default is 10 m: PRG entrance points usually sit just outside the wall, and 10 m was kept as the confirmed default (DiGi.GIS.PostgreSQL#104) rather than re-measured on a county import.</param>
         /// <param name="tolerance">The distance tolerance, in m, for the boundary test and for ties.</param>
         /// <returns>The matches, or null when <paramref name="addressPoints"/> is null or <paramref name="maxDistance"/> is negative or not finite.</returns>
         public static AddressPointMatchResult? AddressPointMatchResult(this IEnumerable<AddressPoint?>? addressPoints, IEnumerable<Building2D?>? building2Ds, double maxDistance = 10, double tolerance = Core.Constants.Tolerance.Distance)
         {
-            // TODO [AddressPointMaxDistance] The default maxDistance (10 m) is an estimate. Replace it, and its <param> text, once the distance distribution of PRG points outside every footprint has been measured on at least one full county (DiGi.GIS#10).
             if (addressPoints == null || double.IsNaN(maxDistance) || double.IsInfinity(maxDistance) || maxDistance < 0)
             {
                 return null;
