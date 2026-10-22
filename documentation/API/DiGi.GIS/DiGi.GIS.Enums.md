@@ -3,6 +3,41 @@
 ## DiGi\.GIS\.Enums Namespace
 ### Enums
 
+<a name='DiGi.GIS.Enums.AddressPointMatchType'></a>
+
+## AddressPointMatchType Enum
+
+Specifies how an address point was assigned to a building footprint\.
+
+```csharp
+public enum AddressPointMatchType
+```
+### Fields
+
+<a name='DiGi.GIS.Enums.AddressPointMatchType.Undefined'></a>
+
+`Undefined` -1
+
+The match type is not known\. A created match never carries this value; it is the default of a missing or unparsed member\.
+
+<a name='DiGi.GIS.Enums.AddressPointMatchType.Inside'></a>
+
+`Inside` 0
+
+The point lies inside the footprint, or on its boundary within the tolerance\.
+
+<a name='DiGi.GIS.Enums.AddressPointMatchType.Nearest'></a>
+
+`Nearest` 1
+
+The point lies outside every footprint and was assigned to the nearest one within the maximum distance\.
+
+<a name='DiGi.GIS.Enums.AddressPointMatchType.Unmatched'></a>
+
+`Unmatched` 2
+
+No footprint lies within the maximum distance of the point, or the point has no location\.
+
 <a name='DiGi.GIS.Enums.AdministrativeDivisionType'></a>
 
 ## AdministrativeDivisionType Enum

@@ -540,6 +540,51 @@ public static class Create
 Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → Create
 ### Methods
 
+<a name='DiGi.GIS.Create.AddressPointMatchResult(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.AddressPoint_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_,double,double)'></a>
+
+## Create\.AddressPointMatchResult\(this IEnumerable\<AddressPoint\>, IEnumerable\<Building2D\>, double, double\) Method
+
+Assigns PRG address points to the building footprints of one county and returns one [AddressPointMatch](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPointMatch 'DiGi\.GIS\.Classes\.AddressPointMatch') per address point, in input order\.
+
+Rules: a point inside a footprint, or on its boundary within [tolerance](DiGi.GIS.md#DiGi.GIS.Create.AddressPointMatchResult(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.AddressPoint_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_,double,double).tolerance 'DiGi\.GIS\.Create\.AddressPointMatchResult\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.AddressPoint\>, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.Building2D\>, double, double\)\.tolerance'), is assigned to it ([Inside](DiGi.GIS.Enums.md#DiGi.GIS.Enums.AddressPointMatchType.Inside 'DiGi\.GIS\.Enums\.AddressPointMatchType\.Inside')); otherwise it is assigned to the nearest footprint within [maxDistance](DiGi.GIS.md#DiGi.GIS.Create.AddressPointMatchResult(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.AddressPoint_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_,double,double).maxDistance 'DiGi\.GIS\.Create\.AddressPointMatchResult\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.AddressPoint\>, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.Building2D\>, double, double\)\.maxDistance') ([Nearest](DiGi.GIS.Enums.md#DiGi.GIS.Enums.AddressPointMatchType.Nearest 'DiGi\.GIS\.Enums\.AddressPointMatchType\.Nearest')); otherwise, or when it has no location, it is reported as [Unmatched](DiGi.GIS.Enums.md#DiGi.GIS.Enums.AddressPointMatchType.Unmatched 'DiGi\.GIS\.Enums\.AddressPointMatchType\.Unmatched'). A point belongs to at most one building; a building receives any number of points.
+
+Ties are deterministic and independent of input order: when the point is inside several (overlapping) footprints, or several footprints lie at distances equal within [tolerance](DiGi.GIS.md#DiGi.GIS.Create.AddressPointMatchResult(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.AddressPoint_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_,double,double).tolerance 'DiGi\.GIS\.Create\.AddressPointMatchResult\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.AddressPoint\>, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.Building2D\>, double, double\)\.tolerance'), the building with the ordinally smallest [Reference](DiGi.GIS.Classes.md#DiGi.GIS.Classes.GISGuidObject2D.Reference 'DiGi\.GIS\.Classes\.GISGuidObject2D\.Reference') wins, then the smallest guid.
+
+The footprints are indexed in an NTS [NetTopologySuite\.Index\.Strtree\.STRtree&lt;&gt;](https://learn.microsoft.com/en-us/dotnet/api/nettopologysuite.index.strtree.strtree-1 'NetTopologySuite\.Index\.Strtree\.STRtree\`1') built inside the call; nothing is cached between calls.
+
+```csharp
+public static DiGi.GIS.Classes.AddressPointMatchResult? AddressPointMatchResult(this System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.AddressPoint?>? addressPoints, System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.Building2D?>? building2Ds, double maxDistance=10.0, double tolerance=1E-06);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Create.AddressPointMatchResult(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.AddressPoint_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_,double,double).addressPoints'></a>
+
+`addressPoints` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[AddressPoint](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPoint 'DiGi\.GIS\.Classes\.AddressPoint')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The address points to assign\. Null items are skipped\.
+
+<a name='DiGi.GIS.Create.AddressPointMatchResult(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.AddressPoint_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_,double,double).building2Ds'></a>
+
+`building2Ds` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[Building2D](DiGi.GIS.Classes.md#DiGi.GIS.Classes.Building2D 'DiGi\.GIS\.Classes\.Building2D')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The building footprints, in the same coordinate system as the points \(EPSG:2180\)\. Null buildings and buildings without a footprint are skipped\.
+
+<a name='DiGi.GIS.Create.AddressPointMatchResult(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.AddressPoint_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_,double,double).maxDistance'></a>
+
+`maxDistance` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The maximum distance, in m, from a point outside every footprint to the footprint it is assigned to\. The default, 10 m, is provisional: PRG entrance points usually sit just outside the wall, but the value has not yet been measured on a county's PRG points against its BDOT10k footprints \(DiGi\.GIS\#10\)\.
+
+<a name='DiGi.GIS.Create.AddressPointMatchResult(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.AddressPoint_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_,double,double).tolerance'></a>
+
+`tolerance` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The distance tolerance, in m, for the boundary test and for ties\.
+
+#### Returns
+[AddressPointMatchResult](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPointMatchResult 'DiGi\.GIS\.Classes\.AddressPointMatchResult')  
+The matches, or null when [addressPoints](DiGi.GIS.md#DiGi.GIS.Create.AddressPointMatchResult(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.AddressPoint_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_,double,double).addressPoints 'DiGi\.GIS\.Create\.AddressPointMatchResult\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.AddressPoint\>, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.Building2D\>, double, double\)\.addressPoints') is null or [maxDistance](DiGi.GIS.md#DiGi.GIS.Create.AddressPointMatchResult(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.AddressPoint_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_,double,double).maxDistance 'DiGi\.GIS\.Create\.AddressPointMatchResult\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.AddressPoint\>, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.Building2D\>, double, double\)\.maxDistance') is negative or not finite\.
+
 <a name='DiGi.GIS.Create.AdministrativeAreal2DGeometryCalculationResult(thisDiGi.GIS.Classes.AdministrativeAreal2D,double)'></a>
 
 ## Create\.AdministrativeAreal2DGeometryCalculationResult\(this AdministrativeAreal2D, double\) Method
