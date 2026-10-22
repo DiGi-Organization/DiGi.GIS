@@ -2030,6 +2030,35 @@ The distance tolerance used when creating the bounding rectangle of the polygona
 [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')  
 The azimuth angle in degrees, ranging from 0 to 360\. Returns double\.NaN if calculations cannot be performed\.
 
+<a name='DiGi.GIS.Query.Building2DOccupancies(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_,uint)'></a>
+
+## Query\.Building2DOccupancies\(this IEnumerable\<Building2D\>, uint\) Method
+
+Distributes the population of a subdivision over its occupied buildings in proportion to their occupancy areas \(see [OccupancyArea\(this Building2D\)](DiGi.GIS.md#DiGi.GIS.Query.OccupancyArea(thisDiGi.GIS.Classes.Building2D) 'DiGi\.GIS\.Query\.OccupancyArea\(this DiGi\.GIS\.Classes\.Building2D\)') and [Occupancies\(this IReadOnlyList&lt;double&gt;, uint\)](DiGi.GIS.md#DiGi.GIS.Query.Occupancies(thisSystem.Collections.Generic.IReadOnlyList_double_,uint) 'DiGi\.GIS\.Query\.Occupancies\(this System\.Collections\.Generic\.IReadOnlyList\<double\>, uint\)')\)\.
+
+Buildings without an occupancy area are left out. The others are ordered by [Reference](DiGi.GIS.Classes.md#DiGi.GIS.Classes.GISGuidObject2D.Reference 'DiGi\.GIS\.Classes\.GISGuidObject2D\.Reference') (ordinal, a missing reference first) and then by [DiGi\.Core\.Classes\.GuidObject\.Guid](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.guidobject.guid 'DiGi\.Core\.Classes\.GuidObject\.Guid') before the distribution, so the result depends only on the buildings and not on the order in which they are passed or stored.
+
+```csharp
+public static System.Collections.Generic.List<System.Tuple<DiGi.GIS.Classes.Building2D,double,uint>> Building2DOccupancies(this System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.Building2D?>? building2Ds, uint occupancy);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.Building2DOccupancies(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_,uint).building2Ds'></a>
+
+`building2Ds` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[Building2D](DiGi.GIS.Classes.md#DiGi.GIS.Classes.Building2D 'DiGi\.GIS\.Classes\.Building2D')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The buildings of the subdivision, in any order\.
+
+<a name='DiGi.GIS.Query.Building2DOccupancies(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_,uint).occupancy'></a>
+
+`occupancy` [System\.UInt32](https://learn.microsoft.com/en-us/dotnet/api/system.uint32 'System\.UInt32')
+
+The population of the subdivision\.
+
+#### Returns
+[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[System\.Tuple&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.tuple-3 'System\.Tuple\`3')[Building2D](DiGi.GIS.Classes.md#DiGi.GIS.Classes.Building2D 'DiGi\.GIS\.Classes\.Building2D')[,](https://learn.microsoft.com/en-us/dotnet/api/system.tuple-3 'System\.Tuple\`3')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[,](https://learn.microsoft.com/en-us/dotnet/api/system.tuple-3 'System\.Tuple\`3')[System\.UInt32](https://learn.microsoft.com/en-us/dotnet/api/system.uint32 'System\.UInt32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.tuple-3 'System\.Tuple\`3')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')  
+One tuple per occupied building — the building, its occupancy area and its occupancy — in the distribution order, or an empty list when no building has an occupancy area\.
+
 <a name='DiGi.GIS.Query.Building2Ds_UAdministrativeAreal2D_(thisDiGi.GIS.Classes.GISModel,DiGi.Geometry.Planar.Classes.Point2D,System.Collections.Generic.List_UAdministrativeAreal2D_,double,double)'></a>
 
 ## Query\.Building2Ds\<UAdministrativeAreal2D\>\(this GISModel, Point2D, List\<UAdministrativeAreal2D\>, double, double\) Method
@@ -3165,7 +3194,7 @@ The corresponding [MunicipalityType](DiGi.GIS.Enums.md#DiGi.GIS.Enums.Municipali
 
 Distributes the population of a subdivision over its buildings in proportion to their occupancy areas\.
 
-Each building receives `floor(occupancyArea × occupancy / Σ occupancyArea)`, raised to one only when the population is at least the number of buildings. An overshoot is removed one resident at a time from the buildings with the highest occupancy; a remainder is added one resident at a time to buildings drawn by a pseudo-random generator seeded with the number of buildings, so the result is reproducible. The sum of the result always equals [occupancy](DiGi.GIS.md#DiGi.GIS.Query.Occupancies(thisSystem.Collections.Generic.IReadOnlyList_double_,uint).occupancy 'DiGi\.GIS\.Query\.Occupancies\(this System\.Collections\.Generic\.IReadOnlyList\<double\>, uint\)\.occupancy').
+Each building receives `floor(occupancyArea × occupancy / Σ occupancyArea)`, raised to one only when the population is at least the number of buildings. An overshoot is removed one resident at a time from the buildings with the highest occupancy; a remainder is added one resident at a time to buildings drawn uniformly over all buildings (indices 0 … n − 1, with replacement) by a pseudo-random generator seeded with the number of buildings, so the result is reproducible for a given order of [occupancyAreas](DiGi.GIS.md#DiGi.GIS.Query.Occupancies(thisSystem.Collections.Generic.IReadOnlyList_double_,uint).occupancyAreas 'DiGi\.GIS\.Query\.Occupancies\(this System\.Collections\.Generic\.IReadOnlyList\<double\>, uint\)\.occupancyAreas'). The sum of the result always equals [occupancy](DiGi.GIS.md#DiGi.GIS.Query.Occupancies(thisSystem.Collections.Generic.IReadOnlyList_double_,uint).occupancy 'DiGi\.GIS\.Query\.Occupancies\(this System\.Collections\.Generic\.IReadOnlyList\<double\>, uint\)\.occupancy').
 
 ```csharp
 public static System.Collections.Generic.List<uint> Occupancies(this System.Collections.Generic.IReadOnlyList<double>? occupancyAreas, uint occupancy);

@@ -1,5 +1,4 @@
-﻿using DiGi.Core.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace DiGi.GIS
@@ -8,7 +7,7 @@ namespace DiGi.GIS
     {
         /// <summary>
         /// Distributes the population of a subdivision over its buildings in proportion to their occupancy areas.
-        /// <para>Each building receives <c>floor(occupancyArea × occupancy / Σ occupancyArea)</c>, raised to one only when the population is at least the number of buildings. An overshoot is removed one resident at a time from the buildings with the highest occupancy; a remainder is added one resident at a time to buildings drawn by a pseudo-random generator seeded with the number of buildings, so the result is reproducible. The sum of the result always equals <paramref name="occupancy"/>.</para>
+        /// <para>Each building receives <c>floor(occupancyArea × occupancy / Σ occupancyArea)</c>, raised to one only when the population is at least the number of buildings. An overshoot is removed one resident at a time from the buildings with the highest occupancy; a remainder is added one resident at a time to buildings drawn uniformly over all buildings (indices 0 … n − 1, with replacement) by a pseudo-random generator seeded with the number of buildings, so the result is reproducible for a given order of <paramref name="occupancyAreas"/>. The sum of the result always equals <paramref name="occupancy"/>.</para>
         /// </summary>
         /// <param name="occupancyAreas">The occupancy areas of the buildings (see <see cref="OccupancyArea"/>); every value must be positive.</param>
         /// <param name="occupancy">The population of the subdivision.</param>
@@ -65,11 +64,11 @@ namespace DiGi.GIS
             if (remainingOccupancy > 0)
             {
                 Random random = new(tuples.Count);
-                Range<int> range = new(0, tuples.Count - 1);
 
                 while (remainingOccupancy > 0)
                 {
-                    int index = Core.Query.Random(random, range);
+                    // Random.Next(int) excludes its bound, so every index 0 … Count − 1 can be drawn (DiGi.GIS#13).
+                    int index = random.Next(tuples.Count);
                     tuples[index] = new Tuple<int, uint>(tuples[index].Item1, tuples[index].Item2 + 1);
                     remainingOccupancy--;
                 }

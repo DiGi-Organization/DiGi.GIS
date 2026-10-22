@@ -269,19 +269,11 @@ namespace DiGi.GIS
                     continue;
                 }
 
-                List<double> occupancyAreas_Building2D = building2Ds.ConvertAll(x => x.OccupancyArea() ?? 0);
-
-                List<uint> occupancies_Building2D = occupancyAreas_Building2D.Occupancies(occupancyCalculationResult_AdministrativeSubdivision.Occupancy.Value);
-                if (occupancies_Building2D.Count != building2Ds.Count)
+                foreach (Tuple<Building2D, double, uint> tuple_Building2D in building2Ds.Building2DOccupancies(occupancyCalculationResult_AdministrativeSubdivision.Occupancy.Value))
                 {
-                    continue;
-                }
+                    OccupancyCalculationResult occupancyCalculationResult = new(tuple_Building2D.Item2, tuple_Building2D.Item3);
 
-                for (int i = 0; i < building2Ds.Count; i++)
-                {
-                    OccupancyCalculationResult occupancyCalculationResult = new(occupancyAreas_Building2D[i], occupancies_Building2D[i]);
-
-                    gISModel.Update(building2Ds[i], occupancyCalculationResult);
+                    gISModel.Update(tuple_Building2D.Item1, occupancyCalculationResult);
                 }
             }
         }
