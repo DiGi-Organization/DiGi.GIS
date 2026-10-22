@@ -3,6 +3,240 @@
 ## DiGi\.GIS\.Classes Namespace
 ### Classes
 
+<a name='DiGi.GIS.Classes.AddressPoint'></a>
+
+## AddressPoint Class
+
+Represents a PRG address point: a position in EPSG:2180 with the street, house number, locality and TERYT identifiers it was registered under\.
+
+It keeps the full PRG record, which [DiGi\.Core\.Classes\.Address](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.address 'DiGi\.Core\.Classes\.Address') cannot hold (no house number, no TERYT ids). Use `ToDiGi(this AddressPoint?)` for the lossy conversion to [DiGi\.Core\.Classes\.Address](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.address 'DiGi\.Core\.Classes\.Address').
+
+```csharp
+public class AddressPoint : DiGi.Core.Classes.SerializableObject, DiGi.GIS.Interfaces.IGISSerializableObject, DiGi.GIS.Interfaces.IGISObject, DiGi.Core.Interfaces.IObject, DiGi.Core.Interfaces.ISerializableObject, DiGi.Core.Interfaces.ICloneableObject<DiGi.Core.Interfaces.ISerializableObject>, DiGi.Core.Interfaces.ICloneableObject
+```
+
+Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → [DiGi\.Core\.Classes\.Object](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.object 'DiGi\.Core\.Classes\.Object') → [DiGi\.Core\.Classes\.SerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.serializableobject 'DiGi\.Core\.Classes\.SerializableObject') → AddressPoint
+
+Implements [IGISSerializableObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISSerializableObject 'DiGi\.GIS\.Interfaces\.IGISSerializableObject'), [IGISObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISObject 'DiGi\.GIS\.Interfaces\.IGISObject'), [DiGi\.Core\.Interfaces\.IObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iobject 'DiGi\.Core\.Interfaces\.IObject'), [DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject'), [DiGi\.Core\.Interfaces\.ICloneableObject&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1')[DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1'), [DiGi\.Core\.Interfaces\.ICloneableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject 'DiGi\.Core\.Interfaces\.ICloneableObject')
+### Constructors
+
+<a name='DiGi.GIS.Classes.AddressPoint.AddressPoint(DiGi.Geometry.Planar.Classes.Point2D,string,string,string,string,string,string,string,System.Nullable_System.DateTimeOffset_)'></a>
+
+## AddressPoint\(Point2D, string, string, string, string, string, string, string, Nullable\<DateTimeOffset\>\) Constructor
+
+Initializes a new instance of the [AddressPoint](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPoint 'DiGi\.GIS\.Classes\.AddressPoint') class\.
+
+```csharp
+public AddressPoint(DiGi.Geometry.Planar.Classes.Point2D? location, string? streetName, string? ulic, string? houseNumber, string? localityName, string? simc, string? postalCode, string? referenceId, System.Nullable<System.DateTimeOffset> version);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.AddressPoint.AddressPoint(DiGi.Geometry.Planar.Classes.Point2D,string,string,string,string,string,string,string,System.Nullable_System.DateTimeOffset_).location'></a>
+
+`location` [DiGi\.Geometry\.Planar\.Classes\.Point2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.point2d 'DiGi\.Geometry\.Planar\.Classes\.Point2D')
+
+The position of the address point in EPSG:2180 \(easting first\)\.
+
+<a name='DiGi.GIS.Classes.AddressPoint.AddressPoint(DiGi.Geometry.Planar.Classes.Point2D,string,string,string,string,string,string,string,System.Nullable_System.DateTimeOffset_).streetName'></a>
+
+`streetName` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The full street name, or null for a locality without streets\.
+
+<a name='DiGi.GIS.Classes.AddressPoint.AddressPoint(DiGi.Geometry.Planar.Classes.Point2D,string,string,string,string,string,string,string,System.Nullable_System.DateTimeOffset_).ulic'></a>
+
+`ulic` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The TERYT ULIC street identifier \(a string, leading zeros are significant\), or null\.
+
+<a name='DiGi.GIS.Classes.AddressPoint.AddressPoint(DiGi.Geometry.Planar.Classes.Point2D,string,string,string,string,string,string,string,System.Nullable_System.DateTimeOffset_).houseNumber'></a>
+
+`houseNumber` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The house number as free text \(for example `6A`, `2/4`\)\.
+
+<a name='DiGi.GIS.Classes.AddressPoint.AddressPoint(DiGi.Geometry.Planar.Classes.Point2D,string,string,string,string,string,string,string,System.Nullable_System.DateTimeOffset_).localityName'></a>
+
+`localityName` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The locality name\.
+
+<a name='DiGi.GIS.Classes.AddressPoint.AddressPoint(DiGi.Geometry.Planar.Classes.Point2D,string,string,string,string,string,string,string,System.Nullable_System.DateTimeOffset_).simc'></a>
+
+`simc` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The TERYT SIMC locality identifier \(a string, leading zeros are significant\)\.
+
+<a name='DiGi.GIS.Classes.AddressPoint.AddressPoint(DiGi.Geometry.Planar.Classes.Point2D,string,string,string,string,string,string,string,System.Nullable_System.DateTimeOffset_).postalCode'></a>
+
+`postalCode` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The postal code, or null\.
+
+<a name='DiGi.GIS.Classes.AddressPoint.AddressPoint(DiGi.Geometry.Planar.Classes.Point2D,string,string,string,string,string,string,string,System.Nullable_System.DateTimeOffset_).referenceId'></a>
+
+`referenceId` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The PRG local identifier of the address point\.
+
+<a name='DiGi.GIS.Classes.AddressPoint.AddressPoint(DiGi.Geometry.Planar.Classes.Point2D,string,string,string,string,string,string,string,System.Nullable_System.DateTimeOffset_).version'></a>
+
+`version` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The PRG version of the address point\.
+
+<a name='DiGi.GIS.Classes.AddressPoint.AddressPoint(DiGi.GIS.Classes.AddressPoint)'></a>
+
+## AddressPoint\(AddressPoint\) Constructor
+
+Initializes a new instance of the [AddressPoint](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPoint 'DiGi\.GIS\.Classes\.AddressPoint') class by copying an existing instance\.
+
+```csharp
+public AddressPoint(DiGi.GIS.Classes.AddressPoint? addressPoint);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.AddressPoint.AddressPoint(DiGi.GIS.Classes.AddressPoint).addressPoint'></a>
+
+`addressPoint` [AddressPoint](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPoint 'DiGi\.GIS\.Classes\.AddressPoint')
+
+The source address point to copy from\.
+
+<a name='DiGi.GIS.Classes.AddressPoint.AddressPoint(System.Text.Json.Nodes.JsonObject)'></a>
+
+## AddressPoint\(JsonObject\) Constructor
+
+Initializes a new instance of the [AddressPoint](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPoint 'DiGi\.GIS\.Classes\.AddressPoint') class from a JSON object\.
+
+```csharp
+public AddressPoint(System.Text.Json.Nodes.JsonObject? jsonObject);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.AddressPoint.AddressPoint(System.Text.Json.Nodes.JsonObject).jsonObject'></a>
+
+`jsonObject` [System\.Text\.Json\.Nodes\.JsonObject](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.nodes.jsonobject 'System\.Text\.Json\.Nodes\.JsonObject')
+
+The JSON object containing the address point data\.
+### Properties
+
+<a name='DiGi.GIS.Classes.AddressPoint.HouseNumber'></a>
+
+## AddressPoint\.HouseNumber Property
+
+Gets the house number as free text\.
+
+```csharp
+public string HouseNumber { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.AddressPoint.LocalityName'></a>
+
+## AddressPoint\.LocalityName Property
+
+Gets the locality name\.
+
+```csharp
+public string? LocalityName { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.AddressPoint.Location'></a>
+
+## AddressPoint\.Location Property
+
+Gets a clone of the position in EPSG:2180 \(easting first\)\.
+
+```csharp
+public DiGi.Geometry.Planar.Classes.Point2D? Location { get; }
+```
+
+#### Property Value
+[DiGi\.Geometry\.Planar\.Classes\.Point2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.point2d 'DiGi\.Geometry\.Planar\.Classes\.Point2D')
+
+<a name='DiGi.GIS.Classes.AddressPoint.PostalCode'></a>
+
+## AddressPoint\.PostalCode Property
+
+Gets the postal code\.
+
+```csharp
+public string? PostalCode { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.AddressPoint.ReferenceId'></a>
+
+## AddressPoint\.ReferenceId Property
+
+Gets the PRG local identifier of the address point\.
+
+```csharp
+public string? ReferenceId { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.AddressPoint.SIMC'></a>
+
+## AddressPoint\.SIMC Property
+
+Gets the TERYT SIMC locality identifier\.
+
+```csharp
+public string? SIMC { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.AddressPoint.StreetName'></a>
+
+## AddressPoint\.StreetName Property
+
+Gets the full street name, or null for a locality without streets\.
+
+```csharp
+public string? StreetName { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.AddressPoint.ULIC'></a>
+
+## AddressPoint\.ULIC Property
+
+Gets the TERYT ULIC street identifier\.
+
+```csharp
+public string? ULIC { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.AddressPoint.Version'></a>
+
+## AddressPoint\.Version Property
+
+Gets the PRG version of the address point\.
+
+```csharp
+public System.Nullable<System.DateTimeOffset> Version { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
 <a name='DiGi.GIS.Classes.AdministrativeAreal2D'></a>
 
 ## AdministrativeAreal2D Class

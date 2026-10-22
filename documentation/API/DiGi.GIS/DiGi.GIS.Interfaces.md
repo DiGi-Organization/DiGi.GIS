@@ -145,6 +145,7 @@ public interface IGISObject : DiGi.Core.Interfaces.IObject
 ```
 
 Derived  
+↳ [AddressPoint](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPoint 'DiGi\.GIS\.Classes\.AddressPoint')  
 ↳ [AdministrativeAreal2DExternalReferenceGuidResult](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AdministrativeAreal2DExternalReferenceGuidResult 'DiGi\.GIS\.Classes\.AdministrativeAreal2DExternalReferenceGuidResult')  
 ↳ [AdministrativeAreal2DGeometryCalculationResult](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AdministrativeAreal2DGeometryCalculationResult 'DiGi\.GIS\.Classes\.AdministrativeAreal2DGeometryCalculationResult')  
 ↳ [AdministrativeAreal2DStatisticalUnitsCalculcationResult](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AdministrativeAreal2DStatisticalUnitsCalculcationResult 'DiGi\.GIS\.Classes\.AdministrativeAreal2DStatisticalUnitsCalculcationResult')  
@@ -235,6 +236,7 @@ public interface IGISSerializableObject : DiGi.GIS.Interfaces.IGISObject, DiGi.C
 ```
 
 Derived  
+↳ [AddressPoint](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPoint 'DiGi\.GIS\.Classes\.AddressPoint')  
 ↳ [AdministrativeAreal2DExternalReferenceGuidResult](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AdministrativeAreal2DExternalReferenceGuidResult 'DiGi\.GIS\.Classes\.AdministrativeAreal2DExternalReferenceGuidResult')  
 ↳ [AdministrativeAreal2DGeometryCalculationResult](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AdministrativeAreal2DGeometryCalculationResult 'DiGi\.GIS\.Classes\.AdministrativeAreal2DGeometryCalculationResult')  
 ↳ [AdministrativeAreal2DStatisticalUnitsCalculcationResult](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AdministrativeAreal2DStatisticalUnitsCalculcationResult 'DiGi\.GIS\.Classes\.AdministrativeAreal2DStatisticalUnitsCalculcationResult')  

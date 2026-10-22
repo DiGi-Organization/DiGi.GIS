@@ -215,6 +215,31 @@ The source locality type from the BDOT10k system\.
 [AdministrativeSubdivisionType](DiGi.GIS.Enums.md#DiGi.GIS.Enums.AdministrativeSubdivisionType 'DiGi\.GIS\.Enums\.AdministrativeSubdivisionType')  
 The equivalent administrative subdivision type in the DiGi GIS system\.
 
+<a name='DiGi.GIS.Convert.ToDiGi(thisDiGi.GIS.Classes.AddressPoint)'></a>
+
+## Convert\.ToDiGi\(this AddressPoint\) Method
+
+Converts an [AddressPoint](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPoint 'DiGi\.GIS\.Classes\.AddressPoint') to a [DiGi\.Core\.Classes\.Address](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.address 'DiGi\.Core\.Classes\.Address')\.
+
+The conversion is <b>lossy</b>: the position, the ULIC and SIMC identifiers and the PRG identifier and version are dropped.
+
+The street is `"<street> <house number>"`; without a street it is `"<locality> <house number>"`, the Polish convention for villages without streets.
+
+```csharp
+public static DiGi.Core.Classes.Address? ToDiGi(this DiGi.GIS.Classes.AddressPoint? addressPoint);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Convert.ToDiGi(thisDiGi.GIS.Classes.AddressPoint).addressPoint'></a>
+
+`addressPoint` [AddressPoint](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPoint 'DiGi\.GIS\.Classes\.AddressPoint')
+
+The source address point\.
+
+#### Returns
+[DiGi\.Core\.Classes\.Address](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.address 'DiGi\.Core\.Classes\.Address')  
+An [DiGi\.Core\.Classes\.Address](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.address 'DiGi\.Core\.Classes\.Address') in Poland; null when the input is null\.
+
 <a name='DiGi.GIS.Convert.ToDiGi(thisDiGi.GIS.Enums.StatisticalUnitType)'></a>
 
 ## Convert\.ToDiGi\(this StatisticalUnitType\) Method
@@ -277,6 +302,29 @@ The surface instance to be converted\.
 #### Returns
 [DiGi\.Geometry\.Planar\.Classes\.PolygonalFace2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.polygonalface2d 'DiGi\.Geometry\.Planar\.Classes\.PolygonalFace2D')  
 A [DiGi\.Geometry\.Planar\.Classes\.PolygonalFace2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.polygonalface2d 'DiGi\.Geometry\.Planar\.Classes\.PolygonalFace2D') object if the conversion is successful; otherwise, null\.
+
+<a name='DiGi.GIS.Convert.ToDiGi(thisDiGi.PRG.Geometry.Classes.PunktAdresowy)'></a>
+
+## Convert\.ToDiGi\(this PunktAdresowy\) Method
+
+Converts a PRG [DiGi\.PRG\.Geometry\.Classes\.PunktAdresowy](https://learn.microsoft.com/en-us/dotnet/api/digi.prg.geometry.classes.punktadresowy 'DiGi\.PRG\.Geometry\.Classes\.PunktAdresowy') to an [AddressPoint](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPoint 'DiGi\.GIS\.Classes\.AddressPoint')\.
+
+The position is taken as is: it is already easting first, the BDOT10k frame, so it must not be swapped again.
+
+```csharp
+public static DiGi.GIS.Classes.AddressPoint? ToDiGi(this DiGi.PRG.Geometry.Classes.PunktAdresowy? punktAdresowy);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Convert.ToDiGi(thisDiGi.PRG.Geometry.Classes.PunktAdresowy).punktAdresowy'></a>
+
+`punktAdresowy` [DiGi\.PRG\.Geometry\.Classes\.PunktAdresowy](https://learn.microsoft.com/en-us/dotnet/api/digi.prg.geometry.classes.punktadresowy 'DiGi\.PRG\.Geometry\.Classes\.PunktAdresowy')
+
+The source PRG address point, with its street and locality already resolved\.
+
+#### Returns
+[AddressPoint](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPoint 'DiGi\.GIS\.Classes\.AddressPoint')  
+An [AddressPoint](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPoint 'DiGi\.GIS\.Classes\.AddressPoint'); null when the input is null or has no position\.
 
 <a name='DiGi.GIS.Convert.ToDiGi(thisstring,string,bool,bool,bool)'></a>
 
