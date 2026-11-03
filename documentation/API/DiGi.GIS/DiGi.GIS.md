@@ -371,6 +371,70 @@ Indicates whether to convert OT\_BUBD\_A\.xml files \(Building2D\)\.
 [System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')  
 A list of paths to the created output files, or null if the input is invalid or no files were processed\.
 
+<a name='DiGi.GIS.Convert.ToDiGi_OrtoSheet(thisSystem.Xml.Linq.XElement,System.Nullable_System.DateTimeOffset_)'></a>
+
+## Convert\.ToDiGi\_OrtoSheet\(this XElement, Nullable\<DateTimeOffset\>\) Method
+
+Converts one feature of the GUGiK orthophoto index \(an element such as `gugik:SkorowidzOrtofomapy2005`\) to an [OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')\.
+
+<b>Axis order.</b> With `SRSNAME=EPSG:2180` the WFS 1.1.0 response writes every `posList` pair northing first (the official EPSG:2180 axis order); [DiGi\.Geometry\.Planar\.Classes\.Point2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.point2d 'DiGi\.Geometry\.Planar\.Classes\.Point2D') holds easting in X, so each pair is swapped here. Verified 2026-11-03: sheet `N-33-117-D-a-3-4` (latitude about 52.7°) reads `547909 316630`, which is only in Poland as northing 547909, easting 316630.
+
+<b>Date precision.</b> This is the one place it is classified. Analog-era rows carry a `YYYY-01-01` placeholder in `akt_data`, so a 1 January date of an analog source (`zrodlo_danych` containing `analog`) is [Year](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision.Year 'DiGi\.GIS\.Enums\.OrtoDatePrecision\.Year'); every other parsed date is [Day](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision.Day 'DiGi\.GIS\.Enums\.OrtoDatePrecision\.Day').
+
+The footprint is the exterior ring of the first polygon of `msGeometry`. The orthophoto type is not in the index and is left [Undefined](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoType.Undefined 'DiGi\.GIS\.Enums\.OrtoType\.Undefined').
+
+```csharp
+public static DiGi.GIS.Classes.OrtoSheet? ToDiGi_OrtoSheet(this System.Xml.Linq.XElement? xElement, System.Nullable<System.DateTimeOffset> probeDate=null);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Convert.ToDiGi_OrtoSheet(thisSystem.Xml.Linq.XElement,System.Nullable_System.DateTimeOffset_).xElement'></a>
+
+`xElement` [System\.Xml\.Linq\.XElement](https://learn.microsoft.com/en-us/dotnet/api/system.xml.linq.xelement 'System\.Xml\.Linq\.XElement')
+
+The feature element\.
+
+<a name='DiGi.GIS.Convert.ToDiGi_OrtoSheet(thisSystem.Xml.Linq.XElement,System.Nullable_System.DateTimeOffset_).probeDate'></a>
+
+`probeDate` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The moment the index was read\.
+
+#### Returns
+[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')  
+The sheet, or null when the element is missing or carries neither a sheet identifier nor a year\.
+
+<a name='DiGi.GIS.Convert.ToDiGi_OrtoSheets(thisSystem.IO.Stream,System.Nullable_System.DateTimeOffset_)'></a>
+
+## Convert\.ToDiGi\_OrtoSheets\(this Stream, Nullable\<DateTimeOffset\>\) Method
+
+Streams the features of a GUGiK orthophoto index WFS response \(a GML `wfs:FeatureCollection`\) as [OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet') objects, one feature held as XML at a time\.
+
+[DiGi\.GML\.Query\.FeatureMembers\(System\.String\)](https://learn.microsoft.com/en-us/dotnet/api/digi.gml.query.featuremembers#digi-gml-query-featuremembers(system-string) 'DiGi\.GML\.Query\.FeatureMembers\(System\.String\)') has the same streaming shape but reads a file path and skips feature types no assembly models, and the yearly index typenames are not modelled; this walks the stream directly and hands each feature to [ToDiGi\_OrtoSheet\(this XElement, Nullable&lt;DateTimeOffset&gt;\)](DiGi.GIS.md#DiGi.GIS.Convert.ToDiGi_OrtoSheet(thisSystem.Xml.Linq.XElement,System.Nullable_System.DateTimeOffset_) 'DiGi\.GIS\.Convert\.ToDiGi\_OrtoSheet\(this System\.Xml\.Linq\.XElement, System\.Nullable\<System\.DateTimeOffset\>\)'). Both `gml:featureMember` (one feature) and `gml:featureMembers` (several) are read.
+
+A feature that does not convert is skipped; compare the count with the `RESULTTYPE=hits` answer to detect loss.
+
+```csharp
+public static System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.OrtoSheet> ToDiGi_OrtoSheets(this System.IO.Stream? stream, System.Nullable<System.DateTimeOffset> probeDate=null);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Convert.ToDiGi_OrtoSheets(thisSystem.IO.Stream,System.Nullable_System.DateTimeOffset_).stream'></a>
+
+`stream` [System\.IO\.Stream](https://learn.microsoft.com/en-us/dotnet/api/system.io.stream 'System\.IO\.Stream')
+
+The response stream; it is not disposed\.
+
+<a name='DiGi.GIS.Convert.ToDiGi_OrtoSheets(thisSystem.IO.Stream,System.Nullable_System.DateTimeOffset_).probeDate'></a>
+
+`probeDate` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The moment the index was read\.
+
+#### Returns
+[System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')  
+The sheets in document order; empty when the stream is null or its root is not a feature collection\.
+
 <a name='DiGi.GIS.Convert.ToEPSG2180(thisDiGi.Geometry.Spatial.Classes.Point3D)'></a>
 
 ## Convert\.ToEPSG2180\(this Point3D\) Method
@@ -507,6 +571,29 @@ The areal 2D reference identifier\.
 [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')  
 A formatted string combining the references, or null if the areal 2D reference is null or whitespace\.
 
+<a name='DiGi.GIS.Convert.ToSystem_Strings(thisDiGi.GIS.Classes.OrtoAvailabilityMatrix)'></a>
+
+## Convert\.ToSystem\_Strings\(this OrtoAvailabilityMatrix\) Method
+
+Converts an orthophoto availability matrix to tab\-separated lines, a header first: one row per cell and epoch, with the gap in days to the previous epoch of the cell\.
+
+The gap of a cell's first epoch is empty (left censored); `DaysToProbe` on its last epoch is the right-censored interval up to the probe date. Numbers render with [System\.Globalization\.CultureInfo\.InvariantCulture](https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.invariantculture 'System\.Globalization\.CultureInfo\.InvariantCulture').
+
+```csharp
+public static string[]? ToSystem_Strings(this DiGi.GIS.Classes.OrtoAvailabilityMatrix? ortoAvailabilityMatrix);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Convert.ToSystem_Strings(thisDiGi.GIS.Classes.OrtoAvailabilityMatrix).ortoAvailabilityMatrix'></a>
+
+`ortoAvailabilityMatrix` [OrtoAvailabilityMatrix](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailabilityMatrix 'DiGi\.GIS\.Classes\.OrtoAvailabilityMatrix')
+
+The matrix\.
+
+#### Returns
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')  
+The lines, or null when the matrix is null\.
+
 <a name='DiGi.GIS.Convert.ToSystem_Strings(thisDiGi.Typology.Classes.Typology)'></a>
 
 ## Convert\.ToSystem\_Strings\(this Typology\) Method
@@ -528,6 +615,29 @@ The typology instance to convert\.
 #### Returns
 [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')  
 An array of tab\-separated strings representing the typology structure, or an empty array if no data is found\.
+
+<a name='DiGi.GIS.Convert.ToSystem_Strings(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_)'></a>
+
+## Convert\.ToSystem\_Strings\(this IEnumerable\<OrtoSheet\>\) Method
+
+Converts orthophoto index rows to tab\-separated lines, a header first: the sheet inventory table, one row per registration, with the probe date\.
+
+Numbers render with [System\.Globalization\.CultureInfo\.InvariantCulture](https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.invariantculture 'System\.Globalization\.CultureInfo\.InvariantCulture') and dates as `yyyy-MM-dd` (probe date as ISO 8601 with offset), so a table written on any machine reads the same. Tabs and line breaks inside values are replaced by spaces.
+
+```csharp
+public static string[]? ToSystem_Strings(this System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.OrtoSheet?>? ortoSheets);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Convert.ToSystem_Strings(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).ortoSheets'></a>
+
+`ortoSheets` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The rows; nulls are skipped\.
+
+#### Returns
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')  
+The lines, or null when the rows are null\.
 
 <a name='DiGi.GIS.Create'></a>
 
@@ -898,6 +1008,53 @@ A collection of administrative areal entities to be indexed\.
 #### Returns
 [IndexDataFile](DiGi.GIS.Classes.md#DiGi.GIS.Classes.IndexDataFile 'DiGi\.GIS\.Classes\.IndexDataFile')  
 An IndexDataFile containing the indexed data, or null if the input collection is null\.
+
+<a name='DiGi.GIS.Create.OrtoAvailabilityMatrix(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,double,double,System.Nullable_System.DateTimeOffset_)'></a>
+
+## Create\.OrtoAvailabilityMatrix\(this IEnumerable\<OrtoSheet\>, double, double, Nullable\<DateTimeOffset\>\) Method
+
+Builds an orthophoto availability matrix over a regular EPSG:2180 grid from index rows: per cell, the distinct epochs and the gaps in days between them\.
+
+The grid is aligned to multiples of [cellSize](DiGi.GIS.md#DiGi.GIS.Create.OrtoAvailabilityMatrix(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,double,double,System.Nullable_System.DateTimeOffset_).cellSize 'DiGi\.GIS\.Create\.OrtoAvailabilityMatrix\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, double, double, System\.Nullable\<System\.DateTimeOffset\>\)\.cellSize') and spans the footprints. A date counts at a cell when the union of the footprints carrying that date covers at least [coverageFraction](DiGi.GIS.md#DiGi.GIS.Create.OrtoAvailabilityMatrix(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,double,double,System.Nullable_System.DateTimeOffset_).coverageFraction 'DiGi\.GIS\.Create\.OrtoAvailabilityMatrix\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, double, double, System\.Nullable\<System\.DateTimeOffset\>\)\.coverageFraction') of the cell area — the union, because one 1:5 000 sheet (about 2 km) never covers a 5 km cell on its own while its campaign does; every 1998 cell came out empty under a per-sheet rule. Sheets of one block flown on different days do not add up, so a cell straddling them needs a smaller cell or a lower fraction. Cells no date covers are not emitted.
+
+Duplicates are removed before epochs are formed: the rows are grouped by [OrtoSheetDuplicateGroups\(this IEnumerable&lt;OrtoSheet&gt;\)](DiGi.GIS.md#DiGi.GIS.Query.OrtoSheetDuplicateGroups(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_) 'DiGi\.GIS\.Query\.OrtoSheetDuplicateGroups\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>\)') over the whole input, each group contributes its canonical row once, and rows with the same date at a cell form one epoch (its precision the best of theirs, its pixel size the finest). Rows without a date or footprint are ignored.
+
+The first epoch of a cell is left censored and the last is right censored at the probe date; gaps before 1995 measure index coverage, not necessarily the absence of imagery.
+
+The footprints are indexed in an NTS [NetTopologySuite\.Index\.Strtree\.STRtree&lt;&gt;](https://learn.microsoft.com/en-us/dotnet/api/nettopologysuite.index.strtree.strtree-1 'NetTopologySuite\.Index\.Strtree\.STRtree\`1') built inside the call; nothing is cached between calls.
+
+```csharp
+public static DiGi.GIS.Classes.OrtoAvailabilityMatrix? OrtoAvailabilityMatrix(this System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.OrtoSheet?>? ortoSheets, double cellSize=5000.0, double coverageFraction=0.9, System.Nullable<System.DateTimeOffset> probeDate=null);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Create.OrtoAvailabilityMatrix(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,double,double,System.Nullable_System.DateTimeOffset_).ortoSheets'></a>
+
+`ortoSheets` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The index rows; nulls are ignored\.
+
+<a name='DiGi.GIS.Create.OrtoAvailabilityMatrix(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,double,double,System.Nullable_System.DateTimeOffset_).cellSize'></a>
+
+`cellSize` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The grid cell size in metres\.
+
+<a name='DiGi.GIS.Create.OrtoAvailabilityMatrix(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,double,double,System.Nullable_System.DateTimeOffset_).coverageFraction'></a>
+
+`coverageFraction` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The fraction of a cell a footprint must cover, in \(0, 1\]\.
+
+<a name='DiGi.GIS.Create.OrtoAvailabilityMatrix(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,double,double,System.Nullable_System.DateTimeOffset_).probeDate'></a>
+
+`probeDate` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The moment the index was read; null takes the latest [ProbeDate](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.ProbeDate 'DiGi\.GIS\.Classes\.OrtoSheet\.ProbeDate') of the rows\.
+
+#### Returns
+[OrtoAvailabilityMatrix](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailabilityMatrix 'DiGi\.GIS\.Classes\.OrtoAvailabilityMatrix')  
+The matrix, or null when the rows are null, the cell size is not positive or the fraction is outside \(0, 1\]\.
 
 <a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool)'></a>
 
@@ -1997,6 +2154,29 @@ The collection of building objects for which the administrative areals are being
 [System\.Collections\.Generic\.Dictionary&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[DiGi\.Core\.Classes\.GuidReference](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.guidreference 'DiGi\.Core\.Classes\.GuidReference')[,](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[UAdministrativeAreal2D](DiGi.GIS.md#DiGi.GIS.Query.AdministrativeAreal2DsDictionary_UAdministrativeAreal2D_(thisDiGi.GIS.Classes.GISModel,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_).UAdministrativeAreal2D 'DiGi\.GIS\.Query\.AdministrativeAreal2DsDictionary\<UAdministrativeAreal2D\>\(this DiGi\.GIS\.Classes\.GISModel, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.Building2D\>\)\.UAdministrativeAreal2D')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')  
 A dictionary mapping each building's unique reference to a list of its associated administrative areal objects, or null if the model or buildings collection is null or empty\.
 
+<a name='DiGi.GIS.Query.AvailableOrtoYears(thisDiGi.GIS.Classes.OrtoAvailability)'></a>
+
+## Query\.AvailableOrtoYears\(this OrtoAvailability\) Method
+
+Gets the distinct years in which an orthophoto was observed at a location, in ascending order — the evidence\-based alternative to the fixed [Years](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoDatasOptions.Years 'DiGi\.GIS\.Classes\.OrtoDatasOptions\.Years') default range\.
+
+Years come from deduplicated epochs, so a year in which the index only re-registered an earlier image does not appear. The list reflects the index, not what the time-enabled WMS serves; the two can drift.
+
+```csharp
+public static System.Collections.Generic.List<int>? AvailableOrtoYears(this DiGi.GIS.Classes.OrtoAvailability? ortoAvailability);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.AvailableOrtoYears(thisDiGi.GIS.Classes.OrtoAvailability).ortoAvailability'></a>
+
+`ortoAvailability` [OrtoAvailability](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailability 'DiGi\.GIS\.Classes\.OrtoAvailability')
+
+The matrix cell of the location\.
+
+#### Returns
+[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')  
+The years, or null when the cell is null\.
+
 <a name='DiGi.GIS.Query.Azimuth(thisDiGi.GIS.Classes.Building2D,DiGi.Geometry.Planar.Classes.Vector2D,double)'></a>
 
 ## Query\.Azimuth\(this Building2D, Vector2D, double\) Method
@@ -2538,6 +2718,29 @@ The variable used as a reference for searching within the collection\.
 [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')  
 True if the collection contains a record matching the variable's reference; otherwise, false\.
 
+<a name='DiGi.GIS.Query.ContentHash(thisbyte[])'></a>
+
+## Query\.ContentHash\(this byte\[\]\) Method
+
+Computes the SHA\-256 of a byte array as lowercase hexadecimal\.
+
+Used to recognise one served orthophoto image behind several requested times. Hash only a response already classified as an image with content: every uniform blank tile of a given size has the same hash.
+
+```csharp
+public static string? ContentHash(this byte[]? bytes);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.ContentHash(thisbyte[]).bytes'></a>
+
+`bytes` [System\.Byte](https://learn.microsoft.com/en-us/dotnet/api/system.byte 'System\.Byte')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')
+
+The bytes to hash\.
+
+#### Returns
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')  
+The 64\-character hash, or null when the array is null\.
+
 <a name='DiGi.GIS.Query.Coordinates(thisDiGi.Geometry.Planar.Classes.Point2D)'></a>
 
 ## Query\.Coordinates\(this Point2D\) Method
@@ -2974,6 +3177,29 @@ The building object to evaluate\.
 #### Returns
 [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')  
 True if the building meets all occupancy criteria; otherwise, false\.
+
+<a name='DiGi.GIS.Query.IsOrtoImage(thisbyte[])'></a>
+
+## Query\.IsOrtoImage\(this byte\[\]\) Method
+
+Determines whether a WMS response body is an image \(JPEG or PNG\) rather than an OGC service exception document\.
+
+A service exception arrives with HTTP 200, so the status code says nothing. This is the first of the three classification steps (exception, blank, content hash) and reads only the leading signature bytes.
+
+```csharp
+public static bool IsOrtoImage(this byte[]? bytes);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.IsOrtoImage(thisbyte[]).bytes'></a>
+
+`bytes` [System\.Byte](https://learn.microsoft.com/en-us/dotnet/api/system.byte 'System\.Byte')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')
+
+The response body\.
+
+#### Returns
+[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')  
+True for a JPEG or PNG signature; otherwise, false\.
 
 <a name='DiGi.GIS.Query.IsResidential(thisDiGi.GIS.Classes.Building2D)'></a>
 
@@ -3599,6 +3825,416 @@ Whether to force the resulting bounding box to be square\.
 [System\.Collections\.Generic\.Dictionary&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[,](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')  
 A dictionary mapping years to their corresponding orthodata URLs, or null if the building or years are null\.
 
+<a name='DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken)'></a>
+
+## Query\.OrtoImageProbesAsync\(this HttpClient, BoundingBox2D, string, string, IEnumerable\<string\>, int, Func\<byte\[\],bool\>, int, TimeSpan, double, CancellationToken\) Method
+
+Asynchronously probes one tile of a time\-enabled orthophoto WMS at several requested times and classifies every response\.
+
+<b>Order of classification</b> (mandatory): exception ([IsOrtoImage\(this byte\[\]\)](DiGi.GIS.md#DiGi.GIS.Query.IsOrtoImage(thisbyte[]) 'DiGi\.GIS\.Query\.IsOrtoImage\(this byte\[\]\)') false), then blank ([isBlank](DiGi.GIS.md#DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).isBlank 'DiGi\.GIS\.Query\.OrtoImageProbesAsync\(this System\.Net\.Http\.HttpClient, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, string, string, System\.Collections\.Generic\.IEnumerable\<string\>, int, System\.Func\<byte\[\],bool\>, int, System\.TimeSpan, double, System\.Threading\.CancellationToken\)\.isBlank')), then the content hash ([ContentHash\(this byte\[\]\)](DiGi.GIS.md#DiGi.GIS.Query.ContentHash(thisbyte[]) 'DiGi\.GIS\.Query\.ContentHash\(this byte\[\]\)')), recorded for images with content only. Every uniform white tile hashes to the same value, so hashing first would report all blank tiles as one duplicated epoch.
+
+<b>Blanks are flaky.</b> One tile once answered blank and then real content minutes later, so a blank is asked for once more, after [retryDelay](DiGi.GIS.md#DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).retryDelay 'DiGi\.GIS\.Query\.OrtoImageProbesAsync\(this System\.Net\.Http\.HttpClient, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, string, string, System\.Collections\.Generic\.IEnumerable\<string\>, int, System\.Func\<byte\[\],bool\>, int, System\.TimeSpan, double, System\.Threading\.CancellationToken\)\.retryDelay'), before it is recorded as [Blank](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoImageProbeStatus.Blank 'DiGi\.GIS\.Enums\.OrtoImageProbeStatus\.Blank').
+
+<b>Scale guard.</b> A tile coarser than half of [maxScaleDenominator](DiGi.GIS.md#DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).maxScaleDenominator 'DiGi\.GIS\.Query\.OrtoImageProbesAsync\(this System\.Net\.Http\.HttpClient, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, string, string, System\.Collections\.Generic\.IEnumerable\<string\>, int, System\.Func\<byte\[\],bool\>, int, System\.TimeSpan, double, System\.Threading\.CancellationToken\)\.maxScaleDenominator') is refused with [System\.ArgumentOutOfRangeException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentoutofrangeexception 'System\.ArgumentOutOfRangeException') before anything is sent: above the service limit the answer is a uniform white image with HTTP 200, which would read as "no imagery".
+
+Decoding pixels needs an imaging library, which this netstandard2.0 assembly does not reference; [isBlank](DiGi.GIS.md#DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).isBlank 'DiGi\.GIS\.Query\.OrtoImageProbesAsync\(this System\.Net\.Http\.HttpClient, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, string, string, System\.Collections\.Generic\.IEnumerable\<string\>, int, System\.Func\<byte\[\],bool\>, int, System\.TimeSpan, double, System\.Threading\.CancellationToken\)\.isBlank') is supplied by the caller (for example from DiGi.GIS.Emgu.CV). Requests are sent one after another.
+
+```csharp
+public static System.Threading.Tasks.Task<System.Collections.Generic.List<DiGi.GIS.Classes.OrtoImageProbe>?> OrtoImageProbesAsync(this System.Net.Http.HttpClient? httpClient, DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D, string? serviceUrl, string? layer, System.Collections.Generic.IEnumerable<string>? times, int width, System.Func<byte[],bool>? isBlank, int retryCount, System.TimeSpan retryDelay, double maxScaleDenominator=47247.02381, System.Threading.CancellationToken cancellationToken=default(System.Threading.CancellationToken));
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).httpClient'></a>
+
+`httpClient` [System\.Net\.Http\.HttpClient](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient 'System\.Net\.Http\.HttpClient')
+
+The HTTP client used to send the requests\.
+
+<a name='DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).boundingBox2D'></a>
+
+`boundingBox2D` [DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
+
+The tile in EPSG:2180, easting in X\.
+
+<a name='DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).serviceUrl'></a>
+
+`serviceUrl` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The WMS endpoint\.
+
+<a name='DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).layer'></a>
+
+`layer` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The layer of that endpoint\.
+
+<a name='DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).times'></a>
+
+`times` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The `TIME` values to probe\.
+
+<a name='DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).width'></a>
+
+`width` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The width of the image in pixels; the height follows the aspect ratio of the tile\.
+
+<a name='DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).isBlank'></a>
+
+`isBlank` [System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Byte](https://learn.microsoft.com/en-us/dotnet/api/system.byte 'System\.Byte')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')
+
+Decides whether an image is of one uniform colour\.
+
+<a name='DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).retryCount'></a>
+
+`retryCount` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The number of times a transient failure is retried\.
+
+<a name='DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).retryDelay'></a>
+
+`retryDelay` [System\.TimeSpan](https://learn.microsoft.com/en-us/dotnet/api/system.timespan 'System\.TimeSpan')
+
+The delay before the first retry, and before a blank is asked for again\.
+
+<a name='DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).maxScaleDenominator'></a>
+
+`maxScaleDenominator` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The `MaxScaleDenominator` of the service; tiles must stay at or below half of it\.
+
+<a name='DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).cancellationToken'></a>
+
+`cancellationToken` [System\.Threading\.CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken 'System\.Threading\.CancellationToken')
+
+The token to monitor for cancellation requests\.
+
+#### Returns
+[System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[OrtoImageProbe](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoImageProbe 'DiGi\.GIS\.Classes\.OrtoImageProbe')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
+One probe per requested time, in the order given, or null when an argument is missing\.
+
+#### Exceptions
+
+[System\.ArgumentOutOfRangeException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentoutofrangeexception 'System\.ArgumentOutOfRangeException')  
+The tile is coarser than half of [maxScaleDenominator](DiGi.GIS.md#DiGi.GIS.Query.OrtoImageProbesAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,System.Collections.Generic.IEnumerable_string_,int,System.Func_byte[],bool_,int,System.TimeSpan,double,System.Threading.CancellationToken).maxScaleDenominator 'DiGi\.GIS\.Query\.OrtoImageProbesAsync\(this System\.Net\.Http\.HttpClient, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, string, string, System\.Collections\.Generic\.IEnumerable\<string\>, int, System\.Func\<byte\[\],bool\>, int, System\.TimeSpan, double, System\.Threading\.CancellationToken\)\.maxScaleDenominator')\.
+
+<a name='DiGi.GIS.Query.OrtoImageScaleDenominator(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,int)'></a>
+
+## Query\.OrtoImageScaleDenominator\(this BoundingBox2D, int\) Method
+
+Computes the OGC scale denominator of a WMS tile: its ground resolution divided by the standard rendering pixel size \([StandardRenderingPixelSize](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.StandardRenderingPixelSize 'DiGi\.GIS\.Constants\.WebService\.StandardRenderingPixelSize')\)\.
+
+Above [OrtoMaxScaleDenominator](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.OrtoMaxScaleDenominator 'DiGi\.GIS\.Constants\.WebService\.OrtoMaxScaleDenominator') the orthophoto services answer a uniform white image with HTTP 200 and no exception, which reads as "no imagery here". A 4 km tile at 200 px (scale about 71 400) does exactly that.
+
+```csharp
+public static System.Nullable<double> OrtoImageScaleDenominator(this DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D, int width);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.OrtoImageScaleDenominator(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,int).boundingBox2D'></a>
+
+`boundingBox2D` [DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
+
+The tile in EPSG:2180, easting in X\.
+
+<a name='DiGi.GIS.Query.OrtoImageScaleDenominator(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,int).width'></a>
+
+`width` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The width of the image in pixels\.
+
+#### Returns
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')  
+The scale denominator, or null when the box is missing or the width is not positive\.
+
+<a name='DiGi.GIS.Query.OrtoLocationKey(thisDiGi.Geometry.Planar.Classes.BoundingBox2D)'></a>
+
+## Query\.OrtoLocationKey\(this BoundingBox2D\) Method
+
+Gets the culture\-invariant key of a location: the minimum corner of its box in EPSG:2180 metres, easting first, as `easting_northing`\.
+
+Rendered with [System\.Globalization\.CultureInfo\.InvariantCulture](https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.invariantculture 'System\.Globalization\.CultureInfo\.InvariantCulture') and the round-trip format, with negative zero folded to zero, so the key a matrix is written under on one machine is the key it is looked up under on any other.
+
+```csharp
+public static string? OrtoLocationKey(this DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.OrtoLocationKey(thisDiGi.Geometry.Planar.Classes.BoundingBox2D).boundingBox2D'></a>
+
+`boundingBox2D` [DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
+
+The location in EPSG:2180, easting in X\.
+
+#### Returns
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')  
+The key, or null when the box is missing\.
+
+<a name='DiGi.GIS.Query.OrtoObstacles(thisDiGi.GIS.Classes.OrtoSheet,System.Nullable_DiGi.GIS.Enums.OrtoObstacle_)'></a>
+
+## Query\.OrtoObstacles\(this OrtoSheet, Nullable\<OrtoObstacle\>\) Method
+
+Gets the obstacles known for an orthophoto sheet: those its index record implies, combined with any measured on a probed image\.
+
+From the record: [SheetIncomplete](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle.SheetIncomplete 'DiGi\.GIS\.Enums\.OrtoObstacle\.SheetIncomplete') (not completely filled), [DateYearPrecision](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle.DateYearPrecision 'DiGi\.GIS\.Enums\.OrtoObstacle\.DateYearPrecision') (year-only date) and [TrueOrthoUnknown](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle.TrueOrthoUnknown 'DiGi\.GIS\.Enums\.OrtoObstacle\.TrueOrthoUnknown') (type not determined). [Unprobed](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle.Unprobed 'DiGi\.GIS\.Enums\.OrtoObstacle\.Unprobed') is set when [measuredOrtoObstacle](DiGi.GIS.md#DiGi.GIS.Query.OrtoObstacles(thisDiGi.GIS.Classes.OrtoSheet,System.Nullable_DiGi.GIS.Enums.OrtoObstacle_).measuredOrtoObstacle 'DiGi\.GIS\.Query\.OrtoObstacles\(this DiGi\.GIS\.Classes\.OrtoSheet, System\.Nullable\<DiGi\.GIS\.Enums\.OrtoObstacle\>\)\.measuredOrtoObstacle') is null.
+
+```csharp
+public static DiGi.GIS.Enums.OrtoObstacle OrtoObstacles(this DiGi.GIS.Classes.OrtoSheet? ortoSheet, System.Nullable<DiGi.GIS.Enums.OrtoObstacle> measuredOrtoObstacle=null);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.OrtoObstacles(thisDiGi.GIS.Classes.OrtoSheet,System.Nullable_DiGi.GIS.Enums.OrtoObstacle_).ortoSheet'></a>
+
+`ortoSheet` [OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')
+
+The sheet\.
+
+<a name='DiGi.GIS.Query.OrtoObstacles(thisDiGi.GIS.Classes.OrtoSheet,System.Nullable_DiGi.GIS.Enums.OrtoObstacle_).measuredOrtoObstacle'></a>
+
+`measuredOrtoObstacle` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[OrtoObstacle](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle 'DiGi\.GIS\.Enums\.OrtoObstacle')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The obstacles measured on a probed image of the sheet, or null when it was not probed\.
+
+#### Returns
+[OrtoObstacle](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle 'DiGi\.GIS\.Enums\.OrtoObstacle')  
+The combined obstacles, or [None](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle.None 'DiGi\.GIS\.Enums\.OrtoObstacle\.None') when the sheet is null\.
+
+<a name='DiGi.GIS.Query.OrtoSheetBBox(thisDiGi.Geometry.Planar.Classes.BoundingBox2D)'></a>
+
+## Query\.OrtoSheetBBox\(this BoundingBox2D\) Method
+
+Formats a box as the `BBOX` value of an orthophoto index WFS request: `minEasting,minNorthing,maxEasting,maxNorthing`, culture\-invariant, without a CRS suffix\.
+
+Verified 2026-11-03: without a suffix the service reads easting first; with `,EPSG:2180` it reads northing first, and a box in the wrong order matches nothing without any error.
+
+```csharp
+public static string? OrtoSheetBBox(this DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.OrtoSheetBBox(thisDiGi.Geometry.Planar.Classes.BoundingBox2D).boundingBox2D'></a>
+
+`boundingBox2D` [DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
+
+The box in EPSG:2180, easting in X\.
+
+#### Returns
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')  
+The formatted value, or null when the box is missing\.
+
+<a name='DiGi.GIS.Query.OrtoSheetCountAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,System.TimeSpan,System.Threading.CancellationToken)'></a>
+
+## Query\.OrtoSheetCountAsync\(this HttpClient, string, BoundingBox2D, int, TimeSpan, CancellationToken\) Method
+
+Asynchronously asks the orthophoto index WFS how many features a yearly typename holds \(`RESULTTYPE=hits`, attribute `numberOfFeatures`\)\.
+
+Use it to verify a pull: [OrtoSheetsAsync\(this HttpClient, string, BoundingBox2D, int, int, TimeSpan, Nullable&lt;DateTimeOffset&gt;, CancellationToken\)](DiGi.GIS.md#DiGi.GIS.Query.OrtoSheetsAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken) 'DiGi\.GIS\.Query\.OrtoSheetsAsync\(this System\.Net\.Http\.HttpClient, string, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, int, int, System\.TimeSpan, System\.Nullable\<System\.DateTimeOffset\>, System\.Threading\.CancellationToken\)') returning fewer sheets than this means features were lost.
+
+```csharp
+public static System.Threading.Tasks.Task<System.Nullable<int>> OrtoSheetCountAsync(this System.Net.Http.HttpClient? httpClient, string? typeName, DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D, int retryCount, System.TimeSpan retryDelay, System.Threading.CancellationToken cancellationToken=default(System.Threading.CancellationToken));
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.OrtoSheetCountAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,System.TimeSpan,System.Threading.CancellationToken).httpClient'></a>
+
+`httpClient` [System\.Net\.Http\.HttpClient](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient 'System\.Net\.Http\.HttpClient')
+
+The HTTP client used to send the request\.
+
+<a name='DiGi.GIS.Query.OrtoSheetCountAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,System.TimeSpan,System.Threading.CancellationToken).typeName'></a>
+
+`typeName` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The yearly typename \([OrtoSheetTypeName\(int\)](DiGi.GIS.md#DiGi.GIS.Query.OrtoSheetTypeName(int) 'DiGi\.GIS\.Query\.OrtoSheetTypeName\(int\)')\)\.
+
+<a name='DiGi.GIS.Query.OrtoSheetCountAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,System.TimeSpan,System.Threading.CancellationToken).boundingBox2D'></a>
+
+`boundingBox2D` [DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
+
+An optional filter box in EPSG:2180, easting in X\.
+
+<a name='DiGi.GIS.Query.OrtoSheetCountAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,System.TimeSpan,System.Threading.CancellationToken).retryCount'></a>
+
+`retryCount` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The number of times a transient failure is retried\.
+
+<a name='DiGi.GIS.Query.OrtoSheetCountAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,System.TimeSpan,System.Threading.CancellationToken).retryDelay'></a>
+
+`retryDelay` [System\.TimeSpan](https://learn.microsoft.com/en-us/dotnet/api/system.timespan 'System\.TimeSpan')
+
+The delay before the first retry, doubling for each attempt after that\.
+
+<a name='DiGi.GIS.Query.OrtoSheetCountAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,System.TimeSpan,System.Threading.CancellationToken).cancellationToken'></a>
+
+`cancellationToken` [System\.Threading\.CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken 'System\.Threading\.CancellationToken')
+
+The token to monitor for cancellation requests\.
+
+#### Returns
+[System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
+The feature count, or null when the request fails or the answer carries no count \(a service exception, for example\)\.
+
+<a name='DiGi.GIS.Query.OrtoSheetDuplicateGroups(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_)'></a>
+
+## Query\.OrtoSheetDuplicateGroups\(this IEnumerable\<OrtoSheet\>\) Method
+
+Groups orthophoto index rows that register the same image, within a typename and across typenames\.
+
+Two rows are the same image when either holds (the groups are the union of both):
+
+A — they share a [DownloadUrl](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.DownloadUrl 'DiGi\.GIS\.Classes\.OrtoSheet\.DownloadUrl') (one physical file).
+
+B — they share [SheetId](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.SheetId 'DiGi\.GIS\.Classes\.OrtoSheet\.SheetId'), [Date](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.Date 'DiGi\.GIS\.Classes\.OrtoSheet\.Date') and [PixelSize](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.PixelSize 'DiGi\.GIS\.Classes\.OrtoSheet\.PixelSize'). Each registration of an image gets a fresh file, so rule A alone misses re-registrations: sheet `N-34-138-B-d-1-4` appears twice in 2024 with different files, both dated 2024-07-18 at 0.25 m.
+
+Neither rule merges by sheet identifier alone: the same sheet in 2025 with a different file, date (2025-04-27) and resolution (0.05 m) is a genuine re-acquisition.
+
+Every row is returned in exactly one group, singletons included. Within a group the canonical row comes first: the earliest [Year](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.Year 'DiGi\.GIS\.Classes\.OrtoSheet\.Year'), then the earliest [RegisterDate](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.RegisterDate 'DiGi\.GIS\.Classes\.OrtoSheet\.RegisterDate').
+
+```csharp
+public static System.Collections.Generic.List<System.Collections.Generic.List<DiGi.GIS.Classes.OrtoSheet>>? OrtoSheetDuplicateGroups(this System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.OrtoSheet?>? ortoSheets);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.OrtoSheetDuplicateGroups(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).ortoSheets'></a>
+
+`ortoSheets` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The rows to group; nulls are ignored\.
+
+#### Returns
+[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')  
+The groups, ordered by their canonical rows, or null when the input is null\.
+
+<a name='DiGi.GIS.Query.OrtoSheetsAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken)'></a>
+
+## Query\.OrtoSheetsAsync\(this HttpClient, string, BoundingBox2D, int, int, TimeSpan, Nullable\<DateTimeOffset\>, CancellationToken\) Method
+
+Asynchronously reads every sheet of one yearly orthophoto index typename, page by page\.
+
+Pages are requested one after another (never in parallel) with `STARTINDEX` advancing by [pageSize](DiGi.GIS.md#DiGi.GIS.Query.OrtoSheetsAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken).pageSize 'DiGi\.GIS\.Query\.OrtoSheetsAsync\(this System\.Net\.Http\.HttpClient, string, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, int, int, System\.TimeSpan, System\.Nullable\<System\.DateTimeOffset\>, System\.Threading\.CancellationToken\)\.pageSize'), until a page carries fewer features than that. A feature that does not convert is skipped (compare with [OrtoSheetCountAsync\(this HttpClient, string, BoundingBox2D, int, TimeSpan, CancellationToken\)](DiGi.GIS.md#DiGi.GIS.Query.OrtoSheetCountAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,System.TimeSpan,System.Threading.CancellationToken) 'DiGi\.GIS\.Query\.OrtoSheetCountAsync\(this System\.Net\.Http\.HttpClient, string, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, int, System\.TimeSpan, System\.Threading\.CancellationToken\)')) but still counts towards its page.
+
+Nothing is truncated silently. A page that still fails after the retries, or answers something other than a feature collection (a service exception arrives with HTTP 200), makes the whole call return null rather than the pages read so far. A page that starts with the same feature as the page before means the service ignored `STARTINDEX`, and throws [System\.InvalidOperationException](https://learn.microsoft.com/en-us/dotnet/api/system.invalidoperationexception 'System\.InvalidOperationException'), because carrying on would repeat the first page indefinitely.
+
+```csharp
+public static System.Threading.Tasks.Task<System.Collections.Generic.List<DiGi.GIS.Classes.OrtoSheet>?> OrtoSheetsAsync(this System.Net.Http.HttpClient? httpClient, string? typeName, DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D, int pageSize, int retryCount, System.TimeSpan retryDelay, System.Nullable<System.DateTimeOffset> probeDate=null, System.Threading.CancellationToken cancellationToken=default(System.Threading.CancellationToken));
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.OrtoSheetsAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken).httpClient'></a>
+
+`httpClient` [System\.Net\.Http\.HttpClient](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient 'System\.Net\.Http\.HttpClient')
+
+The HTTP client used to send the requests\.
+
+<a name='DiGi.GIS.Query.OrtoSheetsAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken).typeName'></a>
+
+`typeName` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The yearly typename \([OrtoSheetTypeName\(int\)](DiGi.GIS.md#DiGi.GIS.Query.OrtoSheetTypeName(int) 'DiGi\.GIS\.Query\.OrtoSheetTypeName\(int\)')\)\.
+
+<a name='DiGi.GIS.Query.OrtoSheetsAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken).boundingBox2D'></a>
+
+`boundingBox2D` [DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
+
+An optional filter box in EPSG:2180, easting in X\.
+
+<a name='DiGi.GIS.Query.OrtoSheetsAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken).pageSize'></a>
+
+`pageSize` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The number of features per page \([OrtoSheetPageSize](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.OrtoSheetPageSize 'DiGi\.GIS\.Constants\.WebService\.OrtoSheetPageSize')\)\.
+
+<a name='DiGi.GIS.Query.OrtoSheetsAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken).retryCount'></a>
+
+`retryCount` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The number of times a transient failure of a page is retried\.
+
+<a name='DiGi.GIS.Query.OrtoSheetsAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken).retryDelay'></a>
+
+`retryDelay` [System\.TimeSpan](https://learn.microsoft.com/en-us/dotnet/api/system.timespan 'System\.TimeSpan')
+
+The delay before the first retry, doubling for each attempt after that\.
+
+<a name='DiGi.GIS.Query.OrtoSheetsAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken).probeDate'></a>
+
+`probeDate` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The moment recorded on every sheet as the time the index was read; null records the current time\.
+
+<a name='DiGi.GIS.Query.OrtoSheetsAsync(thisSystem.Net.Http.HttpClient,string,DiGi.Geometry.Planar.Classes.BoundingBox2D,int,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken).cancellationToken'></a>
+
+`cancellationToken` [System\.Threading\.CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken 'System\.Threading\.CancellationToken')
+
+The token to monitor for cancellation requests\.
+
+#### Returns
+[System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
+The sheets in service order, or null when the arguments are invalid or a page could not be read\.
+
+#### Exceptions
+
+[System\.InvalidOperationException](https://learn.microsoft.com/en-us/dotnet/api/system.invalidoperationexception 'System\.InvalidOperationException')  
+The service answered the same page twice\.
+
+<a name='DiGi.GIS.Query.OrtoSheetTypeName(int)'></a>
+
+## Query\.OrtoSheetTypeName\(int\) Method
+
+Gets the typename of the per\-sheet orthophoto index layer for a year \(`gugik:SkorowidzOrtofomapy2005`\)\.
+
+The index publishes 49 yearly typenames: 1957, 1958, 1961, 1965, 1967, 1969, 1971 to 1973, 1976, 1979, 1980, 1982, 1984, 1987, 1990, 1992 and every year from 1995. A year outside that list answers a service exception, not an empty collection.
+
+```csharp
+public static string OrtoSheetTypeName(int year);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.OrtoSheetTypeName(int).year'></a>
+
+`year` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The year\.
+
+#### Returns
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')  
+The typename\.
+
+<a name='DiGi.GIS.Query.OrtoSheetUsability(thisDiGi.GIS.Classes.OrtoSheet,System.Nullable_double_)'></a>
+
+## Query\.OrtoSheetUsability\(this OrtoSheet, Nullable\<double\>\) Method
+
+Scores how well an orthophoto sheet suits building recognition, on \[0, 1\], under rubric version [Version](DiGi.GIS.Constants.md#DiGi.GIS.Constants.OrtoUsability.Version 'DiGi\.GIS\.Constants\.OrtoUsability\.Version')\.
+
+The score is a weighted sum of five factors (weights and values in [OrtoUsability](DiGi.GIS.Constants.md#DiGi.GIS.Constants.OrtoUsability 'DiGi\.GIS\.Constants\.OrtoUsability')): resolution ([PixelSize](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.PixelSize 'DiGi\.GIS\.Classes\.OrtoSheet\.PixelSize'), linear between knots), orthophoto type, colour mode, source (analog or digital) and clarity.
+
+Clarity is one minus [obstacleFraction](DiGi.GIS.md#DiGi.GIS.Query.OrtoSheetUsability(thisDiGi.GIS.Classes.OrtoSheet,System.Nullable_double_).obstacleFraction 'DiGi\.GIS\.Query\.OrtoSheetUsability\(this DiGi\.GIS\.Classes\.OrtoSheet, System\.Nullable\<double\>\)\.obstacleFraction') when the sheet was probed. Without a probe it falls back to month priors — a leaf-on month (April to October) or a snow-risk month (December to February) costs a fixed amount — which are assumptions, not measurements; [OrtoObstacles\(this OrtoSheet, Nullable&lt;OrtoObstacle&gt;\)](DiGi.GIS.md#DiGi.GIS.Query.OrtoObstacles(thisDiGi.GIS.Classes.OrtoSheet,System.Nullable_DiGi.GIS.Enums.OrtoObstacle_) 'DiGi\.GIS\.Query\.OrtoObstacles\(this DiGi\.GIS\.Classes\.OrtoSheet, System\.Nullable\<DiGi\.GIS\.Enums\.OrtoObstacle\>\)') then reports [Unprobed](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle.Unprobed 'DiGi\.GIS\.Enums\.OrtoObstacle\.Unprobed').
+
+A sheet the index marks as not completely filled is capped at [SheetIncompleteCap](DiGi.GIS.Constants.md#DiGi.GIS.Constants.OrtoUsability.SheetIncompleteCap 'DiGi\.GIS\.Constants\.OrtoUsability\.SheetIncompleteCap'). A year-precision date does not change the score. The scores are for relative sample selection, not radiometric claims.
+
+```csharp
+public static System.Nullable<double> OrtoSheetUsability(this DiGi.GIS.Classes.OrtoSheet? ortoSheet, System.Nullable<double> obstacleFraction=null);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.OrtoSheetUsability(thisDiGi.GIS.Classes.OrtoSheet,System.Nullable_double_).ortoSheet'></a>
+
+`ortoSheet` [OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')
+
+The sheet to score\.
+
+<a name='DiGi.GIS.Query.OrtoSheetUsability(thisDiGi.GIS.Classes.OrtoSheet,System.Nullable_double_).obstacleFraction'></a>
+
+`obstacleFraction` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The measured fraction of the probed image lost to shadow, snow, haze or cloud, or null when the sheet was not probed\.
+
+#### Returns
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')  
+The score, or null when the sheet is null\.
+
 <a name='DiGi.GIS.Query.Reference(thisDiGi.BDOT10k.Classes.OT_ADJA_A)'></a>
 
 ## Query\.Reference\(this OT\_ADJA\_A\) Method
@@ -3724,6 +4360,55 @@ The polygon object to retrieve the reference from\.
 #### Returns
 [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')  
 A string containing the reference identifier, or null if no valid reference could be determined\.
+
+<a name='DiGi.GIS.Query.ResponseBytesAsync(thisSystem.Net.Http.HttpClient,string,int,System.TimeSpan,System.Threading.CancellationToken)'></a>
+
+## Query\.ResponseBytesAsync\(this HttpClient, string, int, TimeSpan, CancellationToken\) Method
+
+Asynchronously fetches the body of a GET request, retrying transient failures\.
+
+A non-success status is retried only when [IsTransient\(this HttpStatusCode\)](DiGi.GIS.md#DiGi.GIS.Query.IsTransient(thisSystem.Net.HttpStatusCode) 'DiGi\.GIS\.Query\.IsTransient\(this System\.Net\.HttpStatusCode\)') says so; a transport failure or the client's own timeout is retried as well. The delay doubles after each attempt, and a `Retry-After` the server sends takes its place for the attempt that follows. Same policy as [ElevationAsync\(this HttpClient, Point2D, int, TimeSpan, CancellationToken\)](DiGi.GIS.md#DiGi.GIS.Query.ElevationAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.Point2D,int,System.TimeSpan,System.Threading.CancellationToken) 'DiGi\.GIS\.Query\.ElevationAsync\(this System\.Net\.Http\.HttpClient, DiGi\.Geometry\.Planar\.Classes\.Point2D, int, System\.TimeSpan, System\.Threading\.CancellationToken\)'), except that HTTP 500 is not retried.
+
+The body is returned whatever it contains: the GUGiK services answer service exceptions with HTTP 200, so classifying the content is the caller's job.
+
+```csharp
+public static System.Threading.Tasks.Task<byte[]?> ResponseBytesAsync(this System.Net.Http.HttpClient? httpClient, string? url, int retryCount, System.TimeSpan retryDelay, System.Threading.CancellationToken cancellationToken=default(System.Threading.CancellationToken));
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.ResponseBytesAsync(thisSystem.Net.Http.HttpClient,string,int,System.TimeSpan,System.Threading.CancellationToken).httpClient'></a>
+
+`httpClient` [System\.Net\.Http\.HttpClient](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient 'System\.Net\.Http\.HttpClient')
+
+The HTTP client used to send the request\.
+
+<a name='DiGi.GIS.Query.ResponseBytesAsync(thisSystem.Net.Http.HttpClient,string,int,System.TimeSpan,System.Threading.CancellationToken).url'></a>
+
+`url` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The request URL\.
+
+<a name='DiGi.GIS.Query.ResponseBytesAsync(thisSystem.Net.Http.HttpClient,string,int,System.TimeSpan,System.Threading.CancellationToken).retryCount'></a>
+
+`retryCount` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The number of times a transient failure is retried; zero sends the request once\.
+
+<a name='DiGi.GIS.Query.ResponseBytesAsync(thisSystem.Net.Http.HttpClient,string,int,System.TimeSpan,System.Threading.CancellationToken).retryDelay'></a>
+
+`retryDelay` [System\.TimeSpan](https://learn.microsoft.com/en-us/dotnet/api/system.timespan 'System\.TimeSpan')
+
+The delay before the first retry, doubling for each attempt after that\.
+
+<a name='DiGi.GIS.Query.ResponseBytesAsync(thisSystem.Net.Http.HttpClient,string,int,System.TimeSpan,System.Threading.CancellationToken).cancellationToken'></a>
+
+`cancellationToken` [System\.Threading\.CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken 'System\.Threading\.CancellationToken')
+
+The token to monitor for cancellation requests\.
+
+#### Returns
+[System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Byte](https://learn.microsoft.com/en-us/dotnet/api/system.byte 'System\.Byte')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
+The response body, or null when the arguments are missing or the request still fails after the retries\.
 
 <a name='DiGi.GIS.Query.SettlementType(thisDiGi.GIS.Classes.AdministrativeSubdivision)'></a>
 
@@ -4000,6 +4685,133 @@ The height of the requested image in pixels\.
 #### Returns
 [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')  
 A string containing the constructed URL, or null if the bounding box is null\.
+
+<a name='DiGi.GIS.Query.Url_OrtoImage(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,int,int)'></a>
+
+## Query\.Url\_OrtoImage\(this BoundingBox2D, string, string, string, int, int\) Method
+
+Generates a WMS `GetMap` URL for one tile of a time\-enabled orthophoto service\.
+
+Pinned to `VERSION=1.1.0` with an easting-first `BBOX`, the form [Url\_OrtoData\(this BoundingBox2D, int, int, int\)](DiGi.GIS.md#DiGi.GIS.Query.Url_OrtoData(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,int,int,int) 'DiGi\.GIS\.Query\.Url\_OrtoData\(this DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, int, int, int\)') already uses. WMS 1.3.0 reads EPSG:2180 northing first; do not switch versions without re-probing.
+
+The URL is built whatever the scale. Whether the tile is fine enough for the service to answer with imagery is for [OrtoImageScaleDenominator\(this BoundingBox2D, int\)](DiGi.GIS.md#DiGi.GIS.Query.OrtoImageScaleDenominator(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,int) 'DiGi\.GIS\.Query\.OrtoImageScaleDenominator\(this DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, int\)') to check.
+
+```csharp
+public static string? Url_OrtoImage(this DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D, string? serviceUrl, string? layer, string? time, int width, int height);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.Url_OrtoImage(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,int,int).boundingBox2D'></a>
+
+`boundingBox2D` [DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
+
+The tile in EPSG:2180, easting in X\.
+
+<a name='DiGi.GIS.Query.Url_OrtoImage(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,int,int).serviceUrl'></a>
+
+`serviceUrl` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The WMS endpoint \([StandardResolutionTime](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.StandardResolutionTime 'DiGi\.GIS\.Constants\.WebService\.StandardResolutionTime') or [HighResolutionTime](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.HighResolutionTime 'DiGi\.GIS\.Constants\.WebService\.HighResolutionTime')\)\.
+
+<a name='DiGi.GIS.Query.Url_OrtoImage(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,int,int).layer'></a>
+
+`layer` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The layer, which differs per service \([StandardResolutionTimeLayer](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.StandardResolutionTimeLayer 'DiGi\.GIS\.Constants\.WebService\.StandardResolutionTimeLayer'), [HighResolutionTimeLayer](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.HighResolutionTimeLayer 'DiGi\.GIS\.Constants\.WebService\.HighResolutionTimeLayer')\)\.
+
+<a name='DiGi.GIS.Query.Url_OrtoImage(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,int,int).time'></a>
+
+`time` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The `TIME` value: a year, a month \(`yyyy-MM`\) or a day \(`yyyy-MM-dd`\)\.
+
+<a name='DiGi.GIS.Query.Url_OrtoImage(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,int,int).width'></a>
+
+`width` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The width of the image in pixels\.
+
+<a name='DiGi.GIS.Query.Url_OrtoImage(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,int,int).height'></a>
+
+`height` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The height of the image in pixels\.
+
+#### Returns
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')  
+The URL, or null when an argument is missing or a size is not positive\.
+
+<a name='DiGi.GIS.Query.Url_OrtoSheetCount(string,DiGi.Geometry.Planar.Classes.BoundingBox2D)'></a>
+
+## Query\.Url\_OrtoSheetCount\(string, BoundingBox2D\) Method
+
+Generates a WFS `GetFeature` URL with `RESULTTYPE=hits`, which answers only the number of features of a yearly orthophoto index typename \(attribute `numberOfFeatures`\)\.
+
+The `BBOX` uses the same form as [Url\_OrtoSheets\(string, int, int, BoundingBox2D\)](DiGi.GIS.md#DiGi.GIS.Query.Url_OrtoSheets(string,int,int,DiGi.Geometry.Planar.Classes.BoundingBox2D) 'DiGi\.GIS\.Query\.Url\_OrtoSheets\(string, int, int, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D\)') ([OrtoSheetBBox\(this BoundingBox2D\)](DiGi.GIS.md#DiGi.GIS.Query.OrtoSheetBBox(thisDiGi.Geometry.Planar.Classes.BoundingBox2D) 'DiGi\.GIS\.Query\.OrtoSheetBBox\(this DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D\)')).
+
+```csharp
+public static string? Url_OrtoSheetCount(string? typeName, DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D=null);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.Url_OrtoSheetCount(string,DiGi.Geometry.Planar.Classes.BoundingBox2D).typeName'></a>
+
+`typeName` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The yearly typename \([OrtoSheetTypeName\(int\)](DiGi.GIS.md#DiGi.GIS.Query.OrtoSheetTypeName(int) 'DiGi\.GIS\.Query\.OrtoSheetTypeName\(int\)')\)\.
+
+<a name='DiGi.GIS.Query.Url_OrtoSheetCount(string,DiGi.Geometry.Planar.Classes.BoundingBox2D).boundingBox2D'></a>
+
+`boundingBox2D` [DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
+
+An optional filter box in EPSG:2180, easting in X\.
+
+#### Returns
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')  
+The URL, or null when the typename is empty\.
+
+<a name='DiGi.GIS.Query.Url_OrtoSheets(string,int,int,DiGi.Geometry.Planar.Classes.BoundingBox2D)'></a>
+
+## Query\.Url\_OrtoSheets\(string, int, int, BoundingBox2D\) Method
+
+Generates a WFS `GetFeature` URL for one page of a yearly orthophoto index typename\.
+
+`VERSION=1.1.0` is mandatory: without it the service answers `MissingParameterValue`. Paging uses `MAXFEATURES` and `STARTINDEX`, both honoured by the service.
+
+The `BBOX` is written easting first and without a CRS suffix, which is how the service reads it. Appending `,EPSG:2180` flips the expected order to northing first (the official axis order of EPSG:2180, the same order the response `posList` uses), and an easting-first box then silently matches nothing.
+
+```csharp
+public static string? Url_OrtoSheets(string? typeName, int startIndex, int count, DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D=null);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.Url_OrtoSheets(string,int,int,DiGi.Geometry.Planar.Classes.BoundingBox2D).typeName'></a>
+
+`typeName` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The yearly typename \([OrtoSheetTypeName\(int\)](DiGi.GIS.md#DiGi.GIS.Query.OrtoSheetTypeName(int) 'DiGi\.GIS\.Query\.OrtoSheetTypeName\(int\)')\)\.
+
+<a name='DiGi.GIS.Query.Url_OrtoSheets(string,int,int,DiGi.Geometry.Planar.Classes.BoundingBox2D).startIndex'></a>
+
+`startIndex` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The zero\-based index of the first feature of the page\.
+
+<a name='DiGi.GIS.Query.Url_OrtoSheets(string,int,int,DiGi.Geometry.Planar.Classes.BoundingBox2D).count'></a>
+
+`count` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The number of features of the page\.
+
+<a name='DiGi.GIS.Query.Url_OrtoSheets(string,int,int,DiGi.Geometry.Planar.Classes.BoundingBox2D).boundingBox2D'></a>
+
+`boundingBox2D` [DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
+
+An optional filter box in EPSG:2180, easting in X\.
+
+#### Returns
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')  
+The URL, or null when the typename is empty, the start index is negative or the count is not positive\.
 
 <a name='DiGi.GIS.Query.UserYearBuilt(string,DiGi.GIS.Classes.Building2D)'></a>
 

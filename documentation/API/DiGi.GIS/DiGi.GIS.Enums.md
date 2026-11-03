@@ -1517,6 +1517,207 @@ Represents an urban\-rural municipality rural area\.
 
 Represents a Warsaw district\.
 
+<a name='DiGi.GIS.Enums.OrtoColorMode'></a>
+
+## OrtoColorMode Enum
+
+The colour mode of an orthophoto sheet \(index field `kolor`\)\.
+
+```csharp
+public enum OrtoColorMode
+```
+### Fields
+
+<a name='DiGi.GIS.Enums.OrtoColorMode.Undefined'></a>
+
+`Undefined` -1
+
+The colour mode is missing or not recognised\.
+
+<a name='DiGi.GIS.Enums.OrtoColorMode.BlackAndWhite'></a>
+
+`BlackAndWhite` 0
+
+Black and white \(`B/W`\)\.
+
+<a name='DiGi.GIS.Enums.OrtoColorMode.RGB'></a>
+
+`RGB` 1
+
+True colour \(`RGB`\)\.
+
+<a name='DiGi.GIS.Enums.OrtoColorMode.CIR'></a>
+
+`CIR` 2
+
+Colour infrared \(`CIR`\)\.
+
+<a name='DiGi.GIS.Enums.OrtoDatePrecision'></a>
+
+## OrtoDatePrecision Enum
+
+The precision of an orthophoto acquisition date recorded in the sheet index\.
+
+```csharp
+public enum OrtoDatePrecision
+```
+### Fields
+
+<a name='DiGi.GIS.Enums.OrtoDatePrecision.Undefined'></a>
+
+`Undefined` -1
+
+No date is known\.
+
+<a name='DiGi.GIS.Enums.OrtoDatePrecision.Day'></a>
+
+`Day` 0
+
+The date is the real acquisition day\.
+
+<a name='DiGi.GIS.Enums.OrtoDatePrecision.Month'></a>
+
+`Month` 1
+
+Only the acquisition month is known; the day is a placeholder\.
+
+<a name='DiGi.GIS.Enums.OrtoDatePrecision.Year'></a>
+
+`Year` 2
+
+Only the acquisition year is known; the analog\-era index stores a YYYY\-01\-01 placeholder\.
+
+<a name='DiGi.GIS.Enums.OrtoImageProbeStatus'></a>
+
+## OrtoImageProbeStatus Enum
+
+The classification of one WMS `GetMap` response\.
+
+The order of the checks matters: exception first, blank second, content hash last. Every uniform white tile hashes to the same value, so hashing before the blank check reports all blank tiles in Poland as one duplicated epoch.
+
+```csharp
+public enum OrtoImageProbeStatus
+```
+### Fields
+
+<a name='DiGi.GIS.Enums.OrtoImageProbeStatus.Undefined'></a>
+
+`Undefined` -1
+
+The request was not answered \(transport failure or a non\-success status after retries\)\.
+
+<a name='DiGi.GIS.Enums.OrtoImageProbeStatus.Image'></a>
+
+`Image` 0
+
+The response is an image with content\.
+
+<a name='DiGi.GIS.Enums.OrtoImageProbeStatus.Blank'></a>
+
+`Blank` 1
+
+The response is an image of one uniform colour: no data at that place and time, or a scale above the service limit\.
+
+<a name='DiGi.GIS.Enums.OrtoImageProbeStatus.Exception'></a>
+
+`Exception` 2
+
+The response is an OGC service exception document rather than an image\.
+
+<a name='DiGi.GIS.Enums.OrtoObstacle'></a>
+
+## OrtoObstacle Enum
+
+Conditions that reduce how well an orthophoto sheet shows buildings, or that limit what is known about it\.
+
+```csharp
+public enum OrtoObstacle
+```
+### Fields
+
+<a name='DiGi.GIS.Enums.OrtoObstacle.None'></a>
+
+`None` 0
+
+No obstacle is known\.
+
+<a name='DiGi.GIS.Enums.OrtoObstacle.Unprobed'></a>
+
+`Unprobed` 1
+
+No image of the sheet was probed; the clarity factor uses month priors instead of measurements\.
+
+<a name='DiGi.GIS.Enums.OrtoObstacle.Shadow'></a>
+
+`Shadow` 2
+
+A significant fraction of the probed image is in deep shadow\.
+
+<a name='DiGi.GIS.Enums.OrtoObstacle.Snow'></a>
+
+`Snow` 4
+
+A significant fraction of the probed image is snow covered \(RGB heuristic; no SWIR band, so no NDSI\)\.
+
+<a name='DiGi.GIS.Enums.OrtoObstacle.Haze'></a>
+
+`Haze` 8
+
+The probed image is hazy or foggy \(low local contrast\)\.
+
+<a name='DiGi.GIS.Enums.OrtoObstacle.Cloud'></a>
+
+`Cloud` 16
+
+A significant fraction of the probed image is cloud covered\.
+
+<a name='DiGi.GIS.Enums.OrtoObstacle.SheetIncomplete'></a>
+
+`SheetIncomplete` 32
+
+The index marks the sheet as not completely filled with imagery\.
+
+<a name='DiGi.GIS.Enums.OrtoObstacle.DateYearPrecision'></a>
+
+`DateYearPrecision` 64
+
+The acquisition date is known to the year only\.
+
+<a name='DiGi.GIS.Enums.OrtoObstacle.TrueOrthoUnknown'></a>
+
+`TrueOrthoUnknown` 128
+
+Whether the sheet is a true orthophoto was not determined\.
+
+<a name='DiGi.GIS.Enums.OrtoType'></a>
+
+## OrtoType Enum
+
+The type of an orthophoto: standard \(roofs offset radially against their ground footprint\) or true orthophoto \(roofs projected orthogonally\)\.
+
+```csharp
+public enum OrtoType
+```
+### Fields
+
+<a name='DiGi.GIS.Enums.OrtoType.Undefined'></a>
+
+`Undefined` -1
+
+The type was not determined\. The per\-sheet index does not carry it, and the true orthophoto service offers no per\-sheet feed\.
+
+<a name='DiGi.GIS.Enums.OrtoType.Standard'></a>
+
+`Standard` 0
+
+A standard orthophoto\.
+
+<a name='DiGi.GIS.Enums.OrtoType.TrueOrtho'></a>
+
+`TrueOrtho` 1
+
+A true orthophoto\.
+
 <a name='DiGi.GIS.Enums.SettlementType'></a>
 
 ## SettlementType Enum

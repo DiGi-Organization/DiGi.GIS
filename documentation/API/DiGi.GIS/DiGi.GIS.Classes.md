@@ -6177,6 +6177,305 @@ Implements [Reference](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IOccupancyData
 #### Property Value
 [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
+<a name='DiGi.GIS.Classes.OrtoAvailability'></a>
+
+## OrtoAvailability Class
+
+Represents one cell of an orthophoto availability matrix: the distinct epochs observed at one location and the gaps between them\.
+
+The first epoch is left censored (nothing earlier is known, which is not the same as nothing earlier existing) and the last is right censored at [ProbeDate](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailability.ProbeDate 'DiGi\.GIS\.Classes\.OrtoAvailability\.ProbeDate').
+
+Build with [OrtoAvailabilityMatrix\(this IEnumerable&lt;OrtoSheet&gt;, double, double, Nullable&lt;DateTimeOffset&gt;\)](DiGi.GIS.md#DiGi.GIS.Create.OrtoAvailabilityMatrix(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,double,double,System.Nullable_System.DateTimeOffset_) 'DiGi\.GIS\.Create\.OrtoAvailabilityMatrix\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, double, double, System\.Nullable\<System\.DateTimeOffset\>\)'), which deduplicates the sheets and computes the gaps; this constructor stores what it is given.
+
+```csharp
+public class OrtoAvailability : DiGi.Core.Classes.SerializableObject, DiGi.GIS.Interfaces.IGISSerializableObject, DiGi.GIS.Interfaces.IGISObject, DiGi.Core.Interfaces.IObject, DiGi.Core.Interfaces.ISerializableObject, DiGi.Core.Interfaces.ICloneableObject<DiGi.Core.Interfaces.ISerializableObject>, DiGi.Core.Interfaces.ICloneableObject
+```
+
+Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → [DiGi\.Core\.Classes\.Object](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.object 'DiGi\.Core\.Classes\.Object') → [DiGi\.Core\.Classes\.SerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.serializableobject 'DiGi\.Core\.Classes\.SerializableObject') → OrtoAvailability
+
+Implements [IGISSerializableObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISSerializableObject 'DiGi\.GIS\.Interfaces\.IGISSerializableObject'), [IGISObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISObject 'DiGi\.GIS\.Interfaces\.IGISObject'), [DiGi\.Core\.Interfaces\.IObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iobject 'DiGi\.Core\.Interfaces\.IObject'), [DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject'), [DiGi\.Core\.Interfaces\.ICloneableObject&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1')[DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1'), [DiGi\.Core\.Interfaces\.ICloneableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject 'DiGi\.Core\.Interfaces\.ICloneableObject')
+### Constructors
+
+<a name='DiGi.GIS.Classes.OrtoAvailability.OrtoAvailability(DiGi.GIS.Classes.OrtoAvailability)'></a>
+
+## OrtoAvailability\(OrtoAvailability\) Constructor
+
+Initializes a new instance of the [OrtoAvailability](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailability 'DiGi\.GIS\.Classes\.OrtoAvailability') class by copying an existing instance\.
+
+```csharp
+public OrtoAvailability(DiGi.GIS.Classes.OrtoAvailability? ortoAvailability);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.OrtoAvailability.OrtoAvailability(DiGi.GIS.Classes.OrtoAvailability).ortoAvailability'></a>
+
+`ortoAvailability` [OrtoAvailability](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailability 'DiGi\.GIS\.Classes\.OrtoAvailability')
+
+The source cell to copy from\.
+
+<a name='DiGi.GIS.Classes.OrtoAvailability.OrtoAvailability(string,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoEpoch_,System.Collections.Generic.IEnumerable_int_,System.Nullable_System.DateTimeOffset_)'></a>
+
+## OrtoAvailability\(string, BoundingBox2D, IEnumerable\<OrtoEpoch\>, IEnumerable\<int\>, Nullable\<DateTimeOffset\>\) Constructor
+
+Initializes a new instance of the [OrtoAvailability](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailability 'DiGi\.GIS\.Classes\.OrtoAvailability') class\.
+
+```csharp
+public OrtoAvailability(string? locationKey, DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D, System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.OrtoEpoch>? ortoEpochs, System.Collections.Generic.IEnumerable<int>? gapDays, System.Nullable<System.DateTimeOffset> probeDate);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.OrtoAvailability.OrtoAvailability(string,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoEpoch_,System.Collections.Generic.IEnumerable_int_,System.Nullable_System.DateTimeOffset_).locationKey'></a>
+
+`locationKey` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The culture\-invariant key of the location \([OrtoLocationKey\(this BoundingBox2D\)](DiGi.GIS.md#DiGi.GIS.Query.OrtoLocationKey(thisDiGi.Geometry.Planar.Classes.BoundingBox2D) 'DiGi\.GIS\.Query\.OrtoLocationKey\(this DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D\)')\)\.
+
+<a name='DiGi.GIS.Classes.OrtoAvailability.OrtoAvailability(string,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoEpoch_,System.Collections.Generic.IEnumerable_int_,System.Nullable_System.DateTimeOffset_).boundingBox2D'></a>
+
+`boundingBox2D` [DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
+
+The location in EPSG:2180, easting in X\.
+
+<a name='DiGi.GIS.Classes.OrtoAvailability.OrtoAvailability(string,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoEpoch_,System.Collections.Generic.IEnumerable_int_,System.Nullable_System.DateTimeOffset_).ortoEpochs'></a>
+
+`ortoEpochs` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoEpoch](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoEpoch 'DiGi\.GIS\.Classes\.OrtoEpoch')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The distinct epochs in date order\.
+
+<a name='DiGi.GIS.Classes.OrtoAvailability.OrtoAvailability(string,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoEpoch_,System.Collections.Generic.IEnumerable_int_,System.Nullable_System.DateTimeOffset_).gapDays'></a>
+
+`gapDays` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The whole days between each pair of consecutive epochs; one element fewer than [ortoEpochs](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailability.OrtoAvailability(string,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoEpoch_,System.Collections.Generic.IEnumerable_int_,System.Nullable_System.DateTimeOffset_).ortoEpochs 'DiGi\.GIS\.Classes\.OrtoAvailability\.OrtoAvailability\(string, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoEpoch\>, System\.Collections\.Generic\.IEnumerable\<int\>, System\.Nullable\<System\.DateTimeOffset\>\)\.ortoEpochs')\.
+
+<a name='DiGi.GIS.Classes.OrtoAvailability.OrtoAvailability(string,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoEpoch_,System.Collections.Generic.IEnumerable_int_,System.Nullable_System.DateTimeOffset_).probeDate'></a>
+
+`probeDate` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The moment the index was read, at which the last epoch is right censored\.
+
+<a name='DiGi.GIS.Classes.OrtoAvailability.OrtoAvailability(System.Text.Json.Nodes.JsonObject)'></a>
+
+## OrtoAvailability\(JsonObject\) Constructor
+
+Initializes a new instance of the [OrtoAvailability](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailability 'DiGi\.GIS\.Classes\.OrtoAvailability') class from a JSON object\.
+
+```csharp
+public OrtoAvailability(System.Text.Json.Nodes.JsonObject? jsonObject);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.OrtoAvailability.OrtoAvailability(System.Text.Json.Nodes.JsonObject).jsonObject'></a>
+
+`jsonObject` [System\.Text\.Json\.Nodes\.JsonObject](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.nodes.jsonobject 'System\.Text\.Json\.Nodes\.JsonObject')
+
+The JSON object containing the cell data\.
+### Properties
+
+<a name='DiGi.GIS.Classes.OrtoAvailability.BoundingBox2D'></a>
+
+## OrtoAvailability\.BoundingBox2D Property
+
+Gets a clone of the location in EPSG:2180, easting in X\.
+
+```csharp
+public DiGi.Geometry.Planar.Classes.BoundingBox2D? BoundingBox2D { get; }
+```
+
+#### Property Value
+[DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
+
+<a name='DiGi.GIS.Classes.OrtoAvailability.GapDays'></a>
+
+## OrtoAvailability\.GapDays Property
+
+Gets a copy of the whole days between each pair of consecutive epochs\.
+
+```csharp
+public System.Collections.Generic.List<int>? GapDays { get; }
+```
+
+#### Property Value
+[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')
+
+<a name='DiGi.GIS.Classes.OrtoAvailability.LocationKey'></a>
+
+## OrtoAvailability\.LocationKey Property
+
+Gets the culture\-invariant key of the location\.
+
+```csharp
+public string? LocationKey { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.OrtoAvailability.OrtoEpochs'></a>
+
+## OrtoAvailability\.OrtoEpochs Property
+
+Gets clones of the distinct epochs in date order\.
+
+```csharp
+public System.Collections.Generic.List<DiGi.GIS.Classes.OrtoEpoch>? OrtoEpochs { get; }
+```
+
+#### Property Value
+[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[OrtoEpoch](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoEpoch 'DiGi\.GIS\.Classes\.OrtoEpoch')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')
+
+<a name='DiGi.GIS.Classes.OrtoAvailability.ProbeDate'></a>
+
+## OrtoAvailability\.ProbeDate Property
+
+Gets the moment the index was read, at which the last epoch is right censored\.
+
+```csharp
+public System.Nullable<System.DateTimeOffset> ProbeDate { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+<a name='DiGi.GIS.Classes.OrtoAvailabilityMatrix'></a>
+
+## OrtoAvailabilityMatrix Class
+
+Represents an orthophoto availability matrix over a regular EPSG:2180 grid, together with the options it was built with, so a stored table is self\-describing\.
+
+Build with [OrtoAvailabilityMatrix\(this IEnumerable&lt;OrtoSheet&gt;, double, double, Nullable&lt;DateTimeOffset&gt;\)](DiGi.GIS.md#DiGi.GIS.Create.OrtoAvailabilityMatrix(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,double,double,System.Nullable_System.DateTimeOffset_) 'DiGi\.GIS\.Create\.OrtoAvailabilityMatrix\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, double, double, System\.Nullable\<System\.DateTimeOffset\>\)'); this constructor stores what it is given.
+
+```csharp
+public class OrtoAvailabilityMatrix : DiGi.Core.Classes.SerializableObject, DiGi.GIS.Interfaces.IGISSerializableObject, DiGi.GIS.Interfaces.IGISObject, DiGi.Core.Interfaces.IObject, DiGi.Core.Interfaces.ISerializableObject, DiGi.Core.Interfaces.ICloneableObject<DiGi.Core.Interfaces.ISerializableObject>, DiGi.Core.Interfaces.ICloneableObject
+```
+
+Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → [DiGi\.Core\.Classes\.Object](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.object 'DiGi\.Core\.Classes\.Object') → [DiGi\.Core\.Classes\.SerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.serializableobject 'DiGi\.Core\.Classes\.SerializableObject') → OrtoAvailabilityMatrix
+
+Implements [IGISSerializableObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISSerializableObject 'DiGi\.GIS\.Interfaces\.IGISSerializableObject'), [IGISObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISObject 'DiGi\.GIS\.Interfaces\.IGISObject'), [DiGi\.Core\.Interfaces\.IObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iobject 'DiGi\.Core\.Interfaces\.IObject'), [DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject'), [DiGi\.Core\.Interfaces\.ICloneableObject&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1')[DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1'), [DiGi\.Core\.Interfaces\.ICloneableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject 'DiGi\.Core\.Interfaces\.ICloneableObject')
+### Constructors
+
+<a name='DiGi.GIS.Classes.OrtoAvailabilityMatrix.OrtoAvailabilityMatrix(DiGi.GIS.Classes.OrtoAvailabilityMatrix)'></a>
+
+## OrtoAvailabilityMatrix\(OrtoAvailabilityMatrix\) Constructor
+
+Initializes a new instance of the [OrtoAvailabilityMatrix](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailabilityMatrix 'DiGi\.GIS\.Classes\.OrtoAvailabilityMatrix') class by copying an existing instance\.
+
+```csharp
+public OrtoAvailabilityMatrix(DiGi.GIS.Classes.OrtoAvailabilityMatrix? ortoAvailabilityMatrix);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.OrtoAvailabilityMatrix.OrtoAvailabilityMatrix(DiGi.GIS.Classes.OrtoAvailabilityMatrix).ortoAvailabilityMatrix'></a>
+
+`ortoAvailabilityMatrix` [OrtoAvailabilityMatrix](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailabilityMatrix 'DiGi\.GIS\.Classes\.OrtoAvailabilityMatrix')
+
+The source matrix to copy from\.
+
+<a name='DiGi.GIS.Classes.OrtoAvailabilityMatrix.OrtoAvailabilityMatrix(double,double,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoAvailability_,System.Nullable_System.DateTimeOffset_)'></a>
+
+## OrtoAvailabilityMatrix\(double, double, IEnumerable\<OrtoAvailability\>, Nullable\<DateTimeOffset\>\) Constructor
+
+Initializes a new instance of the [OrtoAvailabilityMatrix](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailabilityMatrix 'DiGi\.GIS\.Classes\.OrtoAvailabilityMatrix') class\.
+
+```csharp
+public OrtoAvailabilityMatrix(double cellSize, double coverageFraction, System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.OrtoAvailability>? ortoAvailabilities, System.Nullable<System.DateTimeOffset> probeDate);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.OrtoAvailabilityMatrix.OrtoAvailabilityMatrix(double,double,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoAvailability_,System.Nullable_System.DateTimeOffset_).cellSize'></a>
+
+`cellSize` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The grid cell size in metres\.
+
+<a name='DiGi.GIS.Classes.OrtoAvailabilityMatrix.OrtoAvailabilityMatrix(double,double,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoAvailability_,System.Nullable_System.DateTimeOffset_).coverageFraction'></a>
+
+`coverageFraction` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The fraction of a cell the union of the footprints of one date must cover for that date to count at that cell\.
+
+<a name='DiGi.GIS.Classes.OrtoAvailabilityMatrix.OrtoAvailabilityMatrix(double,double,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoAvailability_,System.Nullable_System.DateTimeOffset_).ortoAvailabilities'></a>
+
+`ortoAvailabilities` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoAvailability](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailability 'DiGi\.GIS\.Classes\.OrtoAvailability')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The cells of the matrix\.
+
+<a name='DiGi.GIS.Classes.OrtoAvailabilityMatrix.OrtoAvailabilityMatrix(double,double,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoAvailability_,System.Nullable_System.DateTimeOffset_).probeDate'></a>
+
+`probeDate` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The moment the index was read\.
+
+<a name='DiGi.GIS.Classes.OrtoAvailabilityMatrix.OrtoAvailabilityMatrix(System.Text.Json.Nodes.JsonObject)'></a>
+
+## OrtoAvailabilityMatrix\(JsonObject\) Constructor
+
+Initializes a new instance of the [OrtoAvailabilityMatrix](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailabilityMatrix 'DiGi\.GIS\.Classes\.OrtoAvailabilityMatrix') class from a JSON object\.
+
+```csharp
+public OrtoAvailabilityMatrix(System.Text.Json.Nodes.JsonObject? jsonObject);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.OrtoAvailabilityMatrix.OrtoAvailabilityMatrix(System.Text.Json.Nodes.JsonObject).jsonObject'></a>
+
+`jsonObject` [System\.Text\.Json\.Nodes\.JsonObject](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.nodes.jsonobject 'System\.Text\.Json\.Nodes\.JsonObject')
+
+The JSON object containing the matrix data\.
+### Properties
+
+<a name='DiGi.GIS.Classes.OrtoAvailabilityMatrix.CellSize'></a>
+
+## OrtoAvailabilityMatrix\.CellSize Property
+
+Gets the grid cell size in metres\.
+
+```csharp
+public double CellSize { get; }
+```
+
+#### Property Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Classes.OrtoAvailabilityMatrix.CoverageFraction'></a>
+
+## OrtoAvailabilityMatrix\.CoverageFraction Property
+
+Gets the fraction of a cell the union of the footprints of one date must cover for that date to count at that cell\.
+
+```csharp
+public double CoverageFraction { get; }
+```
+
+#### Property Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Classes.OrtoAvailabilityMatrix.OrtoAvailabilities'></a>
+
+## OrtoAvailabilityMatrix\.OrtoAvailabilities Property
+
+Gets clones of the cells of the matrix\.
+
+```csharp
+public System.Collections.Generic.List<DiGi.GIS.Classes.OrtoAvailability>? OrtoAvailabilities { get; }
+```
+
+#### Property Value
+[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[OrtoAvailability](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailability 'DiGi\.GIS\.Classes\.OrtoAvailability')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')
+
+<a name='DiGi.GIS.Classes.OrtoAvailabilityMatrix.ProbeDate'></a>
+
+## OrtoAvailabilityMatrix\.ProbeDate Property
+
+Gets the moment the index was read\.
+
+```csharp
+public System.Nullable<System.DateTimeOffset> ProbeDate { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
 <a name='DiGi.GIS.Classes.OrtoData'></a>
 
 ## OrtoData Class
@@ -7193,6 +7492,339 @@ public double Scale { get; set; }
 #### Property Value
 [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
 
+<a name='DiGi.GIS.Classes.OrtoEpoch'></a>
+
+## OrtoEpoch Class
+
+Represents one distinct observation moment at a location: every duplicate registration of the same image collapsed into one\.
+
+```csharp
+public class OrtoEpoch : DiGi.Core.Classes.SerializableObject, DiGi.GIS.Interfaces.IGISSerializableObject, DiGi.GIS.Interfaces.IGISObject, DiGi.Core.Interfaces.IObject, DiGi.Core.Interfaces.ISerializableObject, DiGi.Core.Interfaces.ICloneableObject<DiGi.Core.Interfaces.ISerializableObject>, DiGi.Core.Interfaces.ICloneableObject
+```
+
+Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → [DiGi\.Core\.Classes\.Object](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.object 'DiGi\.Core\.Classes\.Object') → [DiGi\.Core\.Classes\.SerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.serializableobject 'DiGi\.Core\.Classes\.SerializableObject') → OrtoEpoch
+
+Implements [IGISSerializableObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISSerializableObject 'DiGi\.GIS\.Interfaces\.IGISSerializableObject'), [IGISObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISObject 'DiGi\.GIS\.Interfaces\.IGISObject'), [DiGi\.Core\.Interfaces\.IObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iobject 'DiGi\.Core\.Interfaces\.IObject'), [DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject'), [DiGi\.Core\.Interfaces\.ICloneableObject&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1')[DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1'), [DiGi\.Core\.Interfaces\.ICloneableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject 'DiGi\.Core\.Interfaces\.ICloneableObject')
+### Constructors
+
+<a name='DiGi.GIS.Classes.OrtoEpoch.OrtoEpoch(DiGi.GIS.Classes.OrtoEpoch)'></a>
+
+## OrtoEpoch\(OrtoEpoch\) Constructor
+
+Initializes a new instance of the [OrtoEpoch](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoEpoch 'DiGi\.GIS\.Classes\.OrtoEpoch') class by copying an existing instance\.
+
+```csharp
+public OrtoEpoch(DiGi.GIS.Classes.OrtoEpoch? ortoEpoch);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.OrtoEpoch.OrtoEpoch(DiGi.GIS.Classes.OrtoEpoch).ortoEpoch'></a>
+
+`ortoEpoch` [OrtoEpoch](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoEpoch 'DiGi\.GIS\.Classes\.OrtoEpoch')
+
+The source epoch to copy from\.
+
+<a name='DiGi.GIS.Classes.OrtoEpoch.OrtoEpoch(System.DateTimeOffset,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,System.Collections.Generic.IEnumerable_string_)'></a>
+
+## OrtoEpoch\(DateTimeOffset, OrtoDatePrecision, Nullable\<double\>, IEnumerable\<string\>\) Constructor
+
+Initializes a new instance of the [OrtoEpoch](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoEpoch 'DiGi\.GIS\.Classes\.OrtoEpoch') class\.
+
+```csharp
+public OrtoEpoch(System.DateTimeOffset date, DiGi.GIS.Enums.OrtoDatePrecision datePrecision, System.Nullable<double> pixelSize, System.Collections.Generic.IEnumerable<string>? downloadUrls);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.OrtoEpoch.OrtoEpoch(System.DateTimeOffset,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,System.Collections.Generic.IEnumerable_string_).date'></a>
+
+`date` [System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')
+
+The acquisition date of the epoch\.
+
+<a name='DiGi.GIS.Classes.OrtoEpoch.OrtoEpoch(System.DateTimeOffset,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,System.Collections.Generic.IEnumerable_string_).datePrecision'></a>
+
+`datePrecision` [OrtoDatePrecision](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision 'DiGi\.GIS\.Enums\.OrtoDatePrecision')
+
+The precision of [date](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoEpoch.OrtoEpoch(System.DateTimeOffset,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,System.Collections.Generic.IEnumerable_string_).date 'DiGi\.GIS\.Classes\.OrtoEpoch\.OrtoEpoch\(System\.DateTimeOffset, DiGi\.GIS\.Enums\.OrtoDatePrecision, System\.Nullable\<double\>, System\.Collections\.Generic\.IEnumerable\<string\>\)\.date')\.
+
+<a name='DiGi.GIS.Classes.OrtoEpoch.OrtoEpoch(System.DateTimeOffset,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,System.Collections.Generic.IEnumerable_string_).pixelSize'></a>
+
+`pixelSize` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The finest ground pixel size in metres among the sheets of the epoch\.
+
+<a name='DiGi.GIS.Classes.OrtoEpoch.OrtoEpoch(System.DateTimeOffset,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,System.Collections.Generic.IEnumerable_string_).downloadUrls'></a>
+
+`downloadUrls` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The download URLs of the canonical sheets the epoch was built from, one per duplicate group\.
+
+<a name='DiGi.GIS.Classes.OrtoEpoch.OrtoEpoch(System.Text.Json.Nodes.JsonObject)'></a>
+
+## OrtoEpoch\(JsonObject\) Constructor
+
+Initializes a new instance of the [OrtoEpoch](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoEpoch 'DiGi\.GIS\.Classes\.OrtoEpoch') class from a JSON object\.
+
+```csharp
+public OrtoEpoch(System.Text.Json.Nodes.JsonObject? jsonObject);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.OrtoEpoch.OrtoEpoch(System.Text.Json.Nodes.JsonObject).jsonObject'></a>
+
+`jsonObject` [System\.Text\.Json\.Nodes\.JsonObject](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.nodes.jsonobject 'System\.Text\.Json\.Nodes\.JsonObject')
+
+The JSON object containing the epoch data\.
+### Properties
+
+<a name='DiGi.GIS.Classes.OrtoEpoch.Date'></a>
+
+## OrtoEpoch\.Date Property
+
+Gets the acquisition date of the epoch\.
+
+```csharp
+public System.DateTimeOffset Date { get; }
+```
+
+#### Property Value
+[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')
+
+<a name='DiGi.GIS.Classes.OrtoEpoch.DatePrecision'></a>
+
+## OrtoEpoch\.DatePrecision Property
+
+Gets the precision of [Date](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoEpoch.Date 'DiGi\.GIS\.Classes\.OrtoEpoch\.Date')\.
+
+```csharp
+public DiGi.GIS.Enums.OrtoDatePrecision DatePrecision { get; }
+```
+
+#### Property Value
+[OrtoDatePrecision](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision 'DiGi\.GIS\.Enums\.OrtoDatePrecision')
+
+<a name='DiGi.GIS.Classes.OrtoEpoch.DownloadUrls'></a>
+
+## OrtoEpoch\.DownloadUrls Property
+
+Gets a copy of the download URLs of the canonical sheets the epoch was built from\.
+
+```csharp
+public System.Collections.Generic.List<string>? DownloadUrls { get; }
+```
+
+#### Property Value
+[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')
+
+<a name='DiGi.GIS.Classes.OrtoEpoch.PixelSize'></a>
+
+## OrtoEpoch\.PixelSize Property
+
+Gets the finest ground pixel size in metres among the sheets of the epoch\.
+
+```csharp
+public System.Nullable<double> PixelSize { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe'></a>
+
+## OrtoImageProbe Class
+
+Represents one observation of a time\-enabled orthophoto WMS: what the service served for one tile at one requested time\.
+
+The index ([OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')) is the primary record; probes verify it. Two probes of one tile at different times with the same [ContentHash](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoImageProbe.ContentHash 'DiGi\.GIS\.Classes\.OrtoImageProbe\.ContentHash') are one served image, not two epochs.
+
+```csharp
+public class OrtoImageProbe : DiGi.Core.Classes.SerializableObject, DiGi.GIS.Interfaces.IGISSerializableObject, DiGi.GIS.Interfaces.IGISObject, DiGi.Core.Interfaces.IObject, DiGi.Core.Interfaces.ISerializableObject, DiGi.Core.Interfaces.ICloneableObject<DiGi.Core.Interfaces.ISerializableObject>, DiGi.Core.Interfaces.ICloneableObject
+```
+
+Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → [DiGi\.Core\.Classes\.Object](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.object 'DiGi\.Core\.Classes\.Object') → [DiGi\.Core\.Classes\.SerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.serializableobject 'DiGi\.Core\.Classes\.SerializableObject') → OrtoImageProbe
+
+Implements [IGISSerializableObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISSerializableObject 'DiGi\.GIS\.Interfaces\.IGISSerializableObject'), [IGISObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISObject 'DiGi\.GIS\.Interfaces\.IGISObject'), [DiGi\.Core\.Interfaces\.IObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iobject 'DiGi\.Core\.Interfaces\.IObject'), [DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject'), [DiGi\.Core\.Interfaces\.ICloneableObject&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1')[DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1'), [DiGi\.Core\.Interfaces\.ICloneableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject 'DiGi\.Core\.Interfaces\.ICloneableObject')
+### Constructors
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.OrtoImageProbe(DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,DiGi.GIS.Enums.OrtoImageProbeStatus,string,System.Nullable_System.DateTimeOffset_)'></a>
+
+## OrtoImageProbe\(BoundingBox2D, string, string, string, OrtoImageProbeStatus, string, Nullable\<DateTimeOffset\>\) Constructor
+
+Initializes a new instance of the [OrtoImageProbe](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoImageProbe 'DiGi\.GIS\.Classes\.OrtoImageProbe') class\.
+
+```csharp
+public OrtoImageProbe(DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D, string? serviceUrl, string? layer, string? time, DiGi.GIS.Enums.OrtoImageProbeStatus ortoImageProbeStatus, string? contentHash, System.Nullable<System.DateTimeOffset> probeDate);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.OrtoImageProbe(DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,DiGi.GIS.Enums.OrtoImageProbeStatus,string,System.Nullable_System.DateTimeOffset_).boundingBox2D'></a>
+
+`boundingBox2D` [DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
+
+The probed tile in EPSG:2180, easting in X\.
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.OrtoImageProbe(DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,DiGi.GIS.Enums.OrtoImageProbeStatus,string,System.Nullable_System.DateTimeOffset_).serviceUrl'></a>
+
+`serviceUrl` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The WMS endpoint that was asked\.
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.OrtoImageProbe(DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,DiGi.GIS.Enums.OrtoImageProbeStatus,string,System.Nullable_System.DateTimeOffset_).layer'></a>
+
+`layer` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The WMS layer that was asked for\.
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.OrtoImageProbe(DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,DiGi.GIS.Enums.OrtoImageProbeStatus,string,System.Nullable_System.DateTimeOffset_).time'></a>
+
+`time` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The requested `TIME` value, as sent\.
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.OrtoImageProbe(DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,DiGi.GIS.Enums.OrtoImageProbeStatus,string,System.Nullable_System.DateTimeOffset_).ortoImageProbeStatus'></a>
+
+`ortoImageProbeStatus` [OrtoImageProbeStatus](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoImageProbeStatus 'DiGi\.GIS\.Enums\.OrtoImageProbeStatus')
+
+The classification of the response\.
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.OrtoImageProbe(DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,DiGi.GIS.Enums.OrtoImageProbeStatus,string,System.Nullable_System.DateTimeOffset_).contentHash'></a>
+
+`contentHash` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The SHA\-256 of the response bytes; set only for [Image](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoImageProbeStatus.Image 'DiGi\.GIS\.Enums\.OrtoImageProbeStatus\.Image')\.
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.OrtoImageProbe(DiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,DiGi.GIS.Enums.OrtoImageProbeStatus,string,System.Nullable_System.DateTimeOffset_).probeDate'></a>
+
+`probeDate` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The moment the request was answered\.
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.OrtoImageProbe(DiGi.GIS.Classes.OrtoImageProbe)'></a>
+
+## OrtoImageProbe\(OrtoImageProbe\) Constructor
+
+Initializes a new instance of the [OrtoImageProbe](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoImageProbe 'DiGi\.GIS\.Classes\.OrtoImageProbe') class by copying an existing instance\.
+
+```csharp
+public OrtoImageProbe(DiGi.GIS.Classes.OrtoImageProbe? ortoImageProbe);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.OrtoImageProbe(DiGi.GIS.Classes.OrtoImageProbe).ortoImageProbe'></a>
+
+`ortoImageProbe` [OrtoImageProbe](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoImageProbe 'DiGi\.GIS\.Classes\.OrtoImageProbe')
+
+The source probe to copy from\.
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.OrtoImageProbe(System.Text.Json.Nodes.JsonObject)'></a>
+
+## OrtoImageProbe\(JsonObject\) Constructor
+
+Initializes a new instance of the [OrtoImageProbe](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoImageProbe 'DiGi\.GIS\.Classes\.OrtoImageProbe') class from a JSON object\.
+
+```csharp
+public OrtoImageProbe(System.Text.Json.Nodes.JsonObject? jsonObject);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.OrtoImageProbe(System.Text.Json.Nodes.JsonObject).jsonObject'></a>
+
+`jsonObject` [System\.Text\.Json\.Nodes\.JsonObject](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.nodes.jsonobject 'System\.Text\.Json\.Nodes\.JsonObject')
+
+The JSON object containing the probe data\.
+### Properties
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.BoundingBox2D'></a>
+
+## OrtoImageProbe\.BoundingBox2D Property
+
+Gets a clone of the probed tile in EPSG:2180, easting in X\.
+
+```csharp
+public DiGi.Geometry.Planar.Classes.BoundingBox2D? BoundingBox2D { get; }
+```
+
+#### Property Value
+[DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.ContentHash'></a>
+
+## OrtoImageProbe\.ContentHash Property
+
+Gets the SHA\-256 of the response bytes as lowercase hexadecimal; null unless [OrtoImageProbeStatus](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoImageProbe.OrtoImageProbeStatus 'DiGi\.GIS\.Classes\.OrtoImageProbe\.OrtoImageProbeStatus') is [Image](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoImageProbeStatus.Image 'DiGi\.GIS\.Enums\.OrtoImageProbeStatus\.Image')\.
+
+```csharp
+public string? ContentHash { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.Layer'></a>
+
+## OrtoImageProbe\.Layer Property
+
+Gets the WMS layer that was asked for\.
+
+```csharp
+public string? Layer { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.OrtoImageProbeStatus'></a>
+
+## OrtoImageProbe\.OrtoImageProbeStatus Property
+
+Gets the classification of the response\.
+
+```csharp
+public DiGi.GIS.Enums.OrtoImageProbeStatus OrtoImageProbeStatus { get; }
+```
+
+#### Property Value
+[OrtoImageProbeStatus](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoImageProbeStatus 'DiGi\.GIS\.Enums\.OrtoImageProbeStatus')
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.ProbeDate'></a>
+
+## OrtoImageProbe\.ProbeDate Property
+
+Gets the moment the request was answered\.
+
+```csharp
+public System.Nullable<System.DateTimeOffset> ProbeDate { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.ServiceUrl'></a>
+
+## OrtoImageProbe\.ServiceUrl Property
+
+Gets the WMS endpoint that was asked\.
+
+```csharp
+public string? ServiceUrl { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.OrtoImageProbe.Time'></a>
+
+## OrtoImageProbe\.Time Property
+
+Gets the requested `TIME` value, as sent\.
+
+```csharp
+public string? Time { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
 <a name='DiGi.GIS.Classes.OrtoRange'></a>
 
 ## OrtoRange Class
@@ -7661,6 +8293,413 @@ public double Width { get; set; }
 
 #### Property Value
 [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Classes.OrtoSheet'></a>
+
+## OrtoSheet Class
+
+Represents one row of the GUGiK per\-sheet orthophoto index: one sheet as registered under one yearly typename of [OrtoSheetIndex](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.OrtoSheetIndex 'DiGi\.GIS\.Constants\.WebService\.OrtoSheetIndex')\.
+
+A row is a registration, not an image: the same image can be registered more than once (each registration gets a fresh download file), and the same sheet identifier recurs for genuine re-acquisitions. [OrtoSheetDuplicateGroups\(this IEnumerable&lt;OrtoSheet&gt;\)](DiGi.GIS.md#DiGi.GIS.Query.OrtoSheetDuplicateGroups(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_) 'DiGi\.GIS\.Query\.OrtoSheetDuplicateGroups\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>\)') tells the two apart.
+
+Build from GML with `Convert.ToDiGi_OrtoSheet`, which classifies [DatePrecision](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.DatePrecision 'DiGi\.GIS\.Classes\.OrtoSheet\.DatePrecision'); this constructor stores what it is given.
+
+```csharp
+public class OrtoSheet : DiGi.Core.Classes.SerializableObject, DiGi.GIS.Interfaces.IGISSerializableObject, DiGi.GIS.Interfaces.IGISObject, DiGi.Core.Interfaces.IObject, DiGi.Core.Interfaces.ISerializableObject, DiGi.Core.Interfaces.ICloneableObject<DiGi.Core.Interfaces.ISerializableObject>, DiGi.Core.Interfaces.ICloneableObject
+```
+
+Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → [DiGi\.Core\.Classes\.Object](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.object 'DiGi\.Core\.Classes\.Object') → [DiGi\.Core\.Classes\.SerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.serializableobject 'DiGi\.Core\.Classes\.SerializableObject') → OrtoSheet
+
+Implements [IGISSerializableObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISSerializableObject 'DiGi\.GIS\.Interfaces\.IGISSerializableObject'), [IGISObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISObject 'DiGi\.GIS\.Interfaces\.IGISObject'), [DiGi\.Core\.Interfaces\.IObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iobject 'DiGi\.Core\.Interfaces\.IObject'), [DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject'), [DiGi\.Core\.Interfaces\.ICloneableObject&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1')[DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1'), [DiGi\.Core\.Interfaces\.ICloneableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject 'DiGi\.Core\.Interfaces\.ICloneableObject')
+### Constructors
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(DiGi.GIS.Classes.OrtoSheet)'></a>
+
+## OrtoSheet\(OrtoSheet\) Constructor
+
+Initializes a new instance of the [OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet') class by copying an existing instance\.
+
+```csharp
+public OrtoSheet(DiGi.GIS.Classes.OrtoSheet? ortoSheet);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(DiGi.GIS.Classes.OrtoSheet).ortoSheet'></a>
+
+`ortoSheet` [OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')
+
+The source sheet to copy from\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_)'></a>
+
+## OrtoSheet\(string, string, int, Nullable\<DateTimeOffset\>, OrtoDatePrecision, Nullable\<double\>, OrtoColorMode, string, string, string, string, Nullable\<bool\>, string, Nullable\<DateTimeOffset\>, Nullable\<double\>, Polygon2D, OrtoType, Nullable\<DateTimeOffset\>\) Constructor
+
+Initializes a new instance of the [OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet') class\.
+
+```csharp
+public OrtoSheet(string? sheetId, string? typeName, int year, System.Nullable<System.DateTimeOffset> date, DiGi.GIS.Enums.OrtoDatePrecision datePrecision, System.Nullable<double> pixelSize, DiGi.GIS.Enums.OrtoColorMode colorMode, string? source, string? coordinateSystem, string? archiveModule, string? applicationNumber, System.Nullable<bool> sheetFilled, string? downloadUrl, System.Nullable<System.DateTimeOffset> registerDate, System.Nullable<double> fileSize, DiGi.Geometry.Planar.Classes.Polygon2D? footprint, DiGi.GIS.Enums.OrtoType ortoType, System.Nullable<System.DateTimeOffset> probeDate);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).sheetId'></a>
+
+`sheetId` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The sheet identifier \(`godlo`\)\. An opaque grouping key: map sheet codes and TERYT\-like ids both occur, and it is not unique within a typename\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).typeName'></a>
+
+`typeName` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The yearly typename the row was read from\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).year'></a>
+
+`year` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The year the row is filed under \(`akt_rok`\)\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).date'></a>
+
+`date` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The acquisition date \(`akt_data`\), at precision [datePrecision](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).datePrecision 'DiGi\.GIS\.Classes\.OrtoSheet\.OrtoSheet\(string, string, int, System\.Nullable\<System\.DateTimeOffset\>, DiGi\.GIS\.Enums\.OrtoDatePrecision, System\.Nullable\<double\>, DiGi\.GIS\.Enums\.OrtoColorMode, string, string, string, string, System\.Nullable\<bool\>, string, System\.Nullable\<System\.DateTimeOffset\>, System\.Nullable\<double\>, DiGi\.Geometry\.Planar\.Classes\.Polygon2D, DiGi\.GIS\.Enums\.OrtoType, System\.Nullable\<System\.DateTimeOffset\>\)\.datePrecision')\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).datePrecision'></a>
+
+`datePrecision` [OrtoDatePrecision](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision 'DiGi\.GIS\.Enums\.OrtoDatePrecision')
+
+The precision of [date](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).date 'DiGi\.GIS\.Classes\.OrtoSheet\.OrtoSheet\(string, string, int, System\.Nullable\<System\.DateTimeOffset\>, DiGi\.GIS\.Enums\.OrtoDatePrecision, System\.Nullable\<double\>, DiGi\.GIS\.Enums\.OrtoColorMode, string, string, string, string, System\.Nullable\<bool\>, string, System\.Nullable\<System\.DateTimeOffset\>, System\.Nullable\<double\>, DiGi\.Geometry\.Planar\.Classes\.Polygon2D, DiGi\.GIS\.Enums\.OrtoType, System\.Nullable\<System\.DateTimeOffset\>\)\.date')\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).pixelSize'></a>
+
+`pixelSize` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The ground pixel size in metres \(`piksel`\)\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).colorMode'></a>
+
+`colorMode` [OrtoColorMode](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoColorMode 'DiGi\.GIS\.Enums\.OrtoColorMode')
+
+The colour mode \(`kolor`\)\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).source'></a>
+
+`source` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The source of the imagery as published \(`zrodlo_danych`\)\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).coordinateSystem'></a>
+
+`coordinateSystem` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The coordinate system of the sheet \(`uklad_xy`\)\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).archiveModule'></a>
+
+`archiveModule` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The archive module \(`modul_archiwizacji`\)\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).applicationNumber'></a>
+
+`applicationNumber` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The PZGiK application number \(`nr_zglosz`\)\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).sheetFilled'></a>
+
+`sheetFilled` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+Whether the sheet is completely filled with imagery \(`czy_ark_wypelniony`\)\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).downloadUrl'></a>
+
+`downloadUrl` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The download URL of the sheet file \(`url_do_pobrania`\)\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).registerDate'></a>
+
+`registerDate` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The PZGiK registration date \(`dt_pzgik`\); not an acquisition date\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).fileSize'></a>
+
+`fileSize` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The file size in megabytes \(`wlk_pliku_mb`\)\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).footprint'></a>
+
+`footprint` [DiGi\.Geometry\.Planar\.Classes\.Polygon2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.polygon2d 'DiGi\.Geometry\.Planar\.Classes\.Polygon2D')
+
+The sheet footprint in EPSG:2180, easting in X\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).ortoType'></a>
+
+`ortoType` [OrtoType](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoType 'DiGi\.GIS\.Enums\.OrtoType')
+
+The orthophoto type\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(string,string,int,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,System.Nullable_double_,DiGi.GIS.Enums.OrtoColorMode,string,string,string,string,System.Nullable_bool_,string,System.Nullable_System.DateTimeOffset_,System.Nullable_double_,DiGi.Geometry.Planar.Classes.Polygon2D,DiGi.GIS.Enums.OrtoType,System.Nullable_System.DateTimeOffset_).probeDate'></a>
+
+`probeDate` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The moment the index was read\.
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(System.Text.Json.Nodes.JsonObject)'></a>
+
+## OrtoSheet\(JsonObject\) Constructor
+
+Initializes a new instance of the [OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet') class from a JSON object\.
+
+```csharp
+public OrtoSheet(System.Text.Json.Nodes.JsonObject? jsonObject);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoSheet(System.Text.Json.Nodes.JsonObject).jsonObject'></a>
+
+`jsonObject` [System\.Text\.Json\.Nodes\.JsonObject](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.nodes.jsonobject 'System\.Text\.Json\.Nodes\.JsonObject')
+
+The JSON object containing the sheet data\.
+### Properties
+
+<a name='DiGi.GIS.Classes.OrtoSheet.ApplicationNumber'></a>
+
+## OrtoSheet\.ApplicationNumber Property
+
+Gets the PZGiK application number \(`nr_zglosz`\)\.
+
+```csharp
+public string? ApplicationNumber { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.ArchiveModule'></a>
+
+## OrtoSheet\.ArchiveModule Property
+
+Gets the archive module \(`modul_archiwizacji`\)\.
+
+```csharp
+public string? ArchiveModule { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.ColorMode'></a>
+
+## OrtoSheet\.ColorMode Property
+
+Gets the colour mode \(`kolor`\)\.
+
+```csharp
+public DiGi.GIS.Enums.OrtoColorMode ColorMode { get; }
+```
+
+#### Property Value
+[OrtoColorMode](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoColorMode 'DiGi\.GIS\.Enums\.OrtoColorMode')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.CoordinateSystem'></a>
+
+## OrtoSheet\.CoordinateSystem Property
+
+Gets the coordinate system of the sheet \(`uklad_xy`\)\.
+
+```csharp
+public string? CoordinateSystem { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.Date'></a>
+
+## OrtoSheet\.Date Property
+
+Gets the acquisition date \(`akt_data`\), at precision [DatePrecision](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.DatePrecision 'DiGi\.GIS\.Classes\.OrtoSheet\.DatePrecision')\.
+
+```csharp
+public System.Nullable<System.DateTimeOffset> Date { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.DatePrecision'></a>
+
+## OrtoSheet\.DatePrecision Property
+
+Gets the precision of [Date](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.Date 'DiGi\.GIS\.Classes\.OrtoSheet\.Date')\.
+
+```csharp
+public DiGi.GIS.Enums.OrtoDatePrecision DatePrecision { get; }
+```
+
+#### Property Value
+[OrtoDatePrecision](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision 'DiGi\.GIS\.Enums\.OrtoDatePrecision')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.DownloadUrl'></a>
+
+## OrtoSheet\.DownloadUrl Property
+
+Gets the download URL of the sheet file \(`url_do_pobrania`\)\.
+
+```csharp
+public string? DownloadUrl { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.FileSize'></a>
+
+## OrtoSheet\.FileSize Property
+
+Gets the file size in megabytes \(`wlk_pliku_mb`\)\.
+
+```csharp
+public System.Nullable<double> FileSize { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.Footprint'></a>
+
+## OrtoSheet\.Footprint Property
+
+Gets a clone of the sheet footprint in EPSG:2180, easting in X\.
+
+```csharp
+public DiGi.Geometry.Planar.Classes.Polygon2D? Footprint { get; }
+```
+
+#### Property Value
+[DiGi\.Geometry\.Planar\.Classes\.Polygon2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.polygon2d 'DiGi\.Geometry\.Planar\.Classes\.Polygon2D')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.OrtoType'></a>
+
+## OrtoSheet\.OrtoType Property
+
+Gets the orthophoto type\.
+
+```csharp
+public DiGi.GIS.Enums.OrtoType OrtoType { get; }
+```
+
+#### Property Value
+[OrtoType](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoType 'DiGi\.GIS\.Enums\.OrtoType')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.PixelSize'></a>
+
+## OrtoSheet\.PixelSize Property
+
+Gets the ground pixel size in metres \(`piksel`\)\.
+
+```csharp
+public System.Nullable<double> PixelSize { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.ProbeDate'></a>
+
+## OrtoSheet\.ProbeDate Property
+
+Gets the moment the index was read\.
+
+```csharp
+public System.Nullable<System.DateTimeOffset> ProbeDate { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.RegisterDate'></a>
+
+## OrtoSheet\.RegisterDate Property
+
+Gets the PZGiK registration date \(`dt_pzgik`\)\. Not an acquisition date\.
+
+```csharp
+public System.Nullable<System.DateTimeOffset> RegisterDate { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.SheetFilled'></a>
+
+## OrtoSheet\.SheetFilled Property
+
+Gets whether the sheet is completely filled with imagery \(`czy_ark_wypelniony`\)\.
+
+```csharp
+public System.Nullable<bool> SheetFilled { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.SheetId'></a>
+
+## OrtoSheet\.SheetId Property
+
+Gets the sheet identifier \(`godlo`\)\. An opaque grouping key: never parse it, and never assume it is unique within a typename\.
+
+```csharp
+public string? SheetId { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.Source'></a>
+
+## OrtoSheet\.Source Property
+
+Gets the source of the imagery as published \(`zrodlo_danych`, for example `Zdj. analogowe` or `Zdj. cyfrowe`\)\.
+
+```csharp
+public string? Source { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.TypeName'></a>
+
+## OrtoSheet\.TypeName Property
+
+Gets the yearly typename the row was read from\.
+
+```csharp
+public string? TypeName { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.OrtoSheet.Year'></a>
+
+## OrtoSheet\.Year Property
+
+Gets the year the row is filed under \(`akt_rok`\)\.
+
+```csharp
+public int Year { get; }
+```
+
+#### Property Value
+[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
 
 <a name='DiGi.GIS.Classes.OtherYearBuilt'></a>
 

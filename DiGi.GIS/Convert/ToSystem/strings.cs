@@ -1,5 +1,9 @@
-﻿using DiGi.Typology.Classes;
+﻿using DiGi.Geometry.Planar.Classes;
+using DiGi.GIS.Classes;
+using DiGi.Typology.Classes;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace DiGi.GIS
 {
@@ -99,6 +103,134 @@ namespace DiGi.GIS
             }
 
             return [.. values.ConvertAll(x => string.Join("\t", x))];
+        }
+
+        /// <summary>
+        /// Converts orthophoto index rows to tab-separated lines, a header first: the sheet inventory table, one row per registration, with the probe date.
+        /// <para>Numbers render with <see cref="CultureInfo.InvariantCulture"/> and dates as <c>yyyy-MM-dd</c> (probe date as ISO 8601 with offset), so a table written on any machine reads the same. Tabs and line breaks inside values are replaced by spaces.</para>
+        /// </summary>
+        /// <param name="ortoSheets">The rows; nulls are skipped.</param>
+        /// <returns>The lines, or null when the rows are null.</returns>
+        public static string[]? ToSystem_Strings(this IEnumerable<OrtoSheet?>? ortoSheets)
+        {
+            if (ortoSheets == null)
+            {
+                return null;
+            }
+
+            List<string> result =
+            [
+                string.Join("\t", "SheetId", "TypeName", "Year", "Date", "DatePrecision", "PixelSize", "ColorMode", "OrtoType", "Source", "CoordinateSystem", "ArchiveModule", "ApplicationNumber", "SheetFilled", "RegisterDate", "FileSize", "MinEasting", "MinNorthing", "MaxEasting", "MaxNorthing", "Usability", "UsabilityVersion", "Obstacles", "DownloadUrl", "ProbeDate")
+            ];
+
+            foreach (OrtoSheet? ortoSheet in ortoSheets)
+            {
+                if (ortoSheet == null)
+                {
+                    continue;
+                }
+
+                BoundingBox2D? boundingBox2D = ortoSheet.Footprint?.GetBoundingBox();
+
+                result.Add(string.Join(
+                    "\t",
+                    Text(ortoSheet.SheetId),
+                    Text(ortoSheet.TypeName),
+                    ortoSheet.Year.ToString(CultureInfo.InvariantCulture),
+                    Date(ortoSheet.Date),
+                    ortoSheet.DatePrecision.ToString(),
+                    Number(ortoSheet.PixelSize),
+                    ortoSheet.ColorMode.ToString(),
+                    ortoSheet.OrtoType.ToString(),
+                    Text(ortoSheet.Source),
+                    Text(ortoSheet.CoordinateSystem),
+                    Text(ortoSheet.ArchiveModule),
+                    Text(ortoSheet.ApplicationNumber),
+                    ortoSheet.SheetFilled == null ? string.Empty : (ortoSheet.SheetFilled.Value ? "true" : "false"),
+                    Date(ortoSheet.RegisterDate),
+                    Number(ortoSheet.FileSize),
+                    Number(boundingBox2D?.Min.X),
+                    Number(boundingBox2D?.Min.Y),
+                    Number(boundingBox2D?.Max.X),
+                    Number(boundingBox2D?.Max.Y),
+                    Number(Query.OrtoSheetUsability(ortoSheet)),
+                    Constants.OrtoUsability.Version.ToString(CultureInfo.InvariantCulture),
+                    Query.OrtoObstacles(ortoSheet).ToString().Replace(", ", "|"),
+                    Text(ortoSheet.DownloadUrl),
+                    ortoSheet.ProbeDate?.ToString("o", CultureInfo.InvariantCulture) ?? string.Empty));
+            }
+
+            return [.. result];
+
+            static string Text(string? value)
+            {
+                return value == null ? string.Empty : value.Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ');
+            }
+
+            static string Date(DateTimeOffset? value)
+            {
+                return value?.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) ?? string.Empty;
+            }
+
+            static string Number(double? value)
+            {
+                return value == null ? string.Empty : (value.Value == 0 ? 0 : value.Value).ToString("R", CultureInfo.InvariantCulture);
+            }
+        }
+
+        /// <summary>
+        /// Converts an orthophoto availability matrix to tab-separated lines, a header first: one row per cell and epoch, with the gap in days to the previous epoch of the cell.
+        /// <para>The gap of a cell's first epoch is empty (left censored); <c>DaysToProbe</c> on its last epoch is the right-censored interval up to the probe date. Numbers render with <see cref="CultureInfo.InvariantCulture"/>.</para>
+        /// </summary>
+        /// <param name="ortoAvailabilityMatrix">The matrix.</param>
+        /// <returns>The lines, or null when the matrix is null.</returns>
+        public static string[]? ToSystem_Strings(this OrtoAvailabilityMatrix? ortoAvailabilityMatrix)
+        {
+            if (ortoAvailabilityMatrix == null)
+            {
+                return null;
+            }
+
+            List<string> result =
+            [
+                string.Join("\t", "LocationKey", "MinEasting", "MinNorthing", "CellSize", "CoverageFraction", "EpochIndex", "EpochCount", "Date", "DatePrecision", "PixelSize", "GapDays", "DaysToProbe", "ProbeDate")
+            ];
+
+            string cellSize = ortoAvailabilityMatrix.CellSize.ToString("R", CultureInfo.InvariantCulture);
+            string coverageFraction = ortoAvailabilityMatrix.CoverageFraction.ToString("R", CultureInfo.InvariantCulture);
+
+            foreach (OrtoAvailability ortoAvailability in ortoAvailabilityMatrix.OrtoAvailabilities ?? [])
+            {
+                List<OrtoEpoch> ortoEpochs = ortoAvailability.OrtoEpochs ?? [];
+                List<int> gapDays = ortoAvailability.GapDays ?? [];
+                BoundingBox2D? boundingBox2D = ortoAvailability.BoundingBox2D;
+                DateTimeOffset? probeDate = ortoAvailability.ProbeDate;
+
+                for (int i = 0; i < ortoEpochs.Count; i++)
+                {
+                    OrtoEpoch ortoEpoch = ortoEpochs[i];
+
+                    string daysToProbe = i == ortoEpochs.Count - 1 && probeDate != null ? ((int)Math.Round((probeDate.Value - ortoEpoch.Date).TotalDays)).ToString(CultureInfo.InvariantCulture) : string.Empty;
+
+                    result.Add(string.Join(
+                        "\t",
+                        ortoAvailability.LocationKey ?? string.Empty,
+                        boundingBox2D?.Min.X.ToString("R", CultureInfo.InvariantCulture) ?? string.Empty,
+                        boundingBox2D?.Min.Y.ToString("R", CultureInfo.InvariantCulture) ?? string.Empty,
+                        cellSize,
+                        coverageFraction,
+                        i.ToString(CultureInfo.InvariantCulture),
+                        ortoEpochs.Count.ToString(CultureInfo.InvariantCulture),
+                        ortoEpoch.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+                        ortoEpoch.DatePrecision.ToString(),
+                        ortoEpoch.PixelSize?.ToString("R", CultureInfo.InvariantCulture) ?? string.Empty,
+                        i == 0 || i - 1 >= gapDays.Count ? string.Empty : gapDays[i - 1].ToString(CultureInfo.InvariantCulture),
+                        daysToProbe,
+                        probeDate?.ToString("o", CultureInfo.InvariantCulture) ?? string.Empty));
+                }
+            }
+
+            return [.. result];
         }
     }
 }
