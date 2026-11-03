@@ -8,7 +8,7 @@ namespace DiGi.GIS.Enums
     public enum OrtoType
     {
         /// <summary>
-        /// The type was not determined. The per-sheet index does not carry it, and the true orthophoto service offers no per-sheet feed.
+        /// The type was not determined. Rows of the per-sheet index are <see cref="Standard"/> and rows of the true orthophoto service are <see cref="TrueOrtho"/>; this marks a sheet from neither source.
         /// </summary>
         [Description("Undefined")] Undefined = -1,
 

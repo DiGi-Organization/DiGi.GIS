@@ -945,7 +945,7 @@ public const string StandardResolutionTimeLayer = "Raster";
 
 ## WebService\.TrueOrtho Field
 
-The true orthophoto WMS \(index layer [TrueOrthoIndexLayer](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.TrueOrthoIndexLayer 'DiGi\.GIS\.Constants\.WebService\.TrueOrthoIndexLayer'), imagery layer [TrueOrthoLayer](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.TrueOrthoLayer 'DiGi\.GIS\.Constants\.WebService\.TrueOrthoLayer')\)\. Its WFS interface is disabled, so there is no per\-sheet true orthophoto feed\.
+The true orthophoto WMS \(index layer [TrueOrthoIndexLayer](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.TrueOrthoIndexLayer 'DiGi\.GIS\.Constants\.WebService\.TrueOrthoIndexLayer'), imagery layer [TrueOrthoLayer](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.TrueOrthoLayer 'DiGi\.GIS\.Constants\.WebService\.TrueOrthoLayer')\)\. Its WFS interface answers `Unauthorized`, so the true orthophoto sheets are read per point through `GetFeatureInfo` \([TrueOrthoSheetsAsync\(this HttpClient, Point2D, int, TimeSpan, Nullable&lt;DateTimeOffset&gt;, CancellationToken\)](DiGi.GIS.md#DiGi.GIS.Query.TrueOrthoSheetsAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.Point2D,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken) 'DiGi\.GIS\.Query\.TrueOrthoSheetsAsync\(this System\.Net\.Http\.HttpClient, DiGi\.Geometry\.Planar\.Classes\.Point2D, int, System\.TimeSpan, System\.Nullable\<System\.DateTimeOffset\>, System\.Threading\.CancellationToken\)')\)\. True orthophotos are a product of their own \(downloads under `DaneFotogrametryczne/TrueOrtho/`, 1:2 500 and 1:5 000 sheets\): they are not rows of [OrtoSheetIndex](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.OrtoSheetIndex 'DiGi\.GIS\.Constants\.WebService\.OrtoSheetIndex')\.
 
 ```csharp
 public const string TrueOrtho = "https://mapy.geoportal.gov.pl/wss/service/PZGIK/ORTO/WMS/TrueOrtho";
@@ -962,6 +962,32 @@ The queryable sheet index layer of [TrueOrtho](DiGi.GIS.Constants.md#DiGi.GIS.Co
 
 ```csharp
 public const string TrueOrthoIndexLayer = "Skorowidze";
+```
+
+#### Field Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Constants.WebService.TrueOrthoInfoFormatGml'></a>
+
+## WebService\.TrueOrthoInfoFormatGml Field
+
+The `GetFeatureInfo` format of [TrueOrtho](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.TrueOrtho 'DiGi\.GIS\.Constants\.WebService\.TrueOrtho') that carries the sheet boxes \(GML 2 `gml:Box`, `gml:coordinates` easting first, unlike the northing\-first `posList` of [OrtoSheetIndex](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.OrtoSheetIndex 'DiGi\.GIS\.Constants\.WebService\.OrtoSheetIndex')\) and no attributes, in the same order as [TrueOrthoInfoFormatHtml](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.TrueOrthoInfoFormatHtml 'DiGi\.GIS\.Constants\.WebService\.TrueOrthoInfoFormatHtml')\.
+
+```csharp
+public const string TrueOrthoInfoFormatGml = "application/vnd.ogc.gml";
+```
+
+#### Field Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Constants.WebService.TrueOrthoInfoFormatHtml'></a>
+
+## WebService\.TrueOrthoInfoFormatHtml Field
+
+The `GetFeatureInfo` format of [TrueOrtho](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.TrueOrtho 'DiGi\.GIS\.Constants\.WebService\.TrueOrtho') that carries the sheet attributes: an HTML page whose script calls `skor.push({url:"…", godlo:"…", aktualnosc:"…", …})` once per sheet\. It carries no geometry\.
+
+```csharp
+public const string TrueOrthoInfoFormatHtml = "text/html";
 ```
 
 #### Field Value

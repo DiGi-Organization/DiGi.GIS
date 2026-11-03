@@ -379,9 +379,9 @@ Converts one feature of the GUGiK orthophoto index \(an element such as `gugik:S
 
 <b>Axis order.</b> With `SRSNAME=EPSG:2180` the WFS 1.1.0 response writes every `posList` pair northing first (the official EPSG:2180 axis order); [DiGi\.Geometry\.Planar\.Classes\.Point2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.point2d 'DiGi\.Geometry\.Planar\.Classes\.Point2D') holds easting in X, so each pair is swapped here. Verified 2026-11-03: sheet `N-33-117-D-a-3-4` (latitude about 52.7°) reads `547909 316630`, which is only in Poland as northing 547909, easting 316630.
 
-<b>Date precision.</b> This is the one place it is classified. Analog-era rows carry a `YYYY-01-01` placeholder in `akt_data`, so a 1 January date of an analog source (`zrodlo_danych` containing `analog`) is [Year](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision.Year 'DiGi\.GIS\.Enums\.OrtoDatePrecision\.Year'); every other parsed date is [Day](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision.Day 'DiGi\.GIS\.Enums\.OrtoDatePrecision\.Day').
+<b>Date precision</b> is classified by [OrtoSheetDatePrecision\(this Nullable&lt;DateTimeOffset&gt;, string\)](DiGi.GIS.md#DiGi.GIS.Query.OrtoSheetDatePrecision(thisSystem.Nullable_System.DateTimeOffset_,string) 'DiGi\.GIS\.Query\.OrtoSheetDatePrecision\(this System\.Nullable\<System\.DateTimeOffset\>, string\)'): analog-era rows carry a `YYYY-01-01` placeholder in `akt_data`.
 
-The footprint is the exterior ring of the first polygon of `msGeometry`. The orthophoto type is not in the index and is left [Undefined](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoType.Undefined 'DiGi\.GIS\.Enums\.OrtoType\.Undefined').
+The footprint is the exterior ring of the first polygon of `msGeometry`. Every index row is [Standard](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoType.Standard 'DiGi\.GIS\.Enums\.OrtoType\.Standard'): its download is under `/ortofotomapa/`, while true orthophotos are a separate product with their own sheets and downloads (verified 2026-11-03 at Łódź: the 2021-04-11 flight is index sheet `M-34-3-D-b-4-2` at 1:5 000 and true orthophoto sheet `M-34-3-D-b-4-2-3` at 1:2 500). Read those with [ToDiGi\_OrtoSheets\(this string, string, Nullable&lt;DateTimeOffset&gt;\)](DiGi.GIS.md#DiGi.GIS.Convert.ToDiGi_OrtoSheets(thisstring,string,System.Nullable_System.DateTimeOffset_) 'DiGi\.GIS\.Convert\.ToDiGi\_OrtoSheets\(this string, string, System\.Nullable\<System\.DateTimeOffset\>\)').
 
 ```csharp
 public static DiGi.GIS.Classes.OrtoSheet? ToDiGi_OrtoSheet(this System.Xml.Linq.XElement? xElement, System.Nullable<System.DateTimeOffset> probeDate=null);
@@ -403,6 +403,43 @@ The moment the index was read\.
 #### Returns
 [OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')  
 The sheet, or null when the element is missing or carries neither a sheet identifier nor a year\.
+
+<a name='DiGi.GIS.Convert.ToDiGi_OrtoSheets(thisstring,string,System.Nullable_System.DateTimeOffset_)'></a>
+
+## Convert\.ToDiGi\_OrtoSheets\(this string, string, Nullable\<DateTimeOffset\>\) Method
+
+Converts the two `GetFeatureInfo` answers of the true orthophoto WMS for one point \([Url\_TrueOrthoSheets\(this Point2D, string, int\)](DiGi.GIS.md#DiGi.GIS.Query.Url_TrueOrthoSheets(thisDiGi.Geometry.Planar.Classes.Point2D,string,int) 'DiGi\.GIS\.Query\.Url\_TrueOrthoSheets\(this DiGi\.Geometry\.Planar\.Classes\.Point2D, string, int\)')\) to [OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet') objects of type [TrueOrtho](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoType.TrueOrtho 'DiGi\.GIS\.Enums\.OrtoType\.TrueOrtho')\.
+
+<b>Attributes</b> come from [html](DiGi.GIS.md#DiGi.GIS.Convert.ToDiGi_OrtoSheets(thisstring,string,System.Nullable_System.DateTimeOffset_).html 'DiGi\.GIS\.Convert\.ToDiGi\_OrtoSheets\(this string, string, System\.Nullable\<System\.DateTimeOffset\>\)\.html') ([TrueOrthoInfoFormatHtml](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.TrueOrthoInfoFormatHtml 'DiGi\.GIS\.Constants\.WebService\.TrueOrthoInfoFormatHtml')), the only format that carries them: its script calls `skor.push({url:"…", godlo:"…", aktualnosc:"…", wielkoscPiksela:"…", ukladWspolrzednych:"…", modulArchiwizacji:"…", zrodloDanych:"…", numerZgloszeniaPracy:"…", aktualnoscRok:"…"})` once per sheet. Values are read as written; an escaped quote inside a value is not expected and is not handled. Colour, sheet completeness, register date and file size are not published and stay null or [Undefined](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoColorMode.Undefined 'DiGi\.GIS\.Enums\.OrtoColorMode\.Undefined').
+
+<b>Footprints</b> come from [gml](DiGi.GIS.md#DiGi.GIS.Convert.ToDiGi_OrtoSheets(thisstring,string,System.Nullable_System.DateTimeOffset_).gml 'DiGi\.GIS\.Convert\.ToDiGi\_OrtoSheets\(this string, string, System\.Nullable\<System\.DateTimeOffset\>\)\.gml') ([TrueOrthoInfoFormatGml](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.TrueOrthoInfoFormatGml 'DiGi\.GIS\.Constants\.WebService\.TrueOrthoInfoFormatGml')), whose `gml:Box` elements list the same sheets in the same order with `gml:coordinates` easting first. They are paired by position, and only when both answers list the same number of sheets; otherwise every footprint is null.
+
+```csharp
+public static System.Collections.Generic.List<DiGi.GIS.Classes.OrtoSheet>? ToDiGi_OrtoSheets(this string? html, string? gml, System.Nullable<System.DateTimeOffset> probeDate=null);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Convert.ToDiGi_OrtoSheets(thisstring,string,System.Nullable_System.DateTimeOffset_).html'></a>
+
+`html` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The HTML answer\.
+
+<a name='DiGi.GIS.Convert.ToDiGi_OrtoSheets(thisstring,string,System.Nullable_System.DateTimeOffset_).gml'></a>
+
+`gml` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The GML answer, or null to leave the footprints null\.
+
+<a name='DiGi.GIS.Convert.ToDiGi_OrtoSheets(thisstring,string,System.Nullable_System.DateTimeOffset_).probeDate'></a>
+
+`probeDate` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The moment the service was read\.
+
+#### Returns
+[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')  
+The sheets in the order of the answer \(empty when no sheet covers the point\), or null when [html](DiGi.GIS.md#DiGi.GIS.Convert.ToDiGi_OrtoSheets(thisstring,string,System.Nullable_System.DateTimeOffset_).html 'DiGi\.GIS\.Convert\.ToDiGi\_OrtoSheets\(this string, string, System\.Nullable\<System\.DateTimeOffset\>\)\.html') is missing or is not the HTML answer \(a service exception, for example\)\.
 
 <a name='DiGi.GIS.Convert.ToDiGi_OrtoSheets(thisSystem.IO.Stream,System.Nullable_System.DateTimeOffset_)'></a>
 
@@ -3977,7 +4014,7 @@ The key, or null when the box is missing\.
 
 Gets the obstacles known for an orthophoto sheet: those its index record implies, combined with any measured on a probed image\.
 
-From the record: [SheetIncomplete](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle.SheetIncomplete 'DiGi\.GIS\.Enums\.OrtoObstacle\.SheetIncomplete') (not completely filled), [DateYearPrecision](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle.DateYearPrecision 'DiGi\.GIS\.Enums\.OrtoObstacle\.DateYearPrecision') (year-only date) and [TrueOrthoUnknown](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle.TrueOrthoUnknown 'DiGi\.GIS\.Enums\.OrtoObstacle\.TrueOrthoUnknown') (type not determined). [Unprobed](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle.Unprobed 'DiGi\.GIS\.Enums\.OrtoObstacle\.Unprobed') is set when [measuredOrtoObstacle](DiGi.GIS.md#DiGi.GIS.Query.OrtoObstacles(thisDiGi.GIS.Classes.OrtoSheet,System.Nullable_DiGi.GIS.Enums.OrtoObstacle_).measuredOrtoObstacle 'DiGi\.GIS\.Query\.OrtoObstacles\(this DiGi\.GIS\.Classes\.OrtoSheet, System\.Nullable\<DiGi\.GIS\.Enums\.OrtoObstacle\>\)\.measuredOrtoObstacle') is null.
+From the record: [SheetIncomplete](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle.SheetIncomplete 'DiGi\.GIS\.Enums\.OrtoObstacle\.SheetIncomplete') (not completely filled), [DateYearPrecision](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle.DateYearPrecision 'DiGi\.GIS\.Enums\.OrtoObstacle\.DateYearPrecision') (year-only date) and [TrueOrthoUnknown](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle.TrueOrthoUnknown 'DiGi\.GIS\.Enums\.OrtoObstacle\.TrueOrthoUnknown') (type not determined; never set for a sheet read by [ToDiGi\_OrtoSheet\(this XElement, Nullable&lt;DateTimeOffset&gt;\)](DiGi.GIS.md#DiGi.GIS.Convert.ToDiGi_OrtoSheet(thisSystem.Xml.Linq.XElement,System.Nullable_System.DateTimeOffset_) 'DiGi\.GIS\.Convert\.ToDiGi\_OrtoSheet\(this System\.Xml\.Linq\.XElement, System\.Nullable\<System\.DateTimeOffset\>\)') or [TrueOrthoSheetsAsync\(this HttpClient, Point2D, int, TimeSpan, Nullable&lt;DateTimeOffset&gt;, CancellationToken\)](DiGi.GIS.md#DiGi.GIS.Query.TrueOrthoSheetsAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.Point2D,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken) 'DiGi\.GIS\.Query\.TrueOrthoSheetsAsync\(this System\.Net\.Http\.HttpClient, DiGi\.Geometry\.Planar\.Classes\.Point2D, int, System\.TimeSpan, System\.Nullable\<System\.DateTimeOffset\>, System\.Threading\.CancellationToken\)')). [Unprobed](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoObstacle.Unprobed 'DiGi\.GIS\.Enums\.OrtoObstacle\.Unprobed') is set when [measuredOrtoObstacle](DiGi.GIS.md#DiGi.GIS.Query.OrtoObstacles(thisDiGi.GIS.Classes.OrtoSheet,System.Nullable_DiGi.GIS.Enums.OrtoObstacle_).measuredOrtoObstacle 'DiGi\.GIS\.Query\.OrtoObstacles\(this DiGi\.GIS\.Classes\.OrtoSheet, System\.Nullable\<DiGi\.GIS\.Enums\.OrtoObstacle\>\)\.measuredOrtoObstacle') is null.
 
 ```csharp
 public static DiGi.GIS.Enums.OrtoObstacle OrtoObstacles(this DiGi.GIS.Classes.OrtoSheet? ortoSheet, System.Nullable<DiGi.GIS.Enums.OrtoObstacle> measuredOrtoObstacle=null);
@@ -4076,6 +4113,35 @@ The token to monitor for cancellation requests\.
 [System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
 The feature count, or null when the request fails or the answer carries no count \(a service exception, for example\)\.
 
+<a name='DiGi.GIS.Query.OrtoSheetDatePrecision(thisSystem.Nullable_System.DateTimeOffset_,string)'></a>
+
+## Query\.OrtoSheetDatePrecision\(this Nullable\<DateTimeOffset\>, string\) Method
+
+Classifies the precision of an orthophoto acquisition date as published by GUGiK\.
+
+Analog-era rows carry a `YYYY-01-01` placeholder, so a 1 January date of an analog source ([source](DiGi.GIS.md#DiGi.GIS.Query.OrtoSheetDatePrecision(thisSystem.Nullable_System.DateTimeOffset_,string).source 'DiGi\.GIS\.Query\.OrtoSheetDatePrecision\(this System\.Nullable\<System\.DateTimeOffset\>, string\)\.source') containing `analog`) is [Year](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision.Year 'DiGi\.GIS\.Enums\.OrtoDatePrecision\.Year'); every other date is [Day](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision.Day 'DiGi\.GIS\.Enums\.OrtoDatePrecision\.Day'). Both the index WFS and the true orthophoto WMS converters classify through this one rule.
+
+```csharp
+public static DiGi.GIS.Enums.OrtoDatePrecision OrtoSheetDatePrecision(this System.Nullable<System.DateTimeOffset> date, string? source);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.OrtoSheetDatePrecision(thisSystem.Nullable_System.DateTimeOffset_,string).date'></a>
+
+`date` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The published acquisition date\.
+
+<a name='DiGi.GIS.Query.OrtoSheetDatePrecision(thisSystem.Nullable_System.DateTimeOffset_,string).source'></a>
+
+`source` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The published data source \(`zrodlo_danych`, for example `Zdj. analogowe`\)\.
+
+#### Returns
+[OrtoDatePrecision](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision 'DiGi\.GIS\.Enums\.OrtoDatePrecision')  
+The precision, or [Undefined](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision.Undefined 'DiGi\.GIS\.Enums\.OrtoDatePrecision\.Undefined') when the date is null\.
+
 <a name='DiGi.GIS.Query.OrtoSheetDuplicateGroups(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_)'></a>
 
 ## Query\.OrtoSheetDuplicateGroups\(this IEnumerable\<OrtoSheet\>\) Method
@@ -4086,7 +4152,7 @@ Two rows are the same image when either holds (the groups are the union of both)
 
 A — they share a [DownloadUrl](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.DownloadUrl 'DiGi\.GIS\.Classes\.OrtoSheet\.DownloadUrl') (one physical file).
 
-B — they share [SheetId](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.SheetId 'DiGi\.GIS\.Classes\.OrtoSheet\.SheetId'), [Date](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.Date 'DiGi\.GIS\.Classes\.OrtoSheet\.Date') and [PixelSize](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.PixelSize 'DiGi\.GIS\.Classes\.OrtoSheet\.PixelSize'). Each registration of an image gets a fresh file, so rule A alone misses re-registrations: sheet `N-34-138-B-d-1-4` appears twice in 2024 with different files, both dated 2024-07-18 at 0.25 m.
+B — they share [SheetId](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.SheetId 'DiGi\.GIS\.Classes\.OrtoSheet\.SheetId'), [Date](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.Date 'DiGi\.GIS\.Classes\.OrtoSheet\.Date'), [PixelSize](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.PixelSize 'DiGi\.GIS\.Classes\.OrtoSheet\.PixelSize') and [OrtoType](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.OrtoType 'DiGi\.GIS\.Classes\.OrtoSheet\.OrtoType'). The type is part of the key so a true orthophoto is never merged with a standard sheet: the two products share sheet identifiers and flights (verified 2026-11-03 in Warsaw: `N-34-138-D-d-2-4` is a standard sheet dated 2025-04-27 and a true orthophoto sheet dated 2025-10-21, the day of standard sheet `7.169.20.05`). Each registration of an image gets a fresh file, so rule A alone misses re-registrations: sheet `N-34-138-B-d-1-4` appears twice in 2024 with different files, both dated 2024-07-18 at 0.25 m.
 
 Neither rule merges by sheet identifier alone: the same sheet in 2025 with a different file, date (2025-04-27) and resolution (0.05 m) is a genuine re-acquisition.
 
@@ -4589,6 +4655,61 @@ A collection of string references used to look up the statistical data\.
 [System\.Collections\.Generic\.Dictionary&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')[,](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[StatisticalDataCollection](DiGi.GIS.Classes.md#DiGi.GIS.Classes.StatisticalDataCollection 'DiGi\.GIS\.Classes\.StatisticalDataCollection')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')  
 A dictionary mapping reference strings to their corresponding [StatisticalDataCollection](DiGi.GIS.Classes.md#DiGi.GIS.Classes.StatisticalDataCollection 'DiGi\.GIS\.Classes\.StatisticalDataCollection'), or null if the directory is invalid or references are null\.
 
+<a name='DiGi.GIS.Query.TrueOrthoSheetsAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.Point2D,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken)'></a>
+
+## Query\.TrueOrthoSheetsAsync\(this HttpClient, Point2D, int, TimeSpan, Nullable\<DateTimeOffset\>, CancellationToken\) Method
+
+Asynchronously reads the true orthophoto sheets covering a point from the true orthophoto WMS \([TrueOrtho](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.TrueOrtho 'DiGi\.GIS\.Constants\.WebService\.TrueOrtho')\), as [OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet') objects of type [TrueOrtho](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoType.TrueOrtho 'DiGi\.GIS\.Enums\.OrtoType\.TrueOrtho')\.
+
+True orthophotos are a product of their own and are not rows of the orthophoto index WFS, which has no true orthophoto feed (its WFS answers `Unauthorized`). Coverage is limited to about a dozen cities (2026-11-03), so most points return an empty list.
+
+Two requests are sent one after the other: the HTML answer for the attributes, then the GML answer for the footprints ([ToDiGi\_OrtoSheets\(this string, string, Nullable&lt;DateTimeOffset&gt;\)](DiGi.GIS.md#DiGi.GIS.Convert.ToDiGi_OrtoSheets(thisstring,string,System.Nullable_System.DateTimeOffset_) 'DiGi\.GIS\.Convert\.ToDiGi\_OrtoSheets\(this string, string, System\.Nullable\<System\.DateTimeOffset\>\)') pairs them). A failed GML request leaves the footprints null rather than failing the call.
+
+```csharp
+public static System.Threading.Tasks.Task<System.Collections.Generic.List<DiGi.GIS.Classes.OrtoSheet>?> TrueOrthoSheetsAsync(this System.Net.Http.HttpClient? httpClient, DiGi.Geometry.Planar.Classes.Point2D? point2D, int retryCount, System.TimeSpan retryDelay, System.Nullable<System.DateTimeOffset> probeDate=null, System.Threading.CancellationToken cancellationToken=default(System.Threading.CancellationToken));
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.TrueOrthoSheetsAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.Point2D,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken).httpClient'></a>
+
+`httpClient` [System\.Net\.Http\.HttpClient](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient 'System\.Net\.Http\.HttpClient')
+
+The HTTP client used to send the requests\.
+
+<a name='DiGi.GIS.Query.TrueOrthoSheetsAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.Point2D,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken).point2D'></a>
+
+`point2D` [DiGi\.Geometry\.Planar\.Classes\.Point2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.point2d 'DiGi\.Geometry\.Planar\.Classes\.Point2D')
+
+The point in EPSG:2180, easting in X\.
+
+<a name='DiGi.GIS.Query.TrueOrthoSheetsAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.Point2D,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken).retryCount'></a>
+
+`retryCount` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The number of times a transient failure is retried\.
+
+<a name='DiGi.GIS.Query.TrueOrthoSheetsAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.Point2D,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken).retryDelay'></a>
+
+`retryDelay` [System\.TimeSpan](https://learn.microsoft.com/en-us/dotnet/api/system.timespan 'System\.TimeSpan')
+
+The delay before the first retry, doubling for each attempt after that\.
+
+<a name='DiGi.GIS.Query.TrueOrthoSheetsAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.Point2D,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken).probeDate'></a>
+
+`probeDate` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The moment stamped on every sheet; the current UTC time when null\.
+
+<a name='DiGi.GIS.Query.TrueOrthoSheetsAsync(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.Point2D,int,System.TimeSpan,System.Nullable_System.DateTimeOffset_,System.Threading.CancellationToken).cancellationToken'></a>
+
+`cancellationToken` [System\.Threading\.CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken 'System\.Threading\.CancellationToken')
+
+The token to monitor for cancellation requests\.
+
+#### Returns
+[System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
+The sheets covering the point \(empty when there is none\), or null when an argument is missing or the HTML request fails\.
+
 <a name='DiGi.GIS.Query.Url_Elevation(thisDiGi.Geometry.Planar.Classes.Point2D)'></a>
 
 ## Query\.Url\_Elevation\(this Point2D\) Method
@@ -4812,6 +4933,43 @@ An optional filter box in EPSG:2180, easting in X\.
 #### Returns
 [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')  
 The URL, or null when the typename is empty, the start index is negative or the count is not positive\.
+
+<a name='DiGi.GIS.Query.Url_TrueOrthoSheets(thisDiGi.Geometry.Planar.Classes.Point2D,string,int)'></a>
+
+## Query\.Url\_TrueOrthoSheets\(this Point2D, string, int\) Method
+
+Generates a WMS `GetFeatureInfo` URL asking the true orthophoto service which index sheets \([TrueOrthoIndexLayer](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.TrueOrthoIndexLayer 'DiGi\.GIS\.Constants\.WebService\.TrueOrthoIndexLayer')\) cover a point\.
+
+The point is the centre of a 101 x 101 pixel image at 1 m per pixel, queried at its centre pixel. Pinned to `VERSION=1.1.0` with an easting-first `BBOX`, as [Url\_OrtoImage\(this BoundingBox2D, string, string, string, int, int\)](DiGi.GIS.md#DiGi.GIS.Query.Url_OrtoImage(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,string,string,int,int) 'DiGi\.GIS\.Query\.Url\_OrtoImage\(this DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, string, string, string, int, int\)').
+
+Only [TrueOrthoInfoFormatHtml](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.TrueOrthoInfoFormatHtml 'DiGi\.GIS\.Constants\.WebService\.TrueOrthoInfoFormatHtml') carries the sheet attributes; [TrueOrthoInfoFormatGml](DiGi.GIS.Constants.md#DiGi.GIS.Constants.WebService.TrueOrthoInfoFormatGml 'DiGi\.GIS\.Constants\.WebService\.TrueOrthoInfoFormatGml') carries the sheet boxes only, in the same order (verified 2026-11-03).
+
+```csharp
+public static string? Url_TrueOrthoSheets(this DiGi.Geometry.Planar.Classes.Point2D? point2D, string? infoFormat, int featureCount=50);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.Url_TrueOrthoSheets(thisDiGi.Geometry.Planar.Classes.Point2D,string,int).point2D'></a>
+
+`point2D` [DiGi\.Geometry\.Planar\.Classes\.Point2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.point2d 'DiGi\.Geometry\.Planar\.Classes\.Point2D')
+
+The point in EPSG:2180, easting in X\.
+
+<a name='DiGi.GIS.Query.Url_TrueOrthoSheets(thisDiGi.Geometry.Planar.Classes.Point2D,string,int).infoFormat'></a>
+
+`infoFormat` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The `INFO_FORMAT` value\.
+
+<a name='DiGi.GIS.Query.Url_TrueOrthoSheets(thisDiGi.Geometry.Planar.Classes.Point2D,string,int).featureCount'></a>
+
+`featureCount` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The maximum number of sheets to return\.
+
+#### Returns
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')  
+The URL, or null when an argument is missing or [featureCount](DiGi.GIS.md#DiGi.GIS.Query.Url_TrueOrthoSheets(thisDiGi.Geometry.Planar.Classes.Point2D,string,int).featureCount 'DiGi\.GIS\.Query\.Url\_TrueOrthoSheets\(this DiGi\.Geometry\.Planar\.Classes\.Point2D, string, int\)\.featureCount') is not positive\.
 
 <a name='DiGi.GIS.Query.UserYearBuilt(string,DiGi.GIS.Classes.Building2D)'></a>
 

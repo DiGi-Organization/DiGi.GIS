@@ -23,7 +23,7 @@ namespace DiGi.GIS.Constants
         public const string HighResolutionTime = "https://mapy.geoportal.gov.pl/wss/service/PZGIK/ORTO/WMS/HighResolutionTime";
 
         /// <summary>
-        /// The true orthophoto WMS (index layer <see cref="TrueOrthoIndexLayer"/>, imagery layer <see cref="TrueOrthoLayer"/>). Its WFS interface is disabled, so there is no per-sheet true orthophoto feed.
+        /// The true orthophoto WMS (index layer <see cref="TrueOrthoIndexLayer"/>, imagery layer <see cref="TrueOrthoLayer"/>). Its WFS interface answers <c>Unauthorized</c>, so the true orthophoto sheets are read per point through <c>GetFeatureInfo</c> (<see cref="Query.TrueOrthoSheetsAsync(System.Net.Http.HttpClient, Geometry.Planar.Classes.Point2D, int, System.TimeSpan, System.DateTimeOffset?, System.Threading.CancellationToken)"/>). True orthophotos are a product of their own (downloads under <c>DaneFotogrametryczne/TrueOrtho/</c>, 1:2 500 and 1:5 000 sheets): they are not rows of <see cref="OrtoSheetIndex"/>.
         /// </summary>
         public const string TrueOrtho = "https://mapy.geoportal.gov.pl/wss/service/PZGIK/ORTO/WMS/TrueOrtho";
 
@@ -51,6 +51,16 @@ namespace DiGi.GIS.Constants
         /// The imagery layer of <see cref="TrueOrtho"/>.
         /// </summary>
         public const string TrueOrthoLayer = "PrawdziwaOrtofotomapa";
+
+        /// <summary>
+        /// The <c>GetFeatureInfo</c> format of <see cref="TrueOrtho"/> that carries the sheet attributes: an HTML page whose script calls <c>skor.push({url:"…", godlo:"…", aktualnosc:"…", …})</c> once per sheet. It carries no geometry.
+        /// </summary>
+        public const string TrueOrthoInfoFormatHtml = "text/html";
+
+        /// <summary>
+        /// The <c>GetFeatureInfo</c> format of <see cref="TrueOrtho"/> that carries the sheet boxes (GML 2 <c>gml:Box</c>, <c>gml:coordinates</c> easting first, unlike the northing-first <c>posList</c> of <see cref="OrtoSheetIndex"/>) and no attributes, in the same order as <see cref="TrueOrthoInfoFormatHtml"/>.
+        /// </summary>
+        public const string TrueOrthoInfoFormatGml = "application/vnd.ogc.gml";
 
         /// <summary>
         /// The <c>MaxScaleDenominator</c> both time-enabled WMS services advertise. A request at a coarser scale answers a uniform white image with HTTP 200 and no exception.

@@ -1704,7 +1704,7 @@ public enum OrtoType
 
 `Undefined` -1
 
-The type was not determined\. The per\-sheet index does not carry it, and the true orthophoto service offers no per\-sheet feed\.
+The type was not determined\. Rows of the per\-sheet index are [Standard](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoType.Standard 'DiGi\.GIS\.Enums\.OrtoType\.Standard') and rows of the true orthophoto service are [TrueOrtho](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoType.TrueOrtho 'DiGi\.GIS\.Enums\.OrtoType\.TrueOrtho'); this marks a sheet from neither source\.
 
 <a name='DiGi.GIS.Enums.OrtoType.Standard'></a>
 
