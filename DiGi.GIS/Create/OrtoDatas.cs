@@ -252,5 +252,39 @@ namespace DiGi.GIS
 
             return result;
         }
+        /// <summary>
+        /// Re-dates a stored orthophoto series by the orthophoto sheet index: every image is rebuilt with <see cref="OrtoData(int, byte[], double, BoundingBox2D, IEnumerable{OrtoSheet}, int?)"/>, dated against the last year of its run (<see cref="Query.OrtoDataRunEndYears"/>).
+        /// <para>Stored series were reduced when they were fetched, so their runs of identical images are gone and <see cref="Query.ContentRunEndYears"/> cannot be used; each image is taken to stand for every year up to the next stored image. The area of an image is rebuilt from its location, scale and size (<see cref="OrtoData.GetBoundingBox(Enums.GeometryContext)"/>); an image whose size cannot be read is kept unchanged.</para>
+        /// <para>The result keeps the <see cref="OrtoDatas.Reference"/> and the <see cref="Core.Classes.GuidObject.Guid"/> of the input, and re-dating it again gives the same series.</para>
+        /// </summary>
+        /// <param name="ortoDatas">The stored series.</param>
+        /// <param name="ortoSheets">The orthophoto index sheets of the area; null leaves every image undated.</param>
+        /// <param name="lastYear">The last year requested when the series was fetched (<c>OrtoDatasOptions.Years</c>).</param>
+        /// <returns>The re-dated series, or null when the input is null.</returns>
+        public static OrtoDatas? OrtoDatas(this OrtoDatas? ortoDatas, IEnumerable<OrtoSheet?>? ortoSheets, int lastYear)
+        {
+            if (ortoDatas == null)
+            {
+                return null;
+            }
+
+            Dictionary<DateTime, int> lastYears = Query.OrtoDataRunEndYears(ortoDatas, lastYear)!;
+
+            List<OrtoData> values = [];
+            foreach (OrtoData ortoData in ortoDatas)
+            {
+                if (ortoData == null)
+                {
+                    continue;
+                }
+
+                BoundingBox2D? boundingBox2D = ortoData.GetBoundingBox(Enums.GeometryContext.Global);
+                OrtoData? value = boundingBox2D == null ? null : OrtoData(ortoData.DateTime.Year, ortoData.Bytes, ortoData.Scale, boundingBox2D, ortoSheets, lastYears[ortoData.DateTime]);
+
+                values.Add(value ?? ortoData);
+            }
+
+            return new Classes.OrtoDatas(ortoDatas.Reference, values).Duplicate(ortoDatas.Guid) as OrtoDatas;
+        }
     }
 }

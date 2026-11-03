@@ -1254,6 +1254,43 @@ The orthophoto index sheets of the area, used to date every image by the sheet i
 [System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[OrtoDatas](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoDatas 'DiGi\.GIS\.Classes\.OrtoDatas')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
 A task that represents the asynchronous operation\. The task result contains the OrtoDatas if successful; otherwise, null\.
 
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoDatas,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,int)'></a>
+
+## Create\.OrtoDatas\(this OrtoDatas, IEnumerable\<OrtoSheet\>, int\) Method
+
+Re\-dates a stored orthophoto series by the orthophoto sheet index: every image is rebuilt with [OrtoData\(int, byte\[\], double, BoundingBox2D, IEnumerable&lt;OrtoSheet&gt;, Nullable&lt;int&gt;\)](DiGi.GIS.md#DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_) 'DiGi\.GIS\.Create\.OrtoData\(int, byte\[\], double, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, System\.Nullable\<int\>\)'), dated against the last year of its run \([OrtoDataRunEndYears\(this OrtoDatas, int\)](DiGi.GIS.md#DiGi.GIS.Query.OrtoDataRunEndYears(thisDiGi.GIS.Classes.OrtoDatas,int) 'DiGi\.GIS\.Query\.OrtoDataRunEndYears\(this DiGi\.GIS\.Classes\.OrtoDatas, int\)')\)\.
+
+Stored series were reduced when they were fetched, so their runs of identical images are gone and [ContentRunEndYears\(this IDictionary&lt;int,byte\[\]&gt;\)](DiGi.GIS.md#DiGi.GIS.Query.ContentRunEndYears(thisSystem.Collections.Generic.IDictionary_int,byte[]_) 'DiGi\.GIS\.Query\.ContentRunEndYears\(this System\.Collections\.Generic\.IDictionary\<int,byte\[\]\>\)') cannot be used; each image is taken to stand for every year up to the next stored image. The area of an image is rebuilt from its location, scale and size ([GetBoundingBox\(GeometryContext\)](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData.GetBoundingBox(DiGi.GIS.Enums.GeometryContext) 'DiGi\.GIS\.Classes\.OrtoData\.GetBoundingBox\(DiGi\.GIS\.Enums\.GeometryContext\)')); an image whose size cannot be read is kept unchanged.
+
+The result keeps the [Reference](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoDatas.Reference 'DiGi\.GIS\.Classes\.OrtoDatas\.Reference') and the [DiGi\.Core\.Classes\.GuidObject\.Guid](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.guidobject.guid 'DiGi\.Core\.Classes\.GuidObject\.Guid') of the input, and re-dating it again gives the same series.
+
+```csharp
+public static DiGi.GIS.Classes.OrtoDatas? OrtoDatas(this DiGi.GIS.Classes.OrtoDatas? ortoDatas, System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.OrtoSheet?>? ortoSheets, int lastYear);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoDatas,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,int).ortoDatas'></a>
+
+`ortoDatas` [OrtoDatas](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoDatas 'DiGi\.GIS\.Classes\.OrtoDatas')
+
+The stored series\.
+
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoDatas,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,int).ortoSheets'></a>
+
+`ortoSheets` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The orthophoto index sheets of the area; null leaves every image undated\.
+
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoDatas,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,int).lastYear'></a>
+
+`lastYear` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The last year requested when the series was fetched \(`OrtoDatasOptions.Years`\)\.
+
+#### Returns
+[OrtoDatas](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoDatas 'DiGi\.GIS\.Classes\.OrtoDatas')  
+The re\-dated series, or null when the input is null\.
+
 <a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoRange,DiGi.Core.Classes.Range_int_,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_)'></a>
 
 ## Create\.OrtoDatas\(this OrtoRange, Range\<int\>, double, bool, bool, IEnumerable\<OrtoSheet\>\) Method
@@ -3645,6 +3682,35 @@ The building to evaluate\.
 #### Returns
 [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')  
 The occupancy area, or `null` when the building is not occupied \(see [IsOccupied\(this Building2D\)](DiGi.GIS.md#DiGi.GIS.Query.IsOccupied(thisDiGi.GIS.Classes.Building2D) 'DiGi\.GIS\.Query\.IsOccupied\(this DiGi\.GIS\.Classes\.Building2D\)')\), has no footprint, or its footprint area is not positive\.
+
+<a name='DiGi.GIS.Query.OrtoDataRunEndYears(thisDiGi.GIS.Classes.OrtoDatas,int)'></a>
+
+## Query\.OrtoDataRunEndYears\(this OrtoDatas, int\) Method
+
+Gets, for every image of a stored \(reduced\) series, the last requested year of its run: the year before the next image's requested year, or [lastYear](DiGi.GIS.md#DiGi.GIS.Query.OrtoDataRunEndYears(thisDiGi.GIS.Classes.OrtoDatas,int).lastYear 'DiGi\.GIS\.Query\.OrtoDataRunEndYears\(this DiGi\.GIS\.Classes\.OrtoDatas, int\)\.lastYear') for the last image\.
+
+This is the stored-series counterpart of [ContentRunEndYears\(this IDictionary&lt;int,byte\[\]&gt;\)](DiGi.GIS.md#DiGi.GIS.Query.ContentRunEndYears(thisSystem.Collections.Generic.IDictionary_int,byte[]_) 'DiGi\.GIS\.Query\.ContentRunEndYears\(this System\.Collections\.Generic\.IDictionary\<int,byte\[\]\>\)'). [Reduce\(\)](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoDatas.Reduce() 'DiGi\.GIS\.Classes\.OrtoDatas\.Reduce\(\)') drops consecutive identical images and keeps the first requested year, so a stored image stood for every year up to the next stored one. A requested year that failed to download is indistinguishable from a repeat; its run is then over-long, which can only move the date to a later sheet within the gap.
+
+```csharp
+public static System.Collections.Generic.Dictionary<System.DateTime,int>? OrtoDataRunEndYears(this DiGi.GIS.Classes.OrtoDatas? ortoDatas, int lastYear);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.OrtoDataRunEndYears(thisDiGi.GIS.Classes.OrtoDatas,int).ortoDatas'></a>
+
+`ortoDatas` [OrtoDatas](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoDatas 'DiGi\.GIS\.Classes\.OrtoDatas')
+
+The stored series\.
+
+<a name='DiGi.GIS.Query.OrtoDataRunEndYears(thisDiGi.GIS.Classes.OrtoDatas,int).lastYear'></a>
+
+`lastYear` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The last year requested when the series was fetched \(`OrtoDatasOptions.Years`\)\.
+
+#### Returns
+[System\.Collections\.Generic\.Dictionary&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[System\.DateTime](https://learn.microsoft.com/en-us/dotnet/api/system.datetime 'System\.DateTime')[,](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')  
+The last year of each image's run by its requested [DateTime](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData.DateTime 'DiGi\.GIS\.Classes\.OrtoData\.DateTime'), or null when the series is null\.
 
 <a name='DiGi.GIS.Query.OrtoDatas(thisDiGi.GIS.Classes.Building2D,string)'></a>
 
