@@ -6482,6 +6482,8 @@ public System.Nullable<System.DateTimeOffset> ProbeDate { get; }
 
 Represents orthophoto data, containing the image bytes, timestamp, location, and scale factor\.
 
+[DateTime](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData.DateTime 'DiGi\.GIS\.Classes\.OrtoData\.DateTime') is the year requested from the time-enabled WMS, not the date of the photograph: for a year with no flight the service answers the nearest earlier imagery (DiGi.GIS#17). The photograph's date is [AcquisitionDate](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData.AcquisitionDate 'DiGi\.GIS\.Classes\.OrtoData\.AcquisitionDate'), read from the orthophoto sheet index ([AcquisitionOrtoSheet\(this IEnumerable&lt;OrtoSheet&gt;, Point2D, int\)](DiGi.GIS.md#DiGi.GIS.Query.AcquisitionOrtoSheet(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,DiGi.Geometry.Planar.Classes.Point2D,int) 'DiGi\.GIS\.Query\.AcquisitionOrtoSheet\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, DiGi\.Geometry\.Planar\.Classes\.Point2D, int\)')), and identical images share [ContentHash](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData.ContentHash 'DiGi\.GIS\.Classes\.OrtoData\.ContentHash').
+
 ```csharp
 public class OrtoData : DiGi.Core.Classes.SerializableObject, DiGi.GIS.Interfaces.IGISObject, DiGi.Core.Interfaces.IObject
 ```
@@ -6508,40 +6510,64 @@ public OrtoData(DiGi.GIS.Classes.OrtoData? ortoData);
 
 The source orthophoto data to copy from\.
 
-<a name='DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D)'></a>
+<a name='DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,string,string)'></a>
 
-## OrtoData\(DateTime, byte\[\], double, Point2D\) Constructor
+## OrtoData\(DateTime, byte\[\], double, Point2D, Nullable\<DateTimeOffset\>, OrtoDatePrecision, string, string\) Constructor
 
 Initializes a new instance of the [OrtoData](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData 'DiGi\.GIS\.Classes\.OrtoData') class\.
 
 ```csharp
-public OrtoData(System.DateTime dateTime, byte[]? bytes, double scale, DiGi.Geometry.Planar.Classes.Point2D? location);
+public OrtoData(System.DateTime dateTime, byte[]? bytes, double scale, DiGi.Geometry.Planar.Classes.Point2D? location, System.Nullable<System.DateTimeOffset> acquisitionDate=null, DiGi.GIS.Enums.OrtoDatePrecision acquisitionDatePrecision=DiGi.GIS.Enums.OrtoDatePrecision.Undefined, string? sheetId=null, string? contentHash=null);
 ```
 #### Parameters
 
-<a name='DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D).dateTime'></a>
+<a name='DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,string,string).dateTime'></a>
 
 `dateTime` [System\.DateTime](https://learn.microsoft.com/en-us/dotnet/api/system.datetime 'System\.DateTime')
 
-The date and time associated with the orthophoto data\.
+The year requested from the time\-enabled WMS, as 1 January of that year\.
 
-<a name='DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D).bytes'></a>
+<a name='DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,string,string).bytes'></a>
 
 `bytes` [System\.Byte](https://learn.microsoft.com/en-us/dotnet/api/system.byte 'System\.Byte')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')
 
 The bitmap image stored as bytes\.
 
-<a name='DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D).scale'></a>
+<a name='DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,string,string).scale'></a>
 
 `scale` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
 
 The scale factor of the image\.
 
-<a name='DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D).location'></a>
+<a name='DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,string,string).location'></a>
 
 `location` [DiGi\.Geometry\.Planar\.Classes\.Point2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.point2d 'DiGi\.Geometry\.Planar\.Classes\.Point2D')
 
 The top\-left corner coordinates of the picture\.
+
+<a name='DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,string,string).acquisitionDate'></a>
+
+`acquisitionDate` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The date the photograph was taken, from the orthophoto sheet index, or null when no sheet was resolved\.
+
+<a name='DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,string,string).acquisitionDatePrecision'></a>
+
+`acquisitionDatePrecision` [OrtoDatePrecision](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision 'DiGi\.GIS\.Enums\.OrtoDatePrecision')
+
+The precision of [acquisitionDate](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,string,string).acquisitionDate 'DiGi\.GIS\.Classes\.OrtoData\.OrtoData\(System\.DateTime, byte\[\], double, DiGi\.Geometry\.Planar\.Classes\.Point2D, System\.Nullable\<System\.DateTimeOffset\>, DiGi\.GIS\.Enums\.OrtoDatePrecision, string, string\)\.acquisitionDate'); [Undefined](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision.Undefined 'DiGi\.GIS\.Enums\.OrtoDatePrecision\.Undefined') when no sheet was resolved\.
+
+<a name='DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,string,string).sheetId'></a>
+
+`sheetId` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The identifier of the index sheet the date was read from\.
+
+<a name='DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,string,string).contentHash'></a>
+
+`contentHash` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The SHA\-256 of [bytes](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData.OrtoData(System.DateTime,byte[],double,DiGi.Geometry.Planar.Classes.Point2D,System.Nullable_System.DateTimeOffset_,DiGi.GIS.Enums.OrtoDatePrecision,string,string).bytes 'DiGi\.GIS\.Classes\.OrtoData\.OrtoData\(System\.DateTime, byte\[\], double, DiGi\.Geometry\.Planar\.Classes\.Point2D, System\.Nullable\<System\.DateTimeOffset\>, DiGi\.GIS\.Enums\.OrtoDatePrecision, string, string\)\.bytes') \([ContentHash\(this byte\[\]\)](DiGi.GIS.md#DiGi.GIS.Query.ContentHash(thisbyte[]) 'DiGi\.GIS\.Query\.ContentHash\(this byte\[\]\)')\)\.
 
 <a name='DiGi.GIS.Classes.OrtoData.OrtoData(System.Text.Json.Nodes.JsonObject)'></a>
 
@@ -6561,6 +6587,32 @@ public OrtoData(System.Text.Json.Nodes.JsonObject? jsonObject);
 The JSON object containing orthophoto data\.
 ### Properties
 
+<a name='DiGi.GIS.Classes.OrtoData.AcquisitionDate'></a>
+
+## OrtoData\.AcquisitionDate Property
+
+Gets the date the photograph was taken, read from the orthophoto sheet index, or null when no sheet was resolved\.
+
+```csharp
+public System.Nullable<System.DateTimeOffset> AcquisitionDate { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+<a name='DiGi.GIS.Classes.OrtoData.AcquisitionDatePrecision'></a>
+
+## OrtoData\.AcquisitionDatePrecision Property
+
+Gets the precision of [AcquisitionDate](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData.AcquisitionDate 'DiGi\.GIS\.Classes\.OrtoData\.AcquisitionDate'): [Year](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision.Year 'DiGi\.GIS\.Enums\.OrtoDatePrecision\.Year') for an analog placeholder date, [Undefined](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision.Undefined 'DiGi\.GIS\.Enums\.OrtoDatePrecision\.Undefined') when no sheet was resolved \(an undated image, never an observation boundary\)\.
+
+```csharp
+public DiGi.GIS.Enums.OrtoDatePrecision AcquisitionDatePrecision { get; }
+```
+
+#### Property Value
+[OrtoDatePrecision](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision 'DiGi\.GIS\.Enums\.OrtoDatePrecision')
+
 <a name='DiGi.GIS.Classes.OrtoData.Bytes'></a>
 
 ## OrtoData\.Bytes Property
@@ -6574,11 +6626,24 @@ public byte[]? Bytes { get; }
 #### Property Value
 [System\.Byte](https://learn.microsoft.com/en-us/dotnet/api/system.byte 'System\.Byte')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')
 
+<a name='DiGi.GIS.Classes.OrtoData.ContentHash'></a>
+
+## OrtoData\.ContentHash Property
+
+Gets the SHA\-256 of [Bytes](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData.Bytes 'DiGi\.GIS\.Classes\.OrtoData\.Bytes'); identical images share it and are one observation \([OrtoObservations\(this IEnumerable&lt;OrtoData&gt;\)](DiGi.GIS.md#DiGi.GIS.Query.OrtoObservations(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoData_) 'DiGi\.GIS\.Query\.OrtoObservations\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoData\>\)')\)\.
+
+```csharp
+public string? ContentHash { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
 <a name='DiGi.GIS.Classes.OrtoData.DateTime'></a>
 
 ## OrtoData\.DateTime Property
 
-Gets the date and time associated with the orthophoto data\.
+Gets the year requested from the time\-enabled WMS, as 1 January of that year\. It is not the date of the photograph; see [AcquisitionDate](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData.AcquisitionDate 'DiGi\.GIS\.Classes\.OrtoData\.AcquisitionDate')\.
 
 ```csharp
 public System.DateTime DateTime { get; }
@@ -6612,6 +6677,19 @@ public double Scale { get; }
 
 #### Property Value
 [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Classes.OrtoData.SheetId'></a>
+
+## OrtoData\.SheetId Property
+
+Gets the identifier of the orthophoto index sheet [AcquisitionDate](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData.AcquisitionDate 'DiGi\.GIS\.Classes\.OrtoData\.AcquisitionDate') was read from\.
+
+```csharp
+public string? SheetId { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 ### Methods
 
 <a name='DiGi.GIS.Classes.OrtoData.FromOrto(DiGi.Geometry.Planar.Classes.Point2D)'></a>

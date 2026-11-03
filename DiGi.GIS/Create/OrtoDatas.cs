@@ -20,8 +20,9 @@ namespace DiGi.GIS
         /// <param name="width">The desired width of the resulting image data.</param>
         /// <param name="reduce">A value indicating whether to reduce the result set.</param>
         /// <param name="squared">A value indicating whether the requested area should be forced into a square shape.</param>
+        /// <param name="ortoSheets">The orthophoto index sheets of the area, used to date every image by the sheet it shows (<see cref="OrtoData(int, byte[], double, BoundingBox2D, IEnumerable{OrtoSheet}, int?)"/>); null leaves the images undated.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains the OrtoDatas if successful; otherwise, null.</returns>
-        public static async Task<OrtoDatas?> OrtoDatas(this Building2D? building2D, Range<int>? years, double offset = 5, double width = 320, bool reduce = true, bool squared = false)
+        public static async Task<OrtoDatas?> OrtoDatas(this Building2D? building2D, Range<int>? years, double offset = 5, double width = 320, bool reduce = true, bool squared = false, IEnumerable<OrtoSheet?>? ortoSheets = null)
         {
             if (building2D == null || years == null)
             {
@@ -50,7 +51,7 @@ namespace DiGi.GIS
 
             double scale = width / boundingBox2D.Width;
 
-            return await OrtoDatas(boundingBox2D, building2D.Reference, years, scale, reduce);
+            return await OrtoDatas(boundingBox2D, building2D.Reference, years, scale, reduce, ortoSheets);
         }
 
         /// <summary>
@@ -64,8 +65,18 @@ namespace DiGi.GIS
         /// <param name="reduce">A value indicating whether to reduce the result set.</param>
         /// <param name="squared">A value indicating whether the requested area should be forced into a square shape.</param>
         /// <param name="initialRequestCount">The initial number of requests to perform when querying data.</param>
+        /// <param name="ortoSheets">The orthophoto index sheets of the area, used to date every image by the sheet it shows (<see cref="OrtoData(int, byte[], double, BoundingBox2D, IEnumerable{OrtoSheet}, int?)"/>); null leaves the images undated.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains the OrtoDatas if successful; otherwise, null.</returns>
-        public static async Task<OrtoDatas?> OrtoDatas(this HttpClient httpClient, Building2D? building2D, Range<int>? years, double offset = 5, double width = 320, bool reduce = true, bool squared = false, int initialRequestCount = 8)
+        public static async Task<OrtoDatas?> OrtoDatas(
+            this HttpClient httpClient,
+            Building2D? building2D,
+            Range<int>? years,
+            double offset = 5,
+            double width = 320,
+            bool reduce = true,
+            bool squared = false,
+            int initialRequestCount = 8,
+            IEnumerable<OrtoSheet?>? ortoSheets = null)
         {
             if (building2D is null || years is null || httpClient is null)
             {
@@ -94,7 +105,7 @@ namespace DiGi.GIS
 
             double scale = width / boundingBox2D.Width;
 
-            return await OrtoDatas(httpClient, boundingBox2D, building2D.Reference, years, scale, reduce, initialRequestCount);
+            return await OrtoDatas(httpClient, boundingBox2D, building2D.Reference, years, scale, reduce, initialRequestCount, ortoSheets);
         }
 
         /// <summary>
@@ -105,8 +116,9 @@ namespace DiGi.GIS
         /// <param name="scale">The scale factor used for the image request.</param>
         /// <param name="reduce">A value indicating whether to reduce the result set.</param>
         /// <param name="squared">A value indicating whether the requested area should be forced into a square shape.</param>
+        /// <param name="ortoSheets">The orthophoto index sheets of the area, used to date every image by the sheet it shows (<see cref="OrtoData(int, byte[], double, BoundingBox2D, IEnumerable{OrtoSheet}, int?)"/>); null leaves the images undated.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains the OrtoDatas if successful; otherwise, null.</returns>
-        public static async Task<OrtoDatas?> OrtoDatas(this OrtoRange? ortoRange, Range<int>? years, double scale, bool reduce = true, bool squared = false)
+        public static async Task<OrtoDatas?> OrtoDatas(this OrtoRange? ortoRange, Range<int>? years, double scale, bool reduce = true, bool squared = false, IEnumerable<OrtoSheet?>? ortoSheets = null)
         {
             if (double.IsNaN(scale))
             {
@@ -126,7 +138,7 @@ namespace DiGi.GIS
                 boundingBox2D = Geometry.Planar.Create.BoundingBox2D(boundingBox2D.GetCentroid(), max_Temp, max_Temp);
             }
 
-            return await OrtoDatas(boundingBox2D, ortoRange?.UniqueId, years, scale, reduce);
+            return await OrtoDatas(boundingBox2D, ortoRange?.UniqueId, years, scale, reduce, ortoSheets);
         }
 
         /// <summary>
@@ -137,8 +149,9 @@ namespace DiGi.GIS
         /// <param name="years">The range of years for which to retrieve orthophoto data.</param>
         /// <param name="scale">The scale factor used for the image request.</param>
         /// <param name="reduce">A value indicating whether to reduce the result set.</param>
+        /// <param name="ortoSheets">The orthophoto index sheets of the area, used to date every image by the sheet it shows (<see cref="OrtoData(int, byte[], double, BoundingBox2D, IEnumerable{OrtoSheet}, int?)"/>); null leaves the images undated.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains the OrtoDatas if successful; otherwise, null.</returns>
-        public static async Task<OrtoDatas?> OrtoDatas(this BoundingBox2D? boundingBox2D, string? reference, Range<int>? years, double scale, bool reduce = true)
+        public static async Task<OrtoDatas?> OrtoDatas(this BoundingBox2D? boundingBox2D, string? reference, Range<int>? years, double scale, bool reduce = true, IEnumerable<OrtoSheet?>? ortoSheets = null)
         {
             if (boundingBox2D is null)
             {
@@ -158,10 +171,14 @@ namespace DiGi.GIS
                 Dictionary<int, byte[]>? dictionary = await Query.BytesDictionary(boundingBox2D, yearsList, scale);
                 if (dictionary != null && dictionary.Count != 0)
                 {
+                    Dictionary<int, int> lastYears = Query.ContentRunEndYears(dictionary)!;
                     foreach (KeyValuePair<int, byte[]> keyValuePair in dictionary)
                     {
-                        OrtoData value = new(new DateTime(keyValuePair.Key, 1, 1), keyValuePair.Value, scale, boundingBox2D.TopLeft);
-                        values.Add(value);
+                        OrtoData? value = OrtoData(keyValuePair.Key, keyValuePair.Value, scale, boundingBox2D, ortoSheets, lastYears[keyValuePair.Key]);
+                        if (value != null)
+                        {
+                            values.Add(value);
+                        }
                     }
                 }
             }
@@ -185,8 +202,17 @@ namespace DiGi.GIS
         /// <param name="scale">The scale factor used for the image request.</param>
         /// <param name="reduce">A value indicating whether to reduce the result set.</param>
         /// <param name="initialRequestCount">The initial number of requests to perform when querying data.</param>
+        /// <param name="ortoSheets">The orthophoto index sheets of the area, used to date every image by the sheet it shows (<see cref="OrtoData(int, byte[], double, BoundingBox2D, IEnumerable{OrtoSheet}, int?)"/>); null leaves the images undated.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains the OrtoDatas if successful; otherwise, null.</returns>
-        public static async Task<OrtoDatas?> OrtoDatas(this HttpClient httpClient, BoundingBox2D? boundingBox2D, string? reference, Range<int>? years, double scale, bool reduce = true, int initialRequestCount = 8)
+        public static async Task<OrtoDatas?> OrtoDatas(
+            this HttpClient httpClient,
+            BoundingBox2D? boundingBox2D,
+            string? reference,
+            Range<int>? years,
+            double scale,
+            bool reduce = true,
+            int initialRequestCount = 8,
+            IEnumerable<OrtoSheet?>? ortoSheets = null)
         {
             if (boundingBox2D is null || httpClient is null)
             {
@@ -206,10 +232,14 @@ namespace DiGi.GIS
                 Dictionary<int, byte[]>? dictionary = await Query.BytesDictionary(httpClient, boundingBox2D, yearsList, scale, initialRequestCount);
                 if (dictionary != null && dictionary.Count != 0)
                 {
+                    Dictionary<int, int> lastYears = Query.ContentRunEndYears(dictionary)!;
                     foreach (KeyValuePair<int, byte[]> keyValuePair in dictionary)
                     {
-                        OrtoData value = new(new DateTime(keyValuePair.Key, 1, 1), keyValuePair.Value, scale, boundingBox2D.TopLeft);
-                        values.Add(value);
+                        OrtoData? value = OrtoData(keyValuePair.Key, keyValuePair.Value, scale, boundingBox2D, ortoSheets, lastYears[keyValuePair.Key]);
+                        if (value != null)
+                        {
+                            values.Add(value);
+                        }
                     }
                 }
             }

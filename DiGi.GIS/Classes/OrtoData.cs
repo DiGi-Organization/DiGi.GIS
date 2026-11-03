@@ -12,11 +12,22 @@ namespace DiGi.GIS.Classes
 {
     /// <summary>
     /// Represents orthophoto data, containing the image bytes, timestamp, location, and scale factor.
+    /// <para><see cref="DateTime"/> is the year requested from the time-enabled WMS, not the date of the photograph: for a year with no flight the service answers the nearest earlier imagery (DiGi.GIS#17). The photograph's date is <see cref="AcquisitionDate"/>, read from the orthophoto sheet index (<see cref="Query.AcquisitionOrtoSheet"/>), and identical images share <see cref="ContentHash"/>.</para>
     /// </summary>
     public class OrtoData : SerializableObject, IGISObject
     {
+        [JsonInclude, JsonPropertyName(nameof(AcquisitionDate))]
+        private readonly DateTimeOffset? acquisitionDate;
+
+        // Initialized so a row stored before this member existed reads as Undefined, not as Day (0).
+        [JsonInclude, JsonPropertyName(nameof(AcquisitionDatePrecision))]
+        private readonly OrtoDatePrecision acquisitionDatePrecision = OrtoDatePrecision.Undefined;
+
         [JsonInclude, JsonPropertyName("Bytes")]
         private readonly byte[]? bytes;
+
+        [JsonInclude, JsonPropertyName(nameof(ContentHash))]
+        private readonly string? contentHash;
 
         [JsonInclude, JsonPropertyName("DateTime")]
         private readonly DateTime dateTime;
@@ -27,19 +38,38 @@ namespace DiGi.GIS.Classes
         [JsonInclude, JsonPropertyName("Scale")]
         private readonly double scale;
 
+        [JsonInclude, JsonPropertyName(nameof(SheetId))]
+        private readonly string? sheetId;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="OrtoData"/> class.
         /// </summary>
-        /// <param name="dateTime">The date and time associated with the orthophoto data.</param>
+        /// <param name="dateTime">The year requested from the time-enabled WMS, as 1 January of that year.</param>
         /// <param name="bytes">The bitmap image stored as bytes.</param>
         /// <param name="scale">The scale factor of the image.</param>
         /// <param name="location">The top-left corner coordinates of the picture.</param>
-        public OrtoData(DateTime dateTime, byte[]? bytes, double scale, Point2D? location)
+        /// <param name="acquisitionDate">The date the photograph was taken, from the orthophoto sheet index, or null when no sheet was resolved.</param>
+        /// <param name="acquisitionDatePrecision">The precision of <paramref name="acquisitionDate"/>; <see cref="OrtoDatePrecision.Undefined"/> when no sheet was resolved.</param>
+        /// <param name="sheetId">The identifier of the index sheet the date was read from.</param>
+        /// <param name="contentHash">The SHA-256 of <paramref name="bytes"/> (<see cref="Query.ContentHash(byte[])"/>).</param>
+        public OrtoData(
+            DateTime dateTime,
+            byte[]? bytes,
+            double scale,
+            Point2D? location,
+            DateTimeOffset? acquisitionDate = null,
+            OrtoDatePrecision acquisitionDatePrecision = OrtoDatePrecision.Undefined,
+            string? sheetId = null,
+            string? contentHash = null)
         {
             this.dateTime = dateTime;
             this.bytes = bytes;
             this.scale = scale;
             this.location = location;
+            this.acquisitionDate = acquisitionDate;
+            this.acquisitionDatePrecision = acquisitionDatePrecision;
+            this.sheetId = sheetId;
+            this.contentHash = contentHash;
         }
 
         /// <summary>
@@ -54,6 +84,10 @@ namespace DiGi.GIS.Classes
                 bytes = ortoData.bytes;
                 scale = ortoData.scale;
                 location = ortoData.location?.Clone<Point2D>();
+                acquisitionDate = ortoData.acquisitionDate;
+                acquisitionDatePrecision = ortoData.acquisitionDatePrecision;
+                sheetId = ortoData.sheetId;
+                contentHash = ortoData.contentHash;
             }
         }
 
@@ -64,6 +98,30 @@ namespace DiGi.GIS.Classes
         public OrtoData(JsonObject? jsonObject)
             : base(jsonObject)
         {
+        }
+
+        /// <summary>
+        /// Gets the date the photograph was taken, read from the orthophoto sheet index, or null when no sheet was resolved.
+        /// </summary>
+        [JsonIgnore]
+        public DateTimeOffset? AcquisitionDate
+        {
+            get
+            {
+                return acquisitionDate;
+            }
+        }
+
+        /// <summary>
+        /// Gets the precision of <see cref="AcquisitionDate"/>: <see cref="OrtoDatePrecision.Year"/> for an analog placeholder date, <see cref="OrtoDatePrecision.Undefined"/> when no sheet was resolved (an undated image, never an observation boundary).
+        /// </summary>
+        [JsonIgnore]
+        public OrtoDatePrecision AcquisitionDatePrecision
+        {
+            get
+            {
+                return acquisitionDatePrecision;
+            }
         }
 
         /// <summary>
@@ -79,7 +137,19 @@ namespace DiGi.GIS.Classes
         }
 
         /// <summary>
-        /// Gets the date and time associated with the orthophoto data.
+        /// Gets the SHA-256 of <see cref="Bytes"/>; identical images share it and are one observation (<see cref="Query.OrtoObservations"/>).
+        /// </summary>
+        [JsonIgnore]
+        public string? ContentHash
+        {
+            get
+            {
+                return contentHash;
+            }
+        }
+
+        /// <summary>
+        /// Gets the year requested from the time-enabled WMS, as 1 January of that year. It is not the date of the photograph; see <see cref="AcquisitionDate"/>.
         /// </summary>
         [JsonIgnore]
         public DateTime DateTime
@@ -111,6 +181,18 @@ namespace DiGi.GIS.Classes
             get
             {
                 return scale;
+            }
+        }
+
+        /// <summary>
+        /// Gets the identifier of the orthophoto index sheet <see cref="AcquisitionDate"/> was read from.
+        /// </summary>
+        [JsonIgnore]
+        public string? SheetId
+        {
+            get
+            {
+                return sheetId;
             }
         }
 

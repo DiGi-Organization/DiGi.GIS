@@ -1093,262 +1093,345 @@ The moment the index was read; null takes the latest [ProbeDate](DiGi.GIS.Classe
 [OrtoAvailabilityMatrix](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoAvailabilityMatrix 'DiGi\.GIS\.Classes\.OrtoAvailabilityMatrix')  
 The matrix, or null when the rows are null, the cell size is not positive or the fraction is outside \(0, 1\]\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool)'></a>
+<a name='DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_)'></a>
 
-## Create\.OrtoDatas\(this BoundingBox2D, string, Range\<int\>, double, bool\) Method
+## Create\.OrtoData\(int, byte\[\], double, BoundingBox2D, IEnumerable\<OrtoSheet\>, Nullable\<int\>\) Method
+
+Creates the orthophoto data of one image requested from the time\-enabled WMS, dated by the index sheet it shows\.
+
+The acquisition date is that of [AcquisitionOrtoSheet\(this IEnumerable&lt;OrtoSheet&gt;, Point2D, int\)](DiGi.GIS.md#DiGi.GIS.Query.AcquisitionOrtoSheet(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,DiGi.Geometry.Planar.Classes.Point2D,int) 'DiGi\.GIS\.Query\.AcquisitionOrtoSheet\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, DiGi\.Geometry\.Planar\.Classes\.Point2D, int\)') at the centre of [boundingBox2D](DiGi.GIS.md#DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_).boundingBox2D 'DiGi\.GIS\.Create\.OrtoData\(int, byte\[\], double, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, System\.Nullable\<int\>\)\.boundingBox2D') for [lastYear](DiGi.GIS.md#DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_).lastYear 'DiGi\.GIS\.Create\.OrtoData\(int, byte\[\], double, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, System\.Nullable\<int\>\)\.lastYear'), the last consecutive requested year that returned the same image ([ContentRunEndYears\(this IDictionary&lt;int,byte\[\]&gt;\)](DiGi.GIS.md#DiGi.GIS.Query.ContentRunEndYears(thisSystem.Collections.Generic.IDictionary_int,byte[]_) 'DiGi\.GIS\.Query\.ContentRunEndYears\(this System\.Collections\.Generic\.IDictionary\<int,byte\[\]\>\)')): the WMS can serve a photograph under a year before its sheet's index date. Without [ortoSheets](DiGi.GIS.md#DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_).ortoSheets 'DiGi\.GIS\.Create\.OrtoData\(int, byte\[\], double, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, System\.Nullable\<int\>\)\.ortoSheets'), or when no sheet qualifies, the image is undated ([Undefined](DiGi.GIS.Enums.md#DiGi.GIS.Enums.OrtoDatePrecision.Undefined 'DiGi\.GIS\.Enums\.OrtoDatePrecision\.Undefined')) and keeps only the requested year. The content hash is always set.
+
+```csharp
+public static DiGi.GIS.Classes.OrtoData? OrtoData(int year, byte[]? bytes, double scale, DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D, System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.OrtoSheet?>? ortoSheets=null, System.Nullable<int> lastYear=null);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_).year'></a>
+
+`year` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The year requested from the WMS\.
+
+<a name='DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_).bytes'></a>
+
+`bytes` [System\.Byte](https://learn.microsoft.com/en-us/dotnet/api/system.byte 'System\.Byte')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')
+
+The image\.
+
+<a name='DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_).scale'></a>
+
+`scale` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The scale factor of the image\.
+
+<a name='DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_).boundingBox2D'></a>
+
+`boundingBox2D` [DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
+
+The requested area in EPSG:2180; its top\-left corner is the image location\.
+
+<a name='DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_).ortoSheets'></a>
+
+`ortoSheets` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The orthophoto index sheets of the area, or null to leave the image undated\.
+
+<a name='DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_).lastYear'></a>
+
+`lastYear` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The last consecutive requested year that returned the same image; null means [year](DiGi.GIS.md#DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_).year 'DiGi\.GIS\.Create\.OrtoData\(int, byte\[\], double, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, System\.Nullable\<int\>\)\.year')\.
+
+#### Returns
+[OrtoData](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData 'DiGi\.GIS\.Classes\.OrtoData')  
+The orthophoto data, or null when the area is missing\.
+
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_)'></a>
+
+## Create\.OrtoDatas\(this BoundingBox2D, string, Range\<int\>, double, bool, IEnumerable\<OrtoSheet\>\) Method
 
 Asynchronously retrieves orthophoto data for a specific bounding box and year range\.
 
 ```csharp
-public static System.Threading.Tasks.Task<DiGi.GIS.Classes.OrtoDatas?> OrtoDatas(this DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D, string? reference, DiGi.Core.Classes.Range<int>? years, double scale, bool reduce=true);
+public static System.Threading.Tasks.Task<DiGi.GIS.Classes.OrtoDatas?> OrtoDatas(this DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D, string? reference, DiGi.Core.Classes.Range<int>? years, double scale, bool reduce=true, System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.OrtoSheet?>? ortoSheets=null);
 ```
 #### Parameters
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool).boundingBox2D'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).boundingBox2D'></a>
 
 `boundingBox2D` [DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
 
 The geographic area to retrieve data for\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool).reference'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).reference'></a>
 
 `reference` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 A reference string associated with the requested data\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool).years'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).years'></a>
 
 `years` [DiGi\.Core\.Classes\.Range&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.range-1 'DiGi\.Core\.Classes\.Range\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.range-1 'DiGi\.Core\.Classes\.Range\`1')
 
 The range of years for which to retrieve orthophoto data\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool).scale'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).scale'></a>
 
 `scale` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
 
 The scale factor used for the image request\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool).reduce'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).reduce'></a>
 
 `reduce` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
 
 A value indicating whether to reduce the result set\.
 
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).ortoSheets'></a>
+
+`ortoSheets` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The orthophoto index sheets of the area, used to date every image by the sheet it shows \([OrtoData\(int, byte\[\], double, BoundingBox2D, IEnumerable&lt;OrtoSheet&gt;, Nullable&lt;int&gt;\)](DiGi.GIS.md#DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_) 'DiGi\.GIS\.Create\.OrtoData\(int, byte\[\], double, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, System\.Nullable\<int\>\)')\); null leaves the images undated\.
+
 #### Returns
 [System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[OrtoDatas](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoDatas 'DiGi\.GIS\.Classes\.OrtoDatas')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
 A task that represents the asynchronous operation\. The task result contains the OrtoDatas if successful; otherwise, null\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool)'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_)'></a>
 
-## Create\.OrtoDatas\(this Building2D, Range\<int\>, double, double, bool, bool\) Method
+## Create\.OrtoDatas\(this Building2D, Range\<int\>, double, double, bool, bool, IEnumerable\<OrtoSheet\>\) Method
 
 Asynchronously retrieves orthophoto data for a specified building within a given range of years\.
 
 ```csharp
-public static System.Threading.Tasks.Task<DiGi.GIS.Classes.OrtoDatas?> OrtoDatas(this DiGi.GIS.Classes.Building2D? building2D, DiGi.Core.Classes.Range<int>? years, double offset=5.0, double width=320.0, bool reduce=true, bool squared=false);
+public static System.Threading.Tasks.Task<DiGi.GIS.Classes.OrtoDatas?> OrtoDatas(this DiGi.GIS.Classes.Building2D? building2D, DiGi.Core.Classes.Range<int>? years, double offset=5.0, double width=320.0, bool reduce=true, bool squared=false, System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.OrtoSheet?>? ortoSheets=null);
 ```
 #### Parameters
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool).building2D'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).building2D'></a>
 
 `building2D` [Building2D](DiGi.GIS.Classes.md#DiGi.GIS.Classes.Building2D 'DiGi\.GIS\.Classes\.Building2D')
 
 The building object used to determine the area of interest\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool).years'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).years'></a>
 
 `years` [DiGi\.Core\.Classes\.Range&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.range-1 'DiGi\.Core\.Classes\.Range\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.range-1 'DiGi\.Core\.Classes\.Range\`1')
 
 The range of years for which to retrieve orthophoto data\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool).offset'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).offset'></a>
 
 `offset` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
 
 The offset distance to expand the bounding box around the building\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool).width'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).width'></a>
 
 `width` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
 
 The desired width of the resulting image data\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool).reduce'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).reduce'></a>
 
 `reduce` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
 
 A value indicating whether to reduce the result set\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool).squared'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).squared'></a>
 
 `squared` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
 
 A value indicating whether the requested area should be forced into a square shape\.
 
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).ortoSheets'></a>
+
+`ortoSheets` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The orthophoto index sheets of the area, used to date every image by the sheet it shows \([OrtoData\(int, byte\[\], double, BoundingBox2D, IEnumerable&lt;OrtoSheet&gt;, Nullable&lt;int&gt;\)](DiGi.GIS.md#DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_) 'DiGi\.GIS\.Create\.OrtoData\(int, byte\[\], double, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, System\.Nullable\<int\>\)')\); null leaves the images undated\.
+
 #### Returns
 [System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[OrtoDatas](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoDatas 'DiGi\.GIS\.Classes\.OrtoDatas')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
 A task that represents the asynchronous operation\. The task result contains the OrtoDatas if successful; otherwise, null\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoRange,DiGi.Core.Classes.Range_int_,double,bool,bool)'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoRange,DiGi.Core.Classes.Range_int_,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_)'></a>
 
-## Create\.OrtoDatas\(this OrtoRange, Range\<int\>, double, bool, bool\) Method
+## Create\.OrtoDatas\(this OrtoRange, Range\<int\>, double, bool, bool, IEnumerable\<OrtoSheet\>\) Method
 
 Asynchronously retrieves orthophoto data based on an existing OrtoRange and a specified year range\.
 
 ```csharp
-public static System.Threading.Tasks.Task<DiGi.GIS.Classes.OrtoDatas?> OrtoDatas(this DiGi.GIS.Classes.OrtoRange? ortoRange, DiGi.Core.Classes.Range<int>? years, double scale, bool reduce=true, bool squared=false);
+public static System.Threading.Tasks.Task<DiGi.GIS.Classes.OrtoDatas?> OrtoDatas(this DiGi.GIS.Classes.OrtoRange? ortoRange, DiGi.Core.Classes.Range<int>? years, double scale, bool reduce=true, bool squared=false, System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.OrtoSheet?>? ortoSheets=null);
 ```
 #### Parameters
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoRange,DiGi.Core.Classes.Range_int_,double,bool,bool).ortoRange'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoRange,DiGi.Core.Classes.Range_int_,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).ortoRange'></a>
 
 `ortoRange` [OrtoRange](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoRange 'DiGi\.GIS\.Classes\.OrtoRange')
 
 The source range containing the bounding box and unique identifier\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoRange,DiGi.Core.Classes.Range_int_,double,bool,bool).years'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoRange,DiGi.Core.Classes.Range_int_,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).years'></a>
 
 `years` [DiGi\.Core\.Classes\.Range&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.range-1 'DiGi\.Core\.Classes\.Range\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.range-1 'DiGi\.Core\.Classes\.Range\`1')
 
 The range of years for which to retrieve orthophoto data\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoRange,DiGi.Core.Classes.Range_int_,double,bool,bool).scale'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoRange,DiGi.Core.Classes.Range_int_,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).scale'></a>
 
 `scale` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
 
 The scale factor used for the image request\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoRange,DiGi.Core.Classes.Range_int_,double,bool,bool).reduce'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoRange,DiGi.Core.Classes.Range_int_,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).reduce'></a>
 
 `reduce` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
 
 A value indicating whether to reduce the result set\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoRange,DiGi.Core.Classes.Range_int_,double,bool,bool).squared'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoRange,DiGi.Core.Classes.Range_int_,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).squared'></a>
 
 `squared` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
 
 A value indicating whether the requested area should be forced into a square shape\.
 
+<a name='DiGi.GIS.Create.OrtoDatas(thisDiGi.GIS.Classes.OrtoRange,DiGi.Core.Classes.Range_int_,double,bool,bool,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).ortoSheets'></a>
+
+`ortoSheets` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The orthophoto index sheets of the area, used to date every image by the sheet it shows \([OrtoData\(int, byte\[\], double, BoundingBox2D, IEnumerable&lt;OrtoSheet&gt;, Nullable&lt;int&gt;\)](DiGi.GIS.md#DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_) 'DiGi\.GIS\.Create\.OrtoData\(int, byte\[\], double, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, System\.Nullable\<int\>\)')\); null leaves the images undated\.
+
 #### Returns
 [System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[OrtoDatas](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoDatas 'DiGi\.GIS\.Classes\.OrtoDatas')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
 A task that represents the asynchronous operation\. The task result contains the OrtoDatas if successful; otherwise, null\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int)'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_)'></a>
 
-## Create\.OrtoDatas\(this HttpClient, BoundingBox2D, string, Range\<int\>, double, bool, int\) Method
+## Create\.OrtoDatas\(this HttpClient, BoundingBox2D, string, Range\<int\>, double, bool, int, IEnumerable\<OrtoSheet\>\) Method
 
 Asynchronously retrieves orthophoto data for a specific bounding box using a provided HttpClient and year range\.
 
 ```csharp
-public static System.Threading.Tasks.Task<DiGi.GIS.Classes.OrtoDatas?> OrtoDatas(this System.Net.Http.HttpClient httpClient, DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D, string? reference, DiGi.Core.Classes.Range<int>? years, double scale, bool reduce=true, int initialRequestCount=8);
+public static System.Threading.Tasks.Task<DiGi.GIS.Classes.OrtoDatas?> OrtoDatas(this System.Net.Http.HttpClient httpClient, DiGi.Geometry.Planar.Classes.BoundingBox2D? boundingBox2D, string? reference, DiGi.Core.Classes.Range<int>? years, double scale, bool reduce=true, int initialRequestCount=8, System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.OrtoSheet?>? ortoSheets=null);
 ```
 #### Parameters
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int).httpClient'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).httpClient'></a>
 
 `httpClient` [System\.Net\.Http\.HttpClient](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient 'System\.Net\.Http\.HttpClient')
 
 The HTTP client used to perform the network requests\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int).boundingBox2D'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).boundingBox2D'></a>
 
 `boundingBox2D` [DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.boundingbox2d 'DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D')
 
 The geographic area to retrieve data for\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int).reference'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).reference'></a>
 
 `reference` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 A reference string associated with the requested data\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int).years'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).years'></a>
 
 `years` [DiGi\.Core\.Classes\.Range&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.range-1 'DiGi\.Core\.Classes\.Range\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.range-1 'DiGi\.Core\.Classes\.Range\`1')
 
 The range of years for which to retrieve orthophoto data\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int).scale'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).scale'></a>
 
 `scale` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
 
 The scale factor used for the image request\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int).reduce'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).reduce'></a>
 
 `reduce` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
 
 A value indicating whether to reduce the result set\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int).initialRequestCount'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).initialRequestCount'></a>
 
 `initialRequestCount` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
 
 The initial number of requests to perform when querying data\.
+
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.Geometry.Planar.Classes.BoundingBox2D,string,DiGi.Core.Classes.Range_int_,double,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).ortoSheets'></a>
+
+`ortoSheets` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The orthophoto index sheets of the area, used to date every image by the sheet it shows \([OrtoData\(int, byte\[\], double, BoundingBox2D, IEnumerable&lt;OrtoSheet&gt;, Nullable&lt;int&gt;\)](DiGi.GIS.md#DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_) 'DiGi\.GIS\.Create\.OrtoData\(int, byte\[\], double, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, System\.Nullable\<int\>\)')\); null leaves the images undated\.
 
 #### Returns
 [System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[OrtoDatas](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoDatas 'DiGi\.GIS\.Classes\.OrtoDatas')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
 A task that represents the asynchronous operation\. The task result contains the OrtoDatas if successful; otherwise, null\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int)'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_)'></a>
 
-## Create\.OrtoDatas\(this HttpClient, Building2D, Range\<int\>, double, double, bool, bool, int\) Method
+## Create\.OrtoDatas\(this HttpClient, Building2D, Range\<int\>, double, double, bool, bool, int, IEnumerable\<OrtoSheet\>\) Method
 
 Asynchronously retrieves orthophoto data for a specified building using a provided HttpClient and within a given range of years\.
 
 ```csharp
-public static System.Threading.Tasks.Task<DiGi.GIS.Classes.OrtoDatas?> OrtoDatas(this System.Net.Http.HttpClient httpClient, DiGi.GIS.Classes.Building2D? building2D, DiGi.Core.Classes.Range<int>? years, double offset=5.0, double width=320.0, bool reduce=true, bool squared=false, int initialRequestCount=8);
+public static System.Threading.Tasks.Task<DiGi.GIS.Classes.OrtoDatas?> OrtoDatas(this System.Net.Http.HttpClient httpClient, DiGi.GIS.Classes.Building2D? building2D, DiGi.Core.Classes.Range<int>? years, double offset=5.0, double width=320.0, bool reduce=true, bool squared=false, int initialRequestCount=8, System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.OrtoSheet?>? ortoSheets=null);
 ```
 #### Parameters
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int).httpClient'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).httpClient'></a>
 
 `httpClient` [System\.Net\.Http\.HttpClient](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient 'System\.Net\.Http\.HttpClient')
 
 The HTTP client used to perform the network requests\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int).building2D'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).building2D'></a>
 
 `building2D` [Building2D](DiGi.GIS.Classes.md#DiGi.GIS.Classes.Building2D 'DiGi\.GIS\.Classes\.Building2D')
 
 The building object used to determine the area of interest\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int).years'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).years'></a>
 
 `years` [DiGi\.Core\.Classes\.Range&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.range-1 'DiGi\.Core\.Classes\.Range\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.range-1 'DiGi\.Core\.Classes\.Range\`1')
 
 The range of years for which to retrieve orthophoto data\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int).offset'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).offset'></a>
 
 `offset` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
 
 The offset distance to expand the bounding box around the building\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int).width'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).width'></a>
 
 `width` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
 
 The desired width of the resulting image data\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int).reduce'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).reduce'></a>
 
 `reduce` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
 
 A value indicating whether to reduce the result set\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int).squared'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).squared'></a>
 
 `squared` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
 
 A value indicating whether the requested area should be forced into a square shape\.
 
-<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int).initialRequestCount'></a>
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).initialRequestCount'></a>
 
 `initialRequestCount` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
 
 The initial number of requests to perform when querying data\.
+
+<a name='DiGi.GIS.Create.OrtoDatas(thisSystem.Net.Http.HttpClient,DiGi.GIS.Classes.Building2D,DiGi.Core.Classes.Range_int_,double,double,bool,bool,int,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_).ortoSheets'></a>
+
+`ortoSheets` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The orthophoto index sheets of the area, used to date every image by the sheet it shows \([OrtoData\(int, byte\[\], double, BoundingBox2D, IEnumerable&lt;OrtoSheet&gt;, Nullable&lt;int&gt;\)](DiGi.GIS.md#DiGi.GIS.Create.OrtoData(int,byte[],double,DiGi.Geometry.Planar.Classes.BoundingBox2D,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,System.Nullable_int_) 'DiGi\.GIS\.Create\.OrtoData\(int, byte\[\], double, DiGi\.Geometry\.Planar\.Classes\.BoundingBox2D, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, System\.Nullable\<int\>\)')\); null leaves the images undated\.
 
 #### Returns
 [System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[OrtoDatas](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoDatas 'DiGi\.GIS\.Classes\.OrtoDatas')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
@@ -2121,6 +2204,43 @@ public static class Query
 Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → Query
 ### Methods
 
+<a name='DiGi.GIS.Query.AcquisitionOrtoSheet(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,DiGi.Geometry.Planar.Classes.Point2D,int)'></a>
+
+## Query\.AcquisitionOrtoSheet\(this IEnumerable\<OrtoSheet\>, Point2D, int\) Method
+
+Gets the orthophoto index sheet whose photograph the time\-enabled WMS shows at a location for a requested year: among the standard sheets whose footprint contains the location, the one with the latest date in or before that year\.
+
+For a year with no flight at the location the WMS answers the nearest earlier imagery, so the requested year alone is not the date of the photograph: in county 1465, 257 of 527 probed images fell in a year without a sheet at the point, and one image was served for up to 6 consecutive years (DiGi.GIS#17).
+
+Sheets on the same date are ordered by the finest [PixelSize](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet.PixelSize 'DiGi\.GIS\.Classes\.OrtoSheet\.PixelSize'), then RGB before CIR, the composite the WMS serves. True orthophoto sheets are skipped: the time-enabled WMS does not serve them.
+
+```csharp
+public static DiGi.GIS.Classes.OrtoSheet? AcquisitionOrtoSheet(this System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.OrtoSheet?>? ortoSheets, DiGi.Geometry.Planar.Classes.Point2D? point2D, int year);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.AcquisitionOrtoSheet(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,DiGi.Geometry.Planar.Classes.Point2D,int).ortoSheets'></a>
+
+`ortoSheets` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The index sheets to search, for example the rows of the location's area; nulls and sheets without a footprint or date are ignored\.
+
+<a name='DiGi.GIS.Query.AcquisitionOrtoSheet(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,DiGi.Geometry.Planar.Classes.Point2D,int).point2D'></a>
+
+`point2D` [DiGi\.Geometry\.Planar\.Classes\.Point2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.point2d 'DiGi\.Geometry\.Planar\.Classes\.Point2D')
+
+The location in EPSG:2180, easting in X\.
+
+<a name='DiGi.GIS.Query.AcquisitionOrtoSheet(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,DiGi.Geometry.Planar.Classes.Point2D,int).year'></a>
+
+`year` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The year to date against: for an image, the last consecutive requested year that returned it \([ContentRunEndYears\(this IDictionary&lt;int,byte\[\]&gt;\)](DiGi.GIS.md#DiGi.GIS.Query.ContentRunEndYears(thisSystem.Collections.Generic.IDictionary_int,byte[]_) 'DiGi\.GIS\.Query\.ContentRunEndYears\(this System\.Collections\.Generic\.IDictionary\<int,byte\[\]\>\)')\), not the first\.
+
+#### Returns
+[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')  
+The sheet, or null when no sheet of that year or earlier contains the location\.
+
 <a name='DiGi.GIS.Query.AdministrativeAreal2Ds_UAdministrativeAreal2D_(thisDiGi.GIS.Classes.GISModel,DiGi.GIS.Classes.Building2D)'></a>
 
 ## Query\.AdministrativeAreal2Ds\<UAdministrativeAreal2D\>\(this GISModel, Building2D\) Method
@@ -2777,6 +2897,31 @@ The bytes to hash\.
 #### Returns
 [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')  
 The 64\-character hash, or null when the array is null\.
+
+<a name='DiGi.GIS.Query.ContentRunEndYears(thisSystem.Collections.Generic.IDictionary_int,byte[]_)'></a>
+
+## Query\.ContentRunEndYears\(this IDictionary\<int,byte\[\]\>\) Method
+
+Gets, for every requested year, the last year of the run of consecutive requested years that returned the same image\.
+
+This is the year an image is dated against ([AcquisitionOrtoSheet\(this IEnumerable&lt;OrtoSheet&gt;, Point2D, int\)](DiGi.GIS.md#DiGi.GIS.Query.AcquisitionOrtoSheet(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,DiGi.Geometry.Planar.Classes.Point2D,int) 'DiGi\.GIS\.Query\.AcquisitionOrtoSheet\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.OrtoSheet\>, DiGi\.Geometry\.Planar\.Classes\.Point2D, int\)')), not the year it was first requested for. The time-enabled WMS can serve a photograph under a year before the index date of its sheet: in county 1465, 23 of 277 runs began before their sheet's year (for example requests 2006–2010 all answered the sheet filed under 2007, whose index date is a year placeholder; DiGi.GIS#17). Dating by the first year would give such an image the previous sheet's date, while the last year of the run still lies in or after the sheet's year.
+
+The content is compared by [ContentHash\(this byte\[\]\)](DiGi.GIS.md#DiGi.GIS.Query.ContentHash(thisbyte[]) 'DiGi\.GIS\.Query\.ContentHash\(this byte\[\]\)'). A run is broken by a different image or by a year missing from the dictionary.
+
+```csharp
+public static System.Collections.Generic.Dictionary<int,int>? ContentRunEndYears(this System.Collections.Generic.IDictionary<int,byte[]>? bytesDictionary);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.ContentRunEndYears(thisSystem.Collections.Generic.IDictionary_int,byte[]_).bytesDictionary'></a>
+
+`bytesDictionary` [System\.Collections\.Generic\.IDictionary&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.idictionary-2 'System\.Collections\.Generic\.IDictionary\`2')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[,](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.idictionary-2 'System\.Collections\.Generic\.IDictionary\`2')[System\.Byte](https://learn.microsoft.com/en-us/dotnet/api/system.byte 'System\.Byte')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.idictionary-2 'System\.Collections\.Generic\.IDictionary\`2')
+
+The images by requested year\.
+
+#### Returns
+[System\.Collections\.Generic\.Dictionary&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[,](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')  
+The last year of each year's run, or null when the input is null\.
 
 <a name='DiGi.GIS.Query.Coordinates(thisDiGi.Geometry.Planar.Classes.Point2D)'></a>
 
@@ -4007,6 +4152,31 @@ The location in EPSG:2180, easting in X\.
 #### Returns
 [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')  
 The key, or null when the box is missing\.
+
+<a name='DiGi.GIS.Query.OrtoObservations(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoData_)'></a>
+
+## Query\.OrtoObservations\(this IEnumerable\<OrtoData\>\) Method
+
+Groups the images of one location into observations: images with the same content are one photograph, whatever year they were requested for\.
+
+The time-enabled WMS repeats the nearest earlier imagery for years with no flight, and [Reduce\(\)](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoDatas.Reduce() 'DiGi\.GIS\.Classes\.OrtoDatas\.Reduce\(\)') removes only repeats in consecutive years, so the same photograph can still appear twice (A, B, A). The content is compared by [ContentHash](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData.ContentHash 'DiGi\.GIS\.Classes\.OrtoData\.ContentHash'), or by [ContentHash\(this byte\[\]\)](DiGi.GIS.md#DiGi.GIS.Query.ContentHash(thisbyte[]) 'DiGi\.GIS\.Query\.ContentHash\(this byte\[\]\)') of the bytes when the member is missing (rows stored before it existed).
+
+Within a group the images are ordered by [AcquisitionDate](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData.AcquisitionDate 'DiGi\.GIS\.Classes\.OrtoData\.AcquisitionDate') (undated last), then by the requested [DateTime](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData.DateTime 'DiGi\.GIS\.Classes\.OrtoData\.DateTime'); the first image dates the observation. The groups are ordered by their first images in the same way. Images without bytes are ignored.
+
+```csharp
+public static System.Collections.Generic.List<System.Collections.Generic.List<DiGi.GIS.Classes.OrtoData>>? OrtoObservations(this System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.OrtoData?>? ortoDatas);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.OrtoObservations(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoData_).ortoDatas'></a>
+
+`ortoDatas` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoData](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData 'DiGi\.GIS\.Classes\.OrtoData')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The images of one location\.
+
+#### Returns
+[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[OrtoData](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoData 'DiGi\.GIS\.Classes\.OrtoData')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')  
+The observations, or null when the input is null\.
 
 <a name='DiGi.GIS.Query.OrtoObstacles(thisDiGi.GIS.Classes.OrtoSheet,System.Nullable_DiGi.GIS.Enums.OrtoObstacle_)'></a>
 
