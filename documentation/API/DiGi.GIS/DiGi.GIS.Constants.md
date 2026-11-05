@@ -653,6 +653,34 @@ public const string YearBuiltDatasFile = "Year Built Datas File";
 #### Field Value
 [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
+<a name='DiGi.GIS.Constants.OrtoBlank'></a>
+
+## OrtoBlank Class
+
+Provides the parameters of the dependency\-free blank check on orthophoto JPEG tiles \([IsOrtoJpegBlank\(this byte\[\]\)](DiGi.GIS.md#DiGi.GIS.Query.IsOrtoJpegBlank(thisbyte[]) 'DiGi\.GIS\.Query\.IsOrtoJpegBlank\(this byte\[\]\)')\)\.
+
+```csharp
+public static class OrtoBlank
+```
+
+Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → OrtoBlank
+### Fields
+
+<a name='DiGi.GIS.Constants.OrtoBlank.Tolerance'></a>
+
+## OrtoBlank\.Tolerance Field
+
+The largest spread \(maximum minus minimum, per colour component, on 0–255\) of the 8 × 8 block means for which a tile still counts as one uniform colour\.
+
+The blank tile the GUGiK WMS answers decodes as exactly uniform white, so every block mean is the same and the tolerance only absorbs rounding of the DC quantisation. Same value as the pixel-based check in DiGi.GIS.Emgu.CV.
+
+```csharp
+public const int Tolerance = 8;
+```
+
+#### Field Value
+[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
 <a name='DiGi.GIS.Constants.OrtoUsability'></a>
 
 ## OrtoUsability Class

@@ -3595,6 +3595,60 @@ The response body\.
 [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')  
 True for a JPEG or PNG signature; otherwise, false\.
 
+<a name='DiGi.GIS.Query.IsOrtoJpegBlank(thisbyte[])'></a>
+
+## Query\.IsOrtoJpegBlank\(this byte\[\]\) Method
+
+Determines whether an orthophoto JPEG tile is blank, that is of one uniform colour, within [Tolerance](DiGi.GIS.Constants.md#DiGi.GIS.Constants.OrtoBlank.Tolerance 'DiGi\.GIS\.Constants\.OrtoBlank\.Tolerance')\.
+
+This is the second of the three classification steps (exception, blank, content hash) for hosts that carry no image library: see [IsOrtoJpegBlank\(this byte\[\], int\)](DiGi.GIS.md#DiGi.GIS.Query.IsOrtoJpegBlank(thisbyte[],int) 'DiGi\.GIS\.Query\.IsOrtoJpegBlank\(this byte\[\], int\)').
+
+```csharp
+public static bool IsOrtoJpegBlank(this byte[]? bytes);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.IsOrtoJpegBlank(thisbyte[]).bytes'></a>
+
+`bytes` [System\.Byte](https://learn.microsoft.com/en-us/dotnet/api/system.byte 'System\.Byte')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')
+
+The encoded JPEG tile\.
+
+#### Returns
+[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')  
+True when the tile is uniform; false when it has content, is not a baseline JPEG, or cannot be parsed\.
+
+<a name='DiGi.GIS.Query.IsOrtoJpegBlank(thisbyte[],int)'></a>
+
+## Query\.IsOrtoJpegBlank\(this byte\[\], int\) Method
+
+Determines whether an orthophoto JPEG tile is blank, that is of one uniform colour, without decoding pixels\.
+
+The GUGiK WMS answers a missing or flaky epoch with HTTP 200 and a valid uniform white JPEG, so [IsOrtoImage\(this byte\[\]\)](DiGi.GIS.md#DiGi.GIS.Query.IsOrtoImage(thisbyte[]) 'DiGi\.GIS\.Query\.IsOrtoImage\(this byte\[\]\)') cannot tell it from imagery. This check reads only the entropy-coded coefficients of a baseline (SOF0) JPEG: a tile is blank when every AC coefficient of every 8 × 8 block is zero (each block is flat) and, per colour component, the dequantised block means (DC / 8) spread by no more than [tolerance](DiGi.GIS.md#DiGi.GIS.Query.IsOrtoJpegBlank(thisbyte[],int).tolerance 'DiGi\.GIS\.Query\.IsOrtoJpegBlank\(this byte\[\], int\)\.tolerance'). A tile that is only partly empty - a mosaic that includes uncovered ground, filled black by the service - is not blank.
+
+Real imagery is rejected at its first non-flat block, so the cost is a few blocks for content and one pass over the (small) scan for a blank. Progressive, lossless or hierarchical JPEG, PNG, and any malformed stream answer false: an undecidable payload is never classified as blank. The pixel-based `DiGi.GIS.Emgu.CV.Query.IsOrtoBlank` remains the reference where Emgu is available.
+
+```csharp
+public static bool IsOrtoJpegBlank(this byte[]? bytes, int tolerance);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.IsOrtoJpegBlank(thisbyte[],int).bytes'></a>
+
+`bytes` [System\.Byte](https://learn.microsoft.com/en-us/dotnet/api/system.byte 'System\.Byte')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')
+
+The encoded JPEG tile\.
+
+<a name='DiGi.GIS.Query.IsOrtoJpegBlank(thisbyte[],int).tolerance'></a>
+
+`tolerance` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The largest per\-component spread of the block means, on 0–255, that still counts as uniform\.
+
+#### Returns
+[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')  
+True when the tile is uniform; false when it has content, is not a baseline JPEG, or cannot be parsed\.
+
 <a name='DiGi.GIS.Query.IsResidential(thisDiGi.GIS.Classes.Building2D)'></a>
 
 ## Query\.IsResidential\(this Building2D\) Method
