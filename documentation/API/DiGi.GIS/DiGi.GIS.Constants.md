@@ -3,6 +3,188 @@
 ## DiGi\.GIS\.Constants Namespace
 ### Classes
 
+<a name='DiGi.GIS.Constants.CoordinateSystem'></a>
+
+## CoordinateSystem Class
+
+Provides the coordinate system definitions and the projection parameters shared by the EPSG conversions of this library\.
+
+```csharp
+public static class CoordinateSystem
+```
+
+Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → CoordinateSystem
+### Fields
+
+<a name='DiGi.GIS.Constants.CoordinateSystem.EPSG2180DomainMargin'></a>
+
+## CoordinateSystem\.EPSG2180DomainMargin Field
+
+The slack in metres added around the EPSG:2180 box derived from the Polish geographic window\.
+
+```csharp
+public const double EPSG2180DomainMargin = 25000;
+```
+
+#### Field Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Constants.CoordinateSystem.EPSG2180Wkt'></a>
+
+## CoordinateSystem\.EPSG2180Wkt Field
+
+The OGC WKT definition of EPSG:2180 \(ETRS89 / Poland CS92\)\. Single source of truth for both directions, so they cannot drift apart\.
+
+```csharp
+public const string EPSG2180Wkt = "PROJCS["ETRS89 / Poland CS92",GEOGCS["ETRS89",DATUM["European_Terrestrial_Reference_System_1989",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6258"]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433],AUTHORITY["EPSG","4258"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",19],PARAMETER["scale_factor",0.9993],PARAMETER["false_easting",500000],PARAMETER["false_northing",-5300000],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["X",EAST],AXIS["Y",NORTH],AUTHORITY["EPSG","2180"]]";
+```
+
+#### Field Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Constants.CoordinateSystem.EPSG3035Wkt'></a>
+
+## CoordinateSystem\.EPSG3035Wkt Field
+
+The OGC WKT definition of EPSG:3035 \(ETRS89 / LAEA Europe\)\. It names the source system reported by Create\.EPSG2180TransformationFromEPSG3035; it is never handed to ProjNet to build a transformation, because ProjNET4GeoAPI 1\.4\.1 registers no lambert\_azimuthal\_equal\_area projection and CreateFromCoordinateSystems throws NotSupportedException for it\.
+
+```csharp
+public const string EPSG3035Wkt = "PROJCS["ETRS89 / LAEA Europe",GEOGCS["ETRS89",DATUM["European_Terrestrial_Reference_System_1989",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6258"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4258"]],PROJECTION["Lambert_Azimuthal_Equal_Area"],PARAMETER["latitude_of_center",52],PARAMETER["longitude_of_center",10],PARAMETER["false_easting",4321000],PARAMETER["false_northing",3210000],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Northing",NORTH],AXIS["Easting",EAST],AUTHORITY["EPSG","3035"]]";
+```
+
+#### Field Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Constants.CoordinateSystem.InverseFlattening'></a>
+
+## CoordinateSystem\.InverseFlattening Field
+
+The inverse flattening of the GRS 1980 ellipsoid \(EPSG:7019\)\.
+
+```csharp
+public const double InverseFlattening = 298.257222101;
+```
+
+#### Field Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Constants.CoordinateSystem.LambertAzimuthalEqualAreaCentralMeridian'></a>
+
+## CoordinateSystem\.LambertAzimuthalEqualAreaCentralMeridian Field
+
+The longitude of the EPSG:3035 projection centre in degrees\.
+
+```csharp
+public const double LambertAzimuthalEqualAreaCentralMeridian = 10;
+```
+
+#### Field Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Constants.CoordinateSystem.LambertAzimuthalEqualAreaFalseEasting'></a>
+
+## CoordinateSystem\.LambertAzimuthalEqualAreaFalseEasting Field
+
+The false easting of EPSG:3035 in metres\.
+
+```csharp
+public const double LambertAzimuthalEqualAreaFalseEasting = 4321000;
+```
+
+#### Field Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Constants.CoordinateSystem.LambertAzimuthalEqualAreaFalseNorthing'></a>
+
+## CoordinateSystem\.LambertAzimuthalEqualAreaFalseNorthing Field
+
+The false northing of EPSG:3035 in metres\.
+
+```csharp
+public const double LambertAzimuthalEqualAreaFalseNorthing = 3210000;
+```
+
+#### Field Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Constants.CoordinateSystem.LambertAzimuthalEqualAreaLatitudeOfOrigin'></a>
+
+## CoordinateSystem\.LambertAzimuthalEqualAreaLatitudeOfOrigin Field
+
+The latitude of the EPSG:3035 projection centre in degrees\.
+
+```csharp
+public const double LambertAzimuthalEqualAreaLatitudeOfOrigin = 52;
+```
+
+#### Field Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Constants.CoordinateSystem.PolandMaximumLatitude'></a>
+
+## CoordinateSystem\.PolandMaximumLatitude Field
+
+The northern limit, in degrees north, of the geographic window bounding the Polish domain\.
+
+```csharp
+public const double PolandMaximumLatitude = 55.5;
+```
+
+#### Field Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Constants.CoordinateSystem.PolandMaximumLongitude'></a>
+
+## CoordinateSystem\.PolandMaximumLongitude Field
+
+The eastern limit, in degrees east, of the geographic window bounding the Polish domain\.
+
+```csharp
+public const double PolandMaximumLongitude = 25.5;
+```
+
+#### Field Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Constants.CoordinateSystem.PolandMinimumLatitude'></a>
+
+## CoordinateSystem\.PolandMinimumLatitude Field
+
+The southern limit, in degrees north, of the geographic window bounding the Polish domain\.
+
+```csharp
+public const double PolandMinimumLatitude = 48.5;
+```
+
+#### Field Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Constants.CoordinateSystem.PolandMinimumLongitude'></a>
+
+## CoordinateSystem\.PolandMinimumLongitude Field
+
+The western limit, in degrees east, of the geographic window bounding the Polish domain\. Mainland Poland spans 14\.12 E to 24\.15 E and 49\.00 N to 54\.85 N; about a degree of slack keeps a footprint at the border inside the domain instead of clipping it\.
+
+```csharp
+public const double PolandMinimumLongitude = 13;
+```
+
+#### Field Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+<a name='DiGi.GIS.Constants.CoordinateSystem.SemiMajorAxis'></a>
+
+## CoordinateSystem\.SemiMajorAxis Field
+
+The semi\-major axis of the GRS 1980 ellipsoid in metres\.
+
+```csharp
+public const double SemiMajorAxis = 6378137;
+```
+
+#### Field Value
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
 <a name='DiGi.GIS.Constants.DirectoryName'></a>
 
 ## DirectoryName Class

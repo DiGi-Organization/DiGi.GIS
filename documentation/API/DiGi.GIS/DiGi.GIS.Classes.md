@@ -3525,6 +3525,148 @@ public bool IncludeOrtoDatasComparison { get; set; }
 #### Property Value
 [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
 
+<a name='DiGi.GIS.Classes.DelegatingMathTransform'></a>
+
+## DelegatingMathTransform Class
+
+Hands a ProjNet mathematics object to a caller without handing over the object ProjNet damages when its direction is reversed\.
+
+```csharp
+internal sealed class DelegatingMathTransform
+```
+
+Inheritance [ProjNet\.CoordinateSystems\.Transformations\.MathTransform](https://learn.microsoft.com/en-us/dotnet/api/projnet.coordinatesystems.transformations.mathtransform 'ProjNet\.CoordinateSystems\.Transformations\.MathTransform') → DelegatingMathTransform
+
+### Remarks
+
+ProjNET4GeoAPI 1.4.1 `ConcatenatedTransform.Inverse()` reverses the list of steps inside the instance it is called on instead of copying it, so the forward direction of a held transformation stops working afterwards and returns nonsense without reporting anything: on this machine, transforming the Warsaw pair through a leg that had once been passed to [Inverse\(\)](DiGi.GIS.Classes.md#DiGi.GIS.Classes.DelegatingMathTransform.Inverse() 'DiGi\.GIS\.Classes\.DelegatingMathTransform\.Inverse\(\)') produced (12.335876698571296, 47.6742301256117) in place of (630388.5747769627, 489307.7984585427).
+A conversion holds its transformation for a whole run, so that is silent corruption of every feature converted after the first call to [Inverse\(\)](DiGi.GIS.Classes.md#DiGi.GIS.Classes.DelegatingMathTransform.Inverse() 'DiGi\.GIS\.Classes\.DelegatingMathTransform\.Inverse\(\)').
+
+This wrapper therefore keeps the direction of a leg fixed and builds a fresh, correctly oriented leg whenever the opposite direction is asked for, which is why the Create methods hand over a factory rather than a leg. [Invert\(\)](DiGi.GIS.Classes.md#DiGi.GIS.Classes.DelegatingMathTransform.Invert() 'DiGi\.GIS\.Classes\.DelegatingMathTransform\.Invert\(\)') is refused outright: it would reverse the wrapped leg in place for the same reason.
+### Constructors
+
+<a name='DiGi.GIS.Classes.DelegatingMathTransform.DelegatingMathTransform(System.Func_bool,IMathTransform_,bool)'></a>
+
+## DelegatingMathTransform\(Func\<bool,IMathTransform\>, bool\) Constructor
+
+Initializes a new instance of the [DelegatingMathTransform](DiGi.GIS.Classes.md#DiGi.GIS.Classes.DelegatingMathTransform 'DiGi\.GIS\.Classes\.DelegatingMathTransform') class, building the leg for the requested direction once\.
+
+```csharp
+internal DelegatingMathTransform(System.Func<bool,IMathTransform> legFactory, bool toTarget);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.DelegatingMathTransform.DelegatingMathTransform(System.Func_bool,IMathTransform_,bool).legFactory'></a>
+
+`legFactory` [System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[GeoAPI\.CoordinateSystems\.Transformations\.IMathTransform](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.imathtransform 'GeoAPI\.CoordinateSystems\.Transformations\.IMathTransform')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')
+
+Builds a fresh ProjNet leg; [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/builtin\-types/bool') asks for the source\-to\-target direction, [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/builtin\-types/bool') for the opposite one\.
+
+<a name='DiGi.GIS.Classes.DelegatingMathTransform.DelegatingMathTransform(System.Func_bool,IMathTransform_,bool).toTarget'></a>
+
+`toTarget` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+The direction of this instance\.
+### Properties
+
+<a name='DiGi.GIS.Classes.DelegatingMathTransform.DimSource'></a>
+
+## DelegatingMathTransform\.DimSource Property
+
+Gets the number of source ordinates of the wrapped leg\.
+
+```csharp
+public override int DimSource { get; }
+```
+
+#### Property Value
+[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+<a name='DiGi.GIS.Classes.DelegatingMathTransform.DimTarget'></a>
+
+## DelegatingMathTransform\.DimTarget Property
+
+Gets the number of target ordinates of the wrapped leg\.
+
+```csharp
+public override int DimTarget { get; }
+```
+
+#### Property Value
+[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+<a name='DiGi.GIS.Classes.DelegatingMathTransform.WKT'></a>
+
+## DelegatingMathTransform\.WKT Property
+
+Gets the well\-known text of the wrapped leg\.
+
+```csharp
+public override string WKT { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.DelegatingMathTransform.XML'></a>
+
+## DelegatingMathTransform\.XML Property
+
+Gets the XML form of the wrapped leg\.
+
+```csharp
+public override string XML { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+### Methods
+
+<a name='DiGi.GIS.Classes.DelegatingMathTransform.Inverse()'></a>
+
+## DelegatingMathTransform\.Inverse\(\) Method
+
+Returns a new instance over a freshly built leg in the opposite direction, leaving this instance and the leg it wraps untouched\.
+
+```csharp
+public override IMathTransform Inverse();
+```
+
+#### Returns
+[GeoAPI\.CoordinateSystems\.Transformations\.IMathTransform](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.imathtransform 'GeoAPI\.CoordinateSystems\.Transformations\.IMathTransform')  
+The opposite direction\.
+
+<a name='DiGi.GIS.Classes.DelegatingMathTransform.Invert()'></a>
+
+## DelegatingMathTransform\.Invert\(\) Method
+
+Not supported: reversing in place is exactly what corrupts a held ProjNet leg\.
+
+```csharp
+public override void Invert();
+```
+
+<a name='DiGi.GIS.Classes.DelegatingMathTransform.Transform(double[])'></a>
+
+## DelegatingMathTransform\.Transform\(double\[\]\) Method
+
+Converts one coordinate pair through the wrapped leg\.
+
+```csharp
+public override double[] Transform(double[] point);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.DelegatingMathTransform.Transform(double[]).point'></a>
+
+`point` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')
+
+The source ordinates\.
+
+#### Returns
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')  
+The converted ordinates\.
+
 <a name='DiGi.GIS.Classes.DirectoryExtractOptions'></a>
 
 ## DirectoryExtractOptions Class
@@ -3847,6 +3989,189 @@ public string? Directory { get; }
 
 #### Property Value
 [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.EPSG2180Transformation'></a>
+
+## EPSG2180Transformation Class
+
+An EPSG:2180 coordinate transformation that also carries the Polish domain bounding box, so a conversion can refuse a footprint that landed outside the country instead of returning plausible nonsense\.
+
+```csharp
+internal sealed class EPSG2180Transformation
+```
+
+Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → [GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.icoordinatetransformation 'GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation') → EPSG2180Transformation
+
+### Remarks
+
+[ProjNet\.CoordinateSystems\.Transformations\.CoordinateTransformation](https://learn.microsoft.com/en-us/dotnet/api/projnet.coordinatesystems.transformations.coordinatetransformation 'ProjNet\.CoordinateSystems\.Transformations\.CoordinateTransformation') cannot be constructed by this library - its only constructor is internal in ProjNET4GeoAPI 1.4.1 - so the handle the caller holds is this type.
+            It is internal, which keeps the stateful projection engine off the public anemic surface, and immutable: built once, safe to share across the threads of one run.
+
+A transformation taken from ProjNet directly, rather than from [EPSG2180TransformationFromEPSG4326\(\)](DiGi.GIS.md#DiGi.GIS.Create.EPSG2180TransformationFromEPSG4326() 'DiGi\.GIS\.Create\.EPSG2180TransformationFromEPSG4326\(\)') or [EPSG2180TransformationFromEPSG3035\(\)](DiGi.GIS.md#DiGi.GIS.Create.EPSG2180TransformationFromEPSG3035() 'DiGi\.GIS\.Create\.EPSG2180TransformationFromEPSG3035\(\)'), still converts; it simply carries no domain, so only the finite-ordinate guard applies to it.
+### Properties
+
+<a name='DiGi.GIS.Classes.EPSG2180Transformation.AreaOfUse'></a>
+
+## EPSG2180Transformation\.AreaOfUse Property
+
+Gets the area of use, empty as ProjNet itself reports it for a transformation built from two coordinate systems\.
+
+```csharp
+public string AreaOfUse { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.EPSG2180Transformation.Authority'></a>
+
+## EPSG2180Transformation\.Authority Property
+
+Gets the authority of the target coordinate system\.
+
+```csharp
+public string Authority { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.EPSG2180Transformation.AuthorityCode'></a>
+
+## EPSG2180Transformation\.AuthorityCode Property
+
+Gets the code of the target coordinate system, EPSG:2180\.
+
+```csharp
+public long AuthorityCode { get; }
+```
+
+#### Property Value
+[System\.Int64](https://learn.microsoft.com/en-us/dotnet/api/system.int64 'System\.Int64')
+
+<a name='DiGi.GIS.Classes.EPSG2180Transformation.MathTransform'></a>
+
+## EPSG2180Transformation\.MathTransform Property
+
+Gets the mathematics of the conversion: [LambertAzimuthalEqualAreaMathTransform](DiGi.GIS.Classes.md#DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform 'DiGi\.GIS\.Classes\.LambertAzimuthalEqualAreaMathTransform') for an EPSG:3035 source, the ProjNet transverse Mercator leg for an EPSG:4326 source\.
+
+```csharp
+public IMathTransform MathTransform { get; }
+```
+
+#### Property Value
+[GeoAPI\.CoordinateSystems\.Transformations\.IMathTransform](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.imathtransform 'GeoAPI\.CoordinateSystems\.Transformations\.IMathTransform')
+
+<a name='DiGi.GIS.Classes.EPSG2180Transformation.Name'></a>
+
+## EPSG2180Transformation\.Name Property
+
+Gets the name of the conversion\.
+
+```csharp
+public string Name { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.EPSG2180Transformation.Remarks'></a>
+
+## EPSG2180Transformation\.Remarks Property
+
+Gets the remarks stating what the conversion does and does not do, in particular that no datum shift is applied\.
+
+```csharp
+public string Remarks { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.EPSG2180Transformation.SourceCS'></a>
+
+## EPSG2180Transformation\.SourceCS Property
+
+Gets the source coordinate system\.
+
+```csharp
+public ICoordinateSystem SourceCS { get; }
+```
+
+#### Property Value
+[GeoAPI\.CoordinateSystems\.ICoordinateSystem](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.icoordinatesystem 'GeoAPI\.CoordinateSystems\.ICoordinateSystem')
+
+<a name='DiGi.GIS.Classes.EPSG2180Transformation.TargetCS'></a>
+
+## EPSG2180Transformation\.TargetCS Property
+
+Gets the target coordinate system, EPSG:2180\.
+
+```csharp
+public ICoordinateSystem TargetCS { get; }
+```
+
+#### Property Value
+[GeoAPI\.CoordinateSystems\.ICoordinateSystem](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.icoordinatesystem 'GeoAPI\.CoordinateSystems\.ICoordinateSystem')
+
+<a name='DiGi.GIS.Classes.EPSG2180Transformation.TransformType'></a>
+
+## EPSG2180Transformation\.TransformType Property
+
+Gets the operation type: both supported sources share the ETRS89 datum with EPSG:2180, so this is a conversion, not a transformation\.
+
+```csharp
+public TransformType TransformType { get; }
+```
+
+#### Property Value
+[GeoAPI\.CoordinateSystems\.Transformations\.TransformType](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.transformtype 'GeoAPI\.CoordinateSystems\.Transformations\.TransformType')
+### Methods
+
+<a name='DiGi.GIS.Classes.EPSG2180Transformation.CreateEPSG2180Domain()'></a>
+
+## EPSG2180Transformation\.CreateEPSG2180Domain\(\) Method
+
+Derives the EPSG:2180 bounding box of the Polish domain by projecting the nine sample points of the geographic window \- its four corners, the midpoints of its four edges and its centre \- and padding the result by [EPSG2180DomainMargin](DiGi.GIS.Constants.md#DiGi.GIS.Constants.CoordinateSystem.EPSG2180DomainMargin 'DiGi\.GIS\.Constants\.CoordinateSystem\.EPSG2180DomainMargin')\.
+The box is derived rather than hard\-coded, so the geographic window stays the only place the domain is stated\.
+
+```csharp
+internal static Envelope? CreateEPSG2180Domain();
+```
+
+#### Returns
+[NetTopologySuite\.Geometries\.Envelope](https://learn.microsoft.com/en-us/dotnet/api/nettopologysuite.geometries.envelope 'NetTopologySuite\.Geometries\.Envelope')  
+An [NetTopologySuite\.Geometries\.Envelope](https://learn.microsoft.com/en-us/dotnet/api/nettopologysuite.geometries.envelope 'NetTopologySuite\.Geometries\.Envelope') in EPSG:2180 metres, or [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null') when a sample point cannot be projected\.
+
+### Remarks
+The window is stated in degrees, so it is always projected by the geographic to EPSG:2180 leg, whatever the source of the transformation the domain is attached to: handing it the composed leg of an EPSG:3035 source would project 52 as though it were 52 metres and produce a box no footprint can be inside\. The domain is a property of how Poland sits in EPSG:2180, so both sources share it\.
+
+<a name='DiGi.GIS.Classes.EPSG2180Transformation.IsWithinDomain(double,double)'></a>
+
+## EPSG2180Transformation\.IsWithinDomain\(double, double\) Method
+
+Determines whether EPSG:2180 coordinates fall inside the Polish domain; a transformation without a domain accepts every finite coordinate pair\.
+
+```csharp
+internal bool IsWithinDomain(double easting, double northing);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.EPSG2180Transformation.IsWithinDomain(double,double).easting'></a>
+
+`easting` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The EPSG:2180 easting\.
+
+<a name='DiGi.GIS.Classes.EPSG2180Transformation.IsWithinDomain(double,double).northing'></a>
+
+`northing` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')
+
+The EPSG:2180 northing\.
+
+#### Returns
+[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')  
+[true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/builtin\-types/bool') when the pair is inside the domain or no domain is known\.
 
 <a name='DiGi.GIS.Classes.ExtractOptions'></a>
 
@@ -5955,6 +6280,153 @@ The path where the index data should be written\.
 #### Returns
 [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')  
 True if the file was written successfully; otherwise, false\.
+
+<a name='DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform'></a>
+
+## LambertAzimuthalEqualAreaMathTransform Class
+
+The Lambert Azimuthal Equal Area leg of the EPSG:3035 to EPSG:2180 conversion: it converts ETRS89\-LAEA coordinates to geographic coordinates on the ellipsoid, then hands them to the ProjNet geographic to EPSG:2180 leg it wraps\.
+
+```csharp
+internal sealed class LambertAzimuthalEqualAreaMathTransform
+```
+
+Inheritance [ProjNet\.CoordinateSystems\.Transformations\.MathTransform](https://learn.microsoft.com/en-us/dotnet/api/projnet.coordinatesystems.transformations.mathtransform 'ProjNet\.CoordinateSystems\.Transformations\.MathTransform') → LambertAzimuthalEqualAreaMathTransform
+
+### Remarks
+
+This exists because ProjNET4GeoAPI 1.4.1 registers no lambert_azimuthal_equal_area projection, so [ProjNet\.CoordinateSystems\.Transformations\.CoordinateTransformationFactory\.CreateFromCoordinateSystems\(GeoAPI\.CoordinateSystems\.ICoordinateSystem,GeoAPI\.CoordinateSystems\.ICoordinateSystem\)](https://learn.microsoft.com/en-us/dotnet/api/projnet.coordinatesystems.transformations.coordinatetransformationfactory.createfromcoordinatesystems#projnet-coordinatesystems-transformations-coordinatetransformationfactory-createfromcoordinatesystems(geoapi-coordinatesystems-icoordinatesystem-geoapi-coordinatesystems-icoordinatesystem) 'ProjNet\.CoordinateSystems\.Transformations\.CoordinateTransformationFactory\.CreateFromCoordinateSystems\(GeoAPI\.CoordinateSystems\.ICoordinateSystem,GeoAPI\.CoordinateSystems\.ICoordinateSystem\)') throws [System\.NotSupportedException](https://learn.microsoft.com/en-us/dotnet/api/system.notsupportedexception 'System\.NotSupportedException') for EPSG:3035 even though the WKT of that coordinate system parses. The package is pinned at 1.4.1 across eight HintPath-consuming projects, so replacing it is a deployment change rather than a detail of this conversion, and registering a projection into the process-wide ProjectionsRegistry from a library is not acceptable either.
+
+The formulation is EPSG Guidance Note 7-2 method 9820 (Lambert Azimuthal Equal Area, ellipsoidal) in the oblique aspect with an azimuth of the central meridian of zero, as PROJ implements it: the ellipsoid is mapped onto the authalic sphere of radius a * sqrt(q_p / 2), the azimuthal formulae run there, and dd = cos(phi_0) / (sqrt(1 - e^2 sin^2 phi_0) * r_q * cos(beta_0)) restores unit scale at the projection centre.
+Where PROJ inverts the authalic latitude with a truncated series, this evaluates sin(beta) = q(phi) / q_p directly and inverts it by Newton iteration on dq/dphi = 2 (1 - e^2) cos(phi) / (1 - e^2 sin^2 phi)^2, which is exact to double precision.
+
+The sign convention for a latitude of origin south of the equator is not implemented: EPSG:3035 uses 52 N. Axes follow the DiGi convention - easting in index 0, northing in index 1 - not the northing-first order of the EPSG:3035 definition.
+A rejected coordinate pair yields an empty ordinate array rather than an exception, which is what lets the conversion overloads fail one footprint closed; the inherited TransformList therefore reports rejected points as empty arrays, and the inherited coordinate-based helpers see an array too short to read.
+### Constructors
+
+<a name='DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform.LambertAzimuthalEqualAreaMathTransform(System.Func_bool,IMathTransform_,bool)'></a>
+
+## LambertAzimuthalEqualAreaMathTransform\(Func\<bool,IMathTransform\>, bool\) Constructor
+
+Initializes a new instance of the [LambertAzimuthalEqualAreaMathTransform](DiGi.GIS.Classes.md#DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform 'DiGi\.GIS\.Classes\.LambertAzimuthalEqualAreaMathTransform') class over a geographic to EPSG:2180 leg, or over its inverse\.
+The ellipsoid constants are computed here because an instance is built once per run by the Create factory, never per feature\.
+
+```csharp
+internal LambertAzimuthalEqualAreaMathTransform(System.Func<bool,IMathTransform> legFactory, bool toLambertAzimuthalEqualArea);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform.LambertAzimuthalEqualAreaMathTransform(System.Func_bool,IMathTransform_,bool).legFactory'></a>
+
+`legFactory` [System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[GeoAPI\.CoordinateSystems\.Transformations\.IMathTransform](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.imathtransform 'GeoAPI\.CoordinateSystems\.Transformations\.IMathTransform')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')
+
+Builds a fresh ProjNet leg on demand, asked by the direction of that leg: [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/builtin\-types/bool') for the geographic to EPSG:2180 leg, [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/builtin\-types/bool') for the leg that returns geographic ordinates from EPSG:2180 ones\. A factory rather than a leg, because ProjNet's own [ProjNet\.CoordinateSystems\.Transformations\.MathTransform\.Inverse](https://learn.microsoft.com/en-us/dotnet/api/projnet.coordinatesystems.transformations.mathtransform.inverse 'ProjNet\.CoordinateSystems\.Transformations\.MathTransform\.Inverse') reverses the steps of the instance it is called on and would corrupt a leg shared by both directions\.
+
+<a name='DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform.LambertAzimuthalEqualAreaMathTransform(System.Func_bool,IMathTransform_,bool).toLambertAzimuthalEqualArea'></a>
+
+`toLambertAzimuthalEqualArea` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+When [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/builtin\-types/bool'), the instance converts EPSG:3035 to EPSG:2180; when [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/builtin\-types/bool'), EPSG:2180 to EPSG:3035\.
+### Properties
+
+<a name='DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform.DimSource'></a>
+
+## LambertAzimuthalEqualAreaMathTransform\.DimSource Property
+
+Gets the number of source ordinates, always two\.
+
+```csharp
+public override int DimSource { get; }
+```
+
+#### Property Value
+[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+<a name='DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform.DimTarget'></a>
+
+## LambertAzimuthalEqualAreaMathTransform\.DimTarget Property
+
+Gets the number of target ordinates, always two\.
+
+```csharp
+public override int DimTarget { get; }
+```
+
+#### Property Value
+[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+<a name='DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform.WKT'></a>
+
+## LambertAzimuthalEqualAreaMathTransform\.WKT Property
+
+Gets an empty string: this leg is not expressible in WKT, because the projection it implements is exactly the one ProjNET4GeoAPI 1\.4\.1 cannot describe\.
+
+```csharp
+public override string WKT { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform.XML'></a>
+
+## LambertAzimuthalEqualAreaMathTransform\.XML Property
+
+Gets an empty string, for the reason given for [WKT](DiGi.GIS.Classes.md#DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform.WKT 'DiGi\.GIS\.Classes\.LambertAzimuthalEqualAreaMathTransform\.WKT')\.
+
+```csharp
+public override string XML { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+### Methods
+
+<a name='DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform.Inverse()'></a>
+
+## LambertAzimuthalEqualAreaMathTransform\.Inverse\(\) Method
+
+Returns the opposite direction: EPSG:2180 to EPSG:3035 when this instance converts EPSG:3035 to EPSG:2180, and the reverse otherwise\.
+The new instance takes a freshly built ProjNet leg, so this one keeps working\.
+
+```csharp
+public override IMathTransform Inverse();
+```
+
+#### Returns
+[GeoAPI\.CoordinateSystems\.Transformations\.IMathTransform](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.imathtransform 'GeoAPI\.CoordinateSystems\.Transformations\.IMathTransform')  
+A new instance over its own leg\.
+
+<a name='DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform.Invert()'></a>
+
+## LambertAzimuthalEqualAreaMathTransform\.Invert\(\) Method
+
+Not supported: this instance is immutable, so take the opposite direction from [Inverse\(\)](DiGi.GIS.Classes.md#DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform.Inverse() 'DiGi\.GIS\.Classes\.LambertAzimuthalEqualAreaMathTransform\.Inverse\(\)') instead\.
+
+```csharp
+public override void Invert();
+```
+
+<a name='DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform.Transform(double[])'></a>
+
+## LambertAzimuthalEqualAreaMathTransform\.Transform\(double\[\]\) Method
+
+Converts one coordinate pair, yielding an empty array when a value is not finite or the point lies outside the projection domain\.
+
+```csharp
+public override double[] Transform(double[] point);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform.Transform(double[]).point'></a>
+
+`point` [System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')
+
+The source ordinates, easting in index 0 and northing in index 1\.
+
+#### Returns
+[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[\[\]](https://learn.microsoft.com/en-us/dotnet/api/system.array 'System\.Array')  
+The converted easting and northing, or an empty array\.
 
 <a name='DiGi.GIS.Classes.OccupancyCalculationResult'></a>
 

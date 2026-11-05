@@ -472,11 +472,74 @@ The moment the index was read\.
 [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[OrtoSheet](DiGi.GIS.Classes.md#DiGi.GIS.Classes.OrtoSheet 'DiGi\.GIS\.Classes\.OrtoSheet')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')  
 The sheets in document order; empty when the stream is null or its root is not a feature collection\.
 
+<a name='DiGi.GIS.Convert.ToEPSG2180(thisDiGi.Geometry.Planar.Classes.Polygon2D,ICoordinateTransformation)'></a>
+
+## Convert\.ToEPSG2180\(this Polygon2D, ICoordinateTransformation\) Method
+
+Reprojects a closed curve to EPSG:2180\.
+
+```csharp
+public static DiGi.Geometry.Planar.Classes.Polygon2D? ToEPSG2180(this DiGi.Geometry.Planar.Classes.Polygon2D? polygon2D, ICoordinateTransformation? coordinateTransformation);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Convert.ToEPSG2180(thisDiGi.Geometry.Planar.Classes.Polygon2D,ICoordinateTransformation).polygon2D'></a>
+
+`polygon2D` [DiGi\.Geometry\.Planar\.Classes\.Polygon2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.polygon2d 'DiGi\.Geometry\.Planar\.Classes\.Polygon2D')
+
+The source closed curve\.
+
+<a name='DiGi.GIS.Convert.ToEPSG2180(thisDiGi.Geometry.Planar.Classes.Polygon2D,ICoordinateTransformation).coordinateTransformation'></a>
+
+`coordinateTransformation` [GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.icoordinatetransformation 'GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation')
+
+A transformation from [EPSG2180TransformationFromEPSG4326\(\)](DiGi.GIS.md#DiGi.GIS.Create.EPSG2180TransformationFromEPSG4326() 'DiGi\.GIS\.Create\.EPSG2180TransformationFromEPSG4326\(\)') or [EPSG2180TransformationFromEPSG3035\(\)](DiGi.GIS.md#DiGi.GIS.Create.EPSG2180TransformationFromEPSG3035() 'DiGi\.GIS\.Create\.EPSG2180TransformationFromEPSG3035\(\)')\.
+
+#### Returns
+[DiGi\.Geometry\.Planar\.Classes\.Polygon2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.polygon2d 'DiGi\.Geometry\.Planar\.Classes\.Polygon2D')  
+The closed curve in EPSG:2180 with the same vertices, or [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null')\.
+
+### Remarks
+DiGi rings are stored open, with no repeated closing vertex, unlike a NetTopologySuite [NetTopologySuite\.Geometries\.LinearRing](https://learn.microsoft.com/en-us/dotnet/api/nettopologysuite.geometries.linearring 'NetTopologySuite\.Geometries\.LinearRing')\. The reprojected points therefore go through `DiGi.Geometry.Planar.Create.Polygon2D`, which is where a repeated closing point is removed and a ring with fewer than three distinct points is refused; the constructor would store whatever it is handed\.
+
+<a name='DiGi.GIS.Convert.ToEPSG2180(thisDiGi.Geometry.Planar.Classes.PolygonalFace2D,ICoordinateTransformation)'></a>
+
+## Convert\.ToEPSG2180\(this PolygonalFace2D, ICoordinateTransformation\) Method
+
+Reprojects a polygonal face to EPSG:2180, keeping its external edge and every internal edge\.
+
+```csharp
+public static DiGi.Geometry.Planar.Classes.PolygonalFace2D? ToEPSG2180(this DiGi.Geometry.Planar.Classes.PolygonalFace2D? polygonalFace2D, ICoordinateTransformation? coordinateTransformation);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Convert.ToEPSG2180(thisDiGi.Geometry.Planar.Classes.PolygonalFace2D,ICoordinateTransformation).polygonalFace2D'></a>
+
+`polygonalFace2D` [DiGi\.Geometry\.Planar\.Classes\.PolygonalFace2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.polygonalface2d 'DiGi\.Geometry\.Planar\.Classes\.PolygonalFace2D')
+
+The source face\.
+
+<a name='DiGi.GIS.Convert.ToEPSG2180(thisDiGi.Geometry.Planar.Classes.PolygonalFace2D,ICoordinateTransformation).coordinateTransformation'></a>
+
+`coordinateTransformation` [GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.icoordinatetransformation 'GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation')
+
+A transformation from [EPSG2180TransformationFromEPSG4326\(\)](DiGi.GIS.md#DiGi.GIS.Create.EPSG2180TransformationFromEPSG4326() 'DiGi\.GIS\.Create\.EPSG2180TransformationFromEPSG4326\(\)') or [EPSG2180TransformationFromEPSG3035\(\)](DiGi.GIS.md#DiGi.GIS.Create.EPSG2180TransformationFromEPSG3035() 'DiGi\.GIS\.Create\.EPSG2180TransformationFromEPSG3035\(\)')\.
+
+#### Returns
+[DiGi\.Geometry\.Planar\.Classes\.PolygonalFace2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.polygonalface2d 'DiGi\.Geometry\.Planar\.Classes\.PolygonalFace2D')  
+The face in EPSG:2180 with the same number of holes, or [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null')\.
+
+### Remarks
+
+The face travels as a NetTopologySuite polygon: [DiGi\.Geometry\.Planar\.Classes\.PolygonalFace2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.polygonalface2d 'DiGi\.Geometry\.Planar\.Classes\.PolygonalFace2D') exposes no public way to build a face from rings - its ring constructors are internal to DiGi.Geometry - and the public `DiGi.Geometry.Planar.Create` factory runs a bounding box, containment and area pass per hole and silently drops every hole that fails containment, which costs time per footprint and breaks the requirement that the ring count survives conversion.
+
+[DiGi\.Geometry\.Planar\.Classes\.PolygonalFace2D\.ExternalEdge](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.polygonalface2d.externaledge 'DiGi\.Geometry\.Planar\.Classes\.PolygonalFace2D\.ExternalEdge') and [DiGi\.Geometry\.Planar\.Classes\.PolygonalFace2D\.InternalEdges](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.polygonalface2d.internaledges 'DiGi\.Geometry\.Planar\.Classes\.PolygonalFace2D\.InternalEdges') clone through JSON on every read, so this path pays that clone once per face. Where a run converts many footprints, converting the source reader's NetTopologySuite geometry with [ToEPSG2180\(this Polygon, ICoordinateTransformation\)](DiGi.GIS.md#DiGi.GIS.Convert.ToEPSG2180(thisPolygon,ICoordinateTransformation) 'DiGi\.GIS\.Convert\.ToEPSG2180\(this Polygon, ICoordinateTransformation\)') and building the face once afterwards is the cheaper order.
+
 <a name='DiGi.GIS.Convert.ToEPSG2180(thisDiGi.Geometry.Spatial.Classes.Point3D)'></a>
 
 ## Convert\.ToEPSG2180\(this Point3D\) Method
 
-Converts a 3D point from geographic coordinates \(WGS 84\) to the Polish coordinate system EPSG:2180\.
+Converts a point from geographic coordinates \(EPSG:4326, longitude in X\) to EPSG:2180 \(easting in X\)\.
 
 ```csharp
 public static DiGi.Geometry.Planar.Classes.Point2D? ToEPSG2180(this DiGi.Geometry.Spatial.Classes.Point3D? point3D);
@@ -487,11 +550,71 @@ public static DiGi.Geometry.Planar.Classes.Point2D? ToEPSG2180(this DiGi.Geometr
 
 `point3D` [DiGi\.Geometry\.Spatial\.Classes\.Point3D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.spatial.classes.point3d 'DiGi\.Geometry\.Spatial\.Classes\.Point3D')
 
-The source 3D point to be converted\.
+The geographic point\.
 
 #### Returns
 [DiGi\.Geometry\.Planar\.Classes\.Point2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.point2d 'DiGi\.Geometry\.Planar\.Classes\.Point2D')  
-A 2D point in the EPSG:2180 coordinate system, or null if the input point is null or conversion fails\.
+The EPSG:2180 point, or [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null') when the point is null, an ordinate is not finite, or the result falls outside the Polish domain\.
+
+### Remarks
+This convenience overload builds the transformation on every call\. A loop over many coordinates or footprints takes an [GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.icoordinatetransformation 'GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation') from [EPSG2180TransformationFromEPSG4326\(\)](DiGi.GIS.md#DiGi.GIS.Create.EPSG2180TransformationFromEPSG4326() 'DiGi\.GIS\.Create\.EPSG2180TransformationFromEPSG4326\(\)') and uses the polygonal overloads in this folder instead\.
+
+<a name='DiGi.GIS.Convert.ToEPSG2180(thisMultiPolygon,ICoordinateTransformation)'></a>
+
+## Convert\.ToEPSG2180\(this MultiPolygon, ICoordinateTransformation\) Method
+
+Reprojects every part of a multi polygon to EPSG:2180, keeping the part count and the ring count of every part\.
+
+```csharp
+public static MultiPolygon? ToEPSG2180(this MultiPolygon? multiPolygon, ICoordinateTransformation? coordinateTransformation);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Convert.ToEPSG2180(thisMultiPolygon,ICoordinateTransformation).multiPolygon'></a>
+
+`multiPolygon` [NetTopologySuite\.Geometries\.MultiPolygon](https://learn.microsoft.com/en-us/dotnet/api/nettopologysuite.geometries.multipolygon 'NetTopologySuite\.Geometries\.MultiPolygon')
+
+The source multi polygon\.
+
+<a name='DiGi.GIS.Convert.ToEPSG2180(thisMultiPolygon,ICoordinateTransformation).coordinateTransformation'></a>
+
+`coordinateTransformation` [GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.icoordinatetransformation 'GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation')
+
+A transformation from [EPSG2180TransformationFromEPSG4326\(\)](DiGi.GIS.md#DiGi.GIS.Create.EPSG2180TransformationFromEPSG4326() 'DiGi\.GIS\.Create\.EPSG2180TransformationFromEPSG4326\(\)') or [EPSG2180TransformationFromEPSG3035\(\)](DiGi.GIS.md#DiGi.GIS.Create.EPSG2180TransformationFromEPSG3035() 'DiGi\.GIS\.Create\.EPSG2180TransformationFromEPSG3035\(\)')\.
+
+#### Returns
+[NetTopologySuite\.Geometries\.MultiPolygon](https://learn.microsoft.com/en-us/dotnet/api/nettopologysuite.geometries.multipolygon 'NetTopologySuite\.Geometries\.MultiPolygon')  
+The multi polygon in EPSG:2180, or [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null') when any part cannot be reprojected\.
+
+<a name='DiGi.GIS.Convert.ToEPSG2180(thisPolygon,ICoordinateTransformation)'></a>
+
+## Convert\.ToEPSG2180\(this Polygon, ICoordinateTransformation\) Method
+
+Reprojects a polygon to EPSG:2180 using a transformation the caller built once and holds\.
+
+```csharp
+public static Polygon? ToEPSG2180(this Polygon? polygon, ICoordinateTransformation? coordinateTransformation);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Convert.ToEPSG2180(thisPolygon,ICoordinateTransformation).polygon'></a>
+
+`polygon` [NetTopologySuite\.Geometries\.Polygon](https://learn.microsoft.com/en-us/dotnet/api/nettopologysuite.geometries.polygon 'NetTopologySuite\.Geometries\.Polygon')
+
+The source polygon\.
+
+<a name='DiGi.GIS.Convert.ToEPSG2180(thisPolygon,ICoordinateTransformation).coordinateTransformation'></a>
+
+`coordinateTransformation` [GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.icoordinatetransformation 'GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation')
+
+A transformation from [EPSG2180TransformationFromEPSG4326\(\)](DiGi.GIS.md#DiGi.GIS.Create.EPSG2180TransformationFromEPSG4326() 'DiGi\.GIS\.Create\.EPSG2180TransformationFromEPSG4326\(\)') or [EPSG2180TransformationFromEPSG3035\(\)](DiGi.GIS.md#DiGi.GIS.Create.EPSG2180TransformationFromEPSG3035() 'DiGi\.GIS\.Create\.EPSG2180TransformationFromEPSG3035\(\)')\.
+
+#### Returns
+[NetTopologySuite\.Geometries\.Polygon](https://learn.microsoft.com/en-us/dotnet/api/nettopologysuite.geometries.polygon 'NetTopologySuite\.Geometries\.Polygon')  
+The polygon in EPSG:2180 with the same number of rings, or [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null')\.
+
+### Remarks
+The footprint is the unit of failure: one non\-finite vertex, a ring shorter than three distinct vertices, or a vertex that lands outside the Polish domain voids the whole polygon, because a ring with some vertices reprojected is worse than no ring \- it still counts as a feature downstream\. Rings are rebuilt through the factory of the input geometry, so precision model and SRID survive, and every ring is closed by copying the transformed first vertex\.
 
 <a name='DiGi.GIS.Convert.ToEPSG4326(thisDiGi.Geometry.Planar.Classes.BoundingBox2D)'></a>
 
@@ -785,6 +908,58 @@ The tolerance value used in geometric calculations\.
 #### Returns
 [Building2DGeometryCalculationResult](DiGi.GIS.Classes.md#DiGi.GIS.Classes.Building2DGeometryCalculationResult 'DiGi\.GIS\.Classes\.Building2DGeometryCalculationResult')  
 A [Building2DGeometryCalculationResult\(this Building2D, double\)](DiGi.GIS.md#DiGi.GIS.Create.Building2DGeometryCalculationResult(thisDiGi.GIS.Classes.Building2D,double) 'DiGi\.GIS\.Create\.Building2DGeometryCalculationResult\(this DiGi\.GIS\.Classes\.Building2D, double\)') containing the calculated values, or null if calculation is not possible\.
+
+<a name='DiGi.GIS.Create.EPSG2180LegFactory()'></a>
+
+## Create\.EPSG2180LegFactory\(\) Method
+
+Builds a factory of the ProjNet leg between EPSG:4326 and EPSG:2180 in either direction\.
+A factory, not a leg: ProjNET4GeoAPI 1\.4\.1 reverses the steps of a leg in place when asked for its inverse, so every direction needs a leg of its own\.
+
+```csharp
+internal static System.Func<bool,IMathTransform> EPSG2180LegFactory();
+```
+
+#### Returns
+[System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[GeoAPI\.CoordinateSystems\.Transformations\.IMathTransform](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.imathtransform 'GeoAPI\.CoordinateSystems\.Transformations\.IMathTransform')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')  
+A function returning the source\-to\-target leg for [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/builtin\-types/bool') and the opposite leg for [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/builtin\-types/bool')\.
+
+<a name='DiGi.GIS.Create.EPSG2180TransformationFromEPSG3035()'></a>
+
+## Create\.EPSG2180TransformationFromEPSG3035\(\) Method
+
+Creates the transformation from EPSG:3035 \(ETRS89 / LAEA Europe, easting in X\) to EPSG:2180 \(Poland CS92, easting in X\)\.
+
+```csharp
+public static ICoordinateTransformation? EPSG2180TransformationFromEPSG3035();
+```
+
+#### Returns
+[GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.icoordinatetransformation 'GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation')  
+The transformation, or [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null') when it could not be built\.
+
+### Remarks
+ProjNET4GeoAPI 1\.4\.1 implements no Lambert Azimuthal Equal Area projection, so this is not a ProjNet transformation: the LAEA leg is computed by [LambertAzimuthalEqualAreaMathTransform](DiGi.GIS.Classes.md#DiGi.GIS.Classes.LambertAzimuthalEqualAreaMathTransform 'DiGi\.GIS\.Classes\.LambertAzimuthalEqualAreaMathTransform') and its geographic output is handed to the ProjNet geographic to EPSG:2180 leg, which is the same leg [EPSG2180TransformationFromEPSG4326\(\)](DiGi.GIS.md#DiGi.GIS.Create.EPSG2180TransformationFromEPSG4326() 'DiGi\.GIS\.Create\.EPSG2180TransformationFromEPSG4326\(\)') uses\. Both coordinate systems are ETRS89, so no datum shift is involved in either leg\.
+The geographic to EPSG:2180 leg is rebuilt whenever a direction is reversed, so taking [GeoAPI\.CoordinateSystems\.Transformations\.IMathTransform\.Inverse](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.imathtransform.inverse 'GeoAPI\.CoordinateSystems\.Transformations\.IMathTransform\.Inverse') leaves this transformation usable\.
+
+<a name='DiGi.GIS.Create.EPSG2180TransformationFromEPSG4326()'></a>
+
+## Create\.EPSG2180TransformationFromEPSG4326\(\) Method
+
+Creates the transformation from EPSG:4326 \(WGS 84, longitude in X\) to EPSG:2180 \(Poland CS92, easting in X\)\.
+
+```csharp
+public static ICoordinateTransformation? EPSG2180TransformationFromEPSG4326();
+```
+
+#### Returns
+[GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.icoordinatetransformation 'GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation')  
+The transformation, or [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null') when it could not be built\.
+
+### Remarks
+Build it once and hold it: constructing a transformation builds the coordinate systems, parses the WKT and resolves the projection, which is the cost the `Convert.ToEPSG2180` overloads take it as a parameter to avoid paying per feature\. Do not keep it in a static field \- a run holds its own\.
+No datum shift is applied, so EPSG:4326 coordinates are treated as ETRS89; in Poland the two differ by about a metre, and that difference is invisible to any check that runs both directions through the same library\.
+The mathematics is a [DelegatingMathTransform](DiGi.GIS.Classes.md#DiGi.GIS.Classes.DelegatingMathTransform 'DiGi\.GIS\.Classes\.DelegatingMathTransform'), not the ProjNet object itself, because calling `Inverse()` on a ProjNet leg corrupts its forward direction; see that class\.
 
 <a name='DiGi.GIS.Create.GISModelAreal2DReference(System.Collections.Generic.IReadOnlyList_string_)'></a>
 
