@@ -35,7 +35,7 @@ namespace DiGi.GIS
                     return null;
                 }
 
-                if (TransformOrdinates(coordinateTransformation, point2Ds[i].X, point2Ds[i].Y) is not double[] values)
+                if (TransformOrdinates(coordinateTransformation, point2Ds[i].X, point2Ds[i].Y, true) is not double[] values)
                 {
                     return null;
                 }

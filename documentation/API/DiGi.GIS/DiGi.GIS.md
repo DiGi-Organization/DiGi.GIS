@@ -554,7 +554,7 @@ The geographic point\.
 
 #### Returns
 [DiGi\.Geometry\.Planar\.Classes\.Point2D](https://learn.microsoft.com/en-us/dotnet/api/digi.geometry.planar.classes.point2d 'DiGi\.Geometry\.Planar\.Classes\.Point2D')  
-The EPSG:2180 point, or [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null') when the point is null, an ordinate is not finite, or the result falls outside the Polish domain\.
+The EPSG:2180 point, or [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null') when the point is null or an ordinate, of the input or of the result, is not finite\.
 
 ### Remarks
 This convenience overload builds the transformation on every call\. A loop over many coordinates or footprints takes an [GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation](https://learn.microsoft.com/en-us/dotnet/api/geoapi.coordinatesystems.transformations.icoordinatetransformation 'GeoAPI\.CoordinateSystems\.Transformations\.ICoordinateTransformation') from [EPSG2180TransformationFromEPSG4326\(\)](DiGi.GIS.md#DiGi.GIS.Create.EPSG2180TransformationFromEPSG4326() 'DiGi\.GIS\.Create\.EPSG2180TransformationFromEPSG4326\(\)') and uses the polygonal overloads in this folder instead\.

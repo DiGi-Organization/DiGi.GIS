@@ -16,7 +16,7 @@ namespace DiGi.GIS
         /// This convenience overload builds the transformation on every call. A loop over many coordinates or footprints takes an <see cref="ICoordinateTransformation"/> from <see cref="Create.EPSG2180TransformationFromEPSG4326"/> and uses the polygonal overloads in this folder instead.
         /// </remarks>
         /// <param name="point3D">The geographic point.</param>
-        /// <returns>The EPSG:2180 point, or <see langword="null"/> when the point is null, an ordinate is not finite, or the result falls outside the Polish domain.</returns>
+        /// <returns>The EPSG:2180 point, or <see langword="null"/> when the point is null or an ordinate, of the input or of the result, is not finite.</returns>
         public static Point2D? ToEPSG2180(this Point3D? point3D)
         {
             if (point3D == null)
@@ -24,7 +24,8 @@ namespace DiGi.GIS
                 return null;
             }
 
-            if (TransformOrdinates(Create.EPSG2180TransformationFromEPSG4326(), point3D.X, point3D.Y) is not double[] values)
+            // The Polish domain is deliberately not applied to a single point. A point has no signal that the wrong source system was used, and the callers of this overload convert things that are legitimately outside Poland: EPWFilePostgreSQLConverter skips an EPW weather station whose coordinate it cannot place, and the GIS.ToEPSG2180 Grasshopper component answers with an empty output.
+            if (TransformOrdinates(Create.EPSG2180TransformationFromEPSG4326(), point3D.X, point3D.Y, false) is not double[] values)
             {
                 return null;
             }
@@ -35,8 +36,8 @@ namespace DiGi.GIS
         // Shared internals of the EPSG:2180 overloads in this folder. They are private to Convert, so they are not public members and do not get a file of their own.
 
         // One vertex: null rather than a partial answer, so a caller can never carry a half-reprojected ring.
-        // A transformation that is not one of ours carries no domain, so only the finite guard applies to it.
-        private static double[]? TransformOrdinates(ICoordinateTransformation? coordinateTransformation, double sourceX, double sourceY)
+        // enforceDomain applies the domain of use when the transformation carries one, which is the case for a transformation from Create. A footprint is the unit of failure, and a vertex outside Poland is the sign that the footprint did not arrive from the source system the caller declared; a lone point carries no such sign, so its overload passes false.
+        private static double[]? TransformOrdinates(ICoordinateTransformation? coordinateTransformation, double sourceX, double sourceY, bool enforceDomain)
         {
             if (coordinateTransformation?.MathTransform is not IMathTransform mathTransform)
             {
@@ -54,7 +55,7 @@ namespace DiGi.GIS
                 return null;
             }
 
-            if (coordinateTransformation is EPSG2180Transformation epsg2180Transformation && !epsg2180Transformation.IsWithinDomain(values[0], values[1]))
+            if (enforceDomain && coordinateTransformation is EPSG2180Transformation epsg2180Transformation && !epsg2180Transformation.IsWithinDomain(values[0], values[1]))
             {
                 return null;
             }
@@ -90,7 +91,7 @@ namespace DiGi.GIS
             List<Coordinate> result = new(vertexCount + 1);
             for (int i = 0; i < vertexCount; i++)
             {
-                if (TransformOrdinates(coordinateTransformation, coordinates[i].X, coordinates[i].Y) is not double[] values)
+                if (TransformOrdinates(coordinateTransformation, coordinates[i].X, coordinates[i].Y, true) is not double[] values)
                 {
                     return null;
                 }
