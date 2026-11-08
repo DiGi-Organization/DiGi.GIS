@@ -1,5 +1,6 @@
 ﻿using DiGi.Core.Classes;
 using DiGi.GIS.Interfaces;
+using System.Globalization;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
@@ -101,7 +102,7 @@ namespace DiGi.GIS.Classes
         {
             get
             {
-                return index.ToString();
+                return index.ToString(CultureInfo.CurrentCulture);
             }
         }
 
@@ -111,7 +112,7 @@ namespace DiGi.GIS.Classes
         /// <returns>A tab-separated string containing the index, reference, and name.</returns>
         public override string? ToString()
         {
-            return string.Join("\t", index.ToString(), reference ?? string.Empty, name ?? string.Empty);
+            return string.Join("\t", index.ToString(CultureInfo.CurrentCulture), reference ?? string.Empty, name ?? string.Empty);
         }
     }
 }

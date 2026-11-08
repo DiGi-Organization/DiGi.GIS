@@ -34,7 +34,7 @@ namespace DiGi.GIS
         /// <returns>A long integer representing the computed hash of the collection; returns 0 if the collection is null or empty.</returns>
         public static long Hash(IEnumerable<double>? doubles)
         {
-            if (doubles == null || doubles.Count() == 0)
+            if (doubles == null || !doubles.Any())
             {
                 return 0;
             }
@@ -55,7 +55,7 @@ namespace DiGi.GIS
         /// <returns>A long integer representing the computed hash of the collection; returns 0 if the collection is null or empty.</returns>
         public static long Hash(IEnumerable<long>? longs)
         {
-            if (longs == null || longs.Count() == 0)
+            if (longs == null || !longs.Any())
             {
                 return 0;
             }
@@ -77,7 +77,7 @@ namespace DiGi.GIS
         /// <returns>A long integer representing the computed hash of the geometry collection; returns 0 if the collection is null or empty.</returns>
         public static long Hash<T>(IEnumerable<T>? geometries) where T : GML.Classes.Geometry
         {
-            if (geometries == null || geometries.Count() == 0)
+            if (geometries == null || !geometries.Any())
             {
                 return 0;
             }

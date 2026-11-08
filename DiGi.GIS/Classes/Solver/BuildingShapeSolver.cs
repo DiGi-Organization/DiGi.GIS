@@ -20,7 +20,7 @@ namespace DiGi.GIS.Classes
         private readonly double offset = 1.0;
         private readonly double thinnessRatio = 0.9;
 
-        private Building2D? input = null;
+        private Building2D? input;
         private BuildingShape output = BuildingShape.Undefined;
 
         private readonly double areaFactor = 0.5;

@@ -1,5 +1,6 @@
 ﻿using DiGi.Core.Classes;
 using DiGi.GIS.Classes;
+using System.Globalization;
 using System.Linq;
 
 namespace DiGi.GIS
@@ -37,7 +38,7 @@ namespace DiGi.GIS
                 return null;
             }
 
-            path = System.IO.Path.Combine(directory, string.Format("{0}.{1}", System.IO.Path.GetFileNameWithoutExtension(path), Constants.FileExtension.YearBuiltDataFile));
+            path = System.IO.Path.Combine(directory, string.Format(CultureInfo.CurrentCulture, "{0}.{1}", System.IO.Path.GetFileNameWithoutExtension(path), Constants.FileExtension.YearBuiltDataFile));
 
             UniqueReference? uniqueReference = null;
 
@@ -59,7 +60,7 @@ namespace DiGi.GIS
             {
                 yearBuiltData.RemoveUserYearBuilt();
 
-                if (yearBuiltData.YearBuilts == null || yearBuiltData.YearBuilts.Count() == 0)
+                if (yearBuiltData.YearBuilts == null || !yearBuiltData.YearBuilts.Any())
                 {
                     UniqueReference? uniqueReference_Temp = YearBuiltDataFile.GetUniqueReference<YearBuiltData>(reference);
                     if (uniqueReference_Temp is not null && yearBuiltDataFile.Remove(uniqueReference_Temp))

@@ -1,6 +1,7 @@
 ﻿using DiGi.BDL.Enums;
 using DiGi.GIS.Classes;
 using DiGi.GIS.Interfaces;
+using System.Globalization;
 
 namespace DiGi.GIS
 {
@@ -19,7 +20,7 @@ namespace DiGi.GIS
                 return false;
             }
 
-            string reference = ((int)variable).ToString();
+            string reference = ((int)variable).ToString(CultureInfo.CurrentCulture);
 
             IStatisticalData? statisticalData = statisticalDataCollection.Find<IStatisticalData>(x => x?.Reference == reference);
 

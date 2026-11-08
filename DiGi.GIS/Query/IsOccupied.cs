@@ -28,7 +28,7 @@ namespace DiGi.GIS
                 return false;
             }
 
-            if (building2D.BuildingSpecificFunctions != null && building2D.BuildingSpecificFunctions.Any())
+            if (building2D.BuildingSpecificFunctions != null && building2D.BuildingSpecificFunctions.Count != 0)
             {
                 if (!building2D.BuildingSpecificFunctions.Contains(BuildingSpecificFunction.single_family_building) && !building2D.BuildingSpecificFunctions.Contains(BuildingSpecificFunction.multi_family_building))
                 {

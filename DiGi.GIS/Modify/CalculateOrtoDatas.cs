@@ -1,6 +1,7 @@
 ﻿using DiGi.Core.Classes;
 using DiGi.GIS.Classes;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -117,7 +118,7 @@ namespace DiGi.GIS
 
             HashSet<GuidReference> result = [];
 
-            if (building2Ds_Temp.Count() == 0)
+            if (!building2Ds_Temp.Any())
             {
                 return result;
             }
@@ -133,7 +134,7 @@ namespace DiGi.GIS
                 return result;
             }
 
-            string path_OrtoDatas = System.IO.Path.Combine(directory, string.Format("{0}{1}", fileName, System.IO.Path.GetExtension(path)));
+            string path_OrtoDatas = System.IO.Path.Combine(directory, string.Format(CultureInfo.CurrentCulture, "{0}{1}", fileName, System.IO.Path.GetExtension(path)));
 
             using (OrtoDatasFile ortoDatasFile = new(path_OrtoDatas))
             {
@@ -221,7 +222,7 @@ namespace DiGi.GIS
 
             HashSet<GuidReference> result = [];
 
-            if (ortoRanges_Temp.Count() == 0)
+            if (!ortoRanges_Temp.Any())
             {
                 return result;
             }
@@ -237,7 +238,7 @@ namespace DiGi.GIS
                 return result;
             }
 
-            string path_OrtoDatas = System.IO.Path.Combine(directory, string.Format("{0}{1}", fileName, System.IO.Path.GetExtension(path)));
+            string path_OrtoDatas = System.IO.Path.Combine(directory, string.Format(CultureInfo.CurrentCulture, "{0}{1}", fileName, System.IO.Path.GetExtension(path)));
 
             using (OrtoDatasFile ortoDatasFile = new(path_OrtoDatas))
             {

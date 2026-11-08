@@ -29,7 +29,7 @@ namespace DiGi.GIS
             string reference_Temp = reference.Trim();
 
             int index_End = reference_Temp.IndexOf(']');
-            if (index_End > 0 && reference_Temp.StartsWith("["))
+            if (index_End > 0 && reference_Temp.StartsWith("[", StringComparison.CurrentCulture))
             {
                 string gISModelReference = reference_Temp.Substring(1, index_End - 1);
                 string areal2DReference = reference_Temp.Substring(index_End + 1);

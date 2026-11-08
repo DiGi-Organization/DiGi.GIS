@@ -74,7 +74,7 @@ namespace DiGi.GIS.Classes
             return GetValue<UYearBuiltData>(uniqueReference);
         }
 
-        private static UniqueReference? GetUniqueReference(System.Type? type, string? reference)
+        private static UniqueIdReference? GetUniqueReference(System.Type? type, string? reference)
         {
             if (string.IsNullOrWhiteSpace(reference) || type == null)
             {

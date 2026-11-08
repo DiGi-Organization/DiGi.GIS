@@ -3,6 +3,7 @@ using DiGi.GIS.Enums;
 using DiGi.GIS.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
@@ -217,7 +218,7 @@ namespace DiGi.GIS.Classes
                     return statisticalUnit;
                 }
 
-                if (includeNested && prefix is not null && prefix.StartsWith(prefix_StatisticalUnit))
+                if (includeNested && prefix is not null && prefix.StartsWith(prefix_StatisticalUnit, StringComparison.CurrentCulture))
                 {
                     StatisticalUnit? statisticalUnit_Nested = statisticalUnit?.Find(unitCode, includeNested);
                     if (statisticalUnit_Nested != null)
@@ -236,7 +237,7 @@ namespace DiGi.GIS.Classes
         /// <returns>A formatted string containing the unit's code and name.</returns>
         public override string? ToString()
         {
-            return string.Format("{0}: {1}", string.IsNullOrWhiteSpace(unitCode?.Code) ? "???" : unitCode!.Code, string.IsNullOrWhiteSpace(name) ? "???" : name);
+            return string.Format(CultureInfo.CurrentCulture, "{0}: {1}", string.IsNullOrWhiteSpace(unitCode?.Code) ? "???" : unitCode!.Code, string.IsNullOrWhiteSpace(name) ? "???" : name);
         }
     }
 }

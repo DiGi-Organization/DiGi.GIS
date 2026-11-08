@@ -2,6 +2,7 @@
 using DiGi.GIS.Classes;
 using DiGi.GIS.Interfaces;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace DiGi.GIS
@@ -17,7 +18,7 @@ namespace DiGi.GIS
         /// <returns>A dictionary mapping references to their corresponding year built data, or null if inputs are invalid or the associated data file is missing.</returns>
         public static Dictionary<string, TYearBuiltData>? YearBuiltDataDictionary<TYearBuiltData>(GISModelFile? gISModelFile, IEnumerable<string>? references) where TYearBuiltData : IYearBuiltData
         {
-            if (gISModelFile == null || references == null || references.Count() == 0)
+            if (gISModelFile == null || references == null || !references.Any())
             {
                 return null;
             }
@@ -34,7 +35,7 @@ namespace DiGi.GIS
                 return null;
             }
 
-            path = System.IO.Path.Combine(directory, string.Format("{0}.{1}", System.IO.Path.GetFileNameWithoutExtension(path), Constants.FileExtension.YearBuiltDataFile));
+            path = System.IO.Path.Combine(directory, string.Format(CultureInfo.CurrentCulture, "{0}.{1}", System.IO.Path.GetFileNameWithoutExtension(path), Constants.FileExtension.YearBuiltDataFile));
 
             if (!System.IO.File.Exists(path))
             {
@@ -140,7 +141,7 @@ namespace DiGi.GIS
                 return result;
             }
 
-            string[] paths = System.IO.Directory.GetFiles(directory, string.Format("*.{0}", Constants.FileExtension.YearBuiltDataFile));
+            string[] paths = System.IO.Directory.GetFiles(directory, string.Format(CultureInfo.CurrentCulture, "*.{0}", Constants.FileExtension.YearBuiltDataFile));
             if (paths == null || paths.Length == 0)
             {
                 return result;

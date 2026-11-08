@@ -39,12 +39,12 @@ namespace DiGi.GIS
                         continue;
                     }
 
-                    while (id!.EndsWith("0"))
+                    while (id!.EndsWith("0", StringComparison.CurrentCulture))
                     {
                         id = id.Substring(0, id.Length - 1);
                     }
 
-                    Core.Query.Filter(statisticalUnits, x => !string.IsNullOrWhiteSpace(x?.Code) && x!.Code!.StartsWith(id), out List<StatisticalUnit>? statisticalUnits_Unit, out statisticalUnits);
+                    Core.Query.Filter(statisticalUnits, x => !string.IsNullOrWhiteSpace(x?.Code) && x!.Code!.StartsWith(id, StringComparison.CurrentCulture), out List<StatisticalUnit>? statisticalUnits_Unit, out statisticalUnits);
 
                     statisticalUnits?.Add(new StatisticalUnit(Guid.NewGuid(), UnitCode(unit_Level.id), unit_Level.name, statisticalUnits_Unit));
                 }

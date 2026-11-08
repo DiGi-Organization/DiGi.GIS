@@ -1,6 +1,7 @@
 using DiGi.Core.Classes;
 using DiGi.Core.Enums;
 using DiGi.GIS.Classes;
+using System.Globalization;
 
 namespace DiGi.GIS
 {
@@ -25,7 +26,7 @@ namespace DiGi.GIS
             string? street = name;
             if (!string.IsNullOrWhiteSpace(addressPoint.HouseNumber))
             {
-                street = string.IsNullOrWhiteSpace(name) ? addressPoint.HouseNumber : string.Format("{0} {1}", name, addressPoint.HouseNumber);
+                street = string.IsNullOrWhiteSpace(name) ? addressPoint.HouseNumber : string.Format(CultureInfo.CurrentCulture, "{0} {1}", name, addressPoint.HouseNumber);
             }
 
             return new Address(street, addressPoint.LocalityName, addressPoint.PostalCode, CountryCode.PL);

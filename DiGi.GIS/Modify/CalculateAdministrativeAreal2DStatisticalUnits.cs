@@ -2,6 +2,7 @@
 using DiGi.GIS.Enums;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace DiGi.GIS
@@ -52,15 +53,15 @@ namespace DiGi.GIS
                 {
                     if (extended)
                     {
-                        string name = statisticalUnit.Name.Trim().ToUpper();
+                        string name = statisticalUnit.Name.Trim().ToUpper(CultureInfo.CurrentCulture);
 
-                        return name.EndsWith(administrativeDivision.Name?.ToUpper());
+                        return name.EndsWith(administrativeDivision.Name?.ToUpper(CultureInfo.CurrentCulture), StringComparison.CurrentCulture);
                     }
                     else
                     {
-                        string name_StatisticalUnit = statisticalUnit.Name.Trim().ToUpper();
-                        int index_OD = name_StatisticalUnit.IndexOf(" OD ");
-                        int index_DO = name_StatisticalUnit.IndexOf(" DO ");
+                        string name_StatisticalUnit = statisticalUnit.Name.Trim().ToUpper(CultureInfo.CurrentCulture);
+                        int index_OD = name_StatisticalUnit.IndexOf(" OD ", StringComparison.CurrentCulture);
+                        int index_DO = name_StatisticalUnit.IndexOf(" DO ", StringComparison.CurrentCulture);
                         if (index_DO > 0 || index_OD > 0)
                         {
                             index_OD = index_OD == -1 ? index_DO : index_OD;
@@ -68,7 +69,7 @@ namespace DiGi.GIS
                             name_StatisticalUnit = name_StatisticalUnit.Substring(0, Math.Min(index_OD, index_DO));
                         }
 
-                        string name_AdministrativeDivision = administrativeDivision.Name?.Trim().ToUpper() ?? string.Empty;
+                        string name_AdministrativeDivision = administrativeDivision.Name?.Trim().ToUpper(CultureInfo.CurrentCulture) ?? string.Empty;
                         string name_AdministrativeDivision_2 = "POWIAT " + name_AdministrativeDivision;
                         string name_AdministrativeDivision_3 = "POWIAT M. " + name_AdministrativeDivision;
 
@@ -82,11 +83,11 @@ namespace DiGi.GIS
                     {
                         if (extended)
                         {
-                            return Query.IsUrban(municipalityType.Value) && statisticalUnit.Name.ToUpper().StartsWith(administrativeDivision.Name?.ToUpper());
+                            return Query.IsUrban(municipalityType.Value) && statisticalUnit.Name.StartsWith(administrativeDivision.Name?.ToUpper(CultureInfo.CurrentCulture), StringComparison.CurrentCultureIgnoreCase);
                         }
                         else
                         {
-                            return municipalityType == MunicipalityType.urban_rural_municipality_town && statisticalUnit.Name?.ToUpper() == administrativeDivision.Name?.ToUpper();
+                            return municipalityType == MunicipalityType.urban_rural_municipality_town && statisticalUnit.Name?.ToUpper(CultureInfo.CurrentCulture) == administrativeDivision.Name?.ToUpper(CultureInfo.CurrentCulture);
                         }
                     }
                 }
@@ -94,14 +95,14 @@ namespace DiGi.GIS
                 {
                     if (statisticalUnit.GetStatisticalUnitType() == StatisticalUnitType.municipalities)
                     {
-                        string name_StatisticalUnit = statisticalUnit.Name.ToUpper();
+                        string name_StatisticalUnit = statisticalUnit.Name.ToUpper(CultureInfo.CurrentCulture);
 
-                        string name_AdministrativeDivision = administrativeDivision.Name?.ToUpper() ?? string.Empty;
-                        if (name_AdministrativeDivision.StartsWith("M. ST."))
+                        string name_AdministrativeDivision = administrativeDivision.Name?.ToUpper(CultureInfo.CurrentCulture) ?? string.Empty;
+                        if (name_AdministrativeDivision.StartsWith("M. ST.", StringComparison.CurrentCulture))
                         {
                             name_AdministrativeDivision = name_AdministrativeDivision.Replace(" ", string.Empty) + " OD 2002";
                         }
-                        else if (name_AdministrativeDivision.StartsWith("M."))
+                        else if (name_AdministrativeDivision.StartsWith("M.", StringComparison.CurrentCulture))
                         {
                             name_AdministrativeDivision = name_AdministrativeDivision.Substring(2).Trim();
                         }
@@ -112,20 +113,20 @@ namespace DiGi.GIS
                             string sufix;
 
                             sufix = "(GM. MIEJSKA)";
-                            if (name_AdministrativeDivision.EndsWith(sufix))
+                            if (name_AdministrativeDivision.EndsWith(sufix, StringComparison.CurrentCulture))
                             {
                                 if (Query.IsUrban(municipalityType.Value))
                                 {
-                                    name_StatisticalUnit = string.Format("{0} {1}", name_StatisticalUnit, sufix);
+                                    name_StatisticalUnit = string.Format(CultureInfo.CurrentCulture, "{0} {1}", name_StatisticalUnit, sufix);
                                 }
                             }
 
                             sufix = "(GM. WIEJSKA)";
-                            if (name_AdministrativeDivision.EndsWith(sufix))
+                            if (name_AdministrativeDivision.EndsWith(sufix, StringComparison.CurrentCulture))
                             {
                                 if (!Query.IsUrban(municipalityType.Value))
                                 {
-                                    name_StatisticalUnit = string.Format("{0} {1}", name_StatisticalUnit, sufix);
+                                    name_StatisticalUnit = string.Format(CultureInfo.CurrentCulture, "{0} {1}", name_StatisticalUnit, sufix);
                                 }
                             }
 
@@ -134,8 +135,8 @@ namespace DiGi.GIS
                                 return true;
                             }
 
-                            int index_Start = name_AdministrativeDivision.LastIndexOf("(");
-                            int index_End = name_AdministrativeDivision.LastIndexOf(")");
+                            int index_Start = name_AdministrativeDivision.LastIndexOf("(", StringComparison.CurrentCulture);
+                            int index_End = name_AdministrativeDivision.LastIndexOf(")", StringComparison.CurrentCulture);
                             if (index_Start > 0 && index_End > 1 && index_End == name_AdministrativeDivision.Length - 1)
                             {
                                 name_AdministrativeDivision = name_AdministrativeDivision.Substring(0, index_Start).Trim();
@@ -156,18 +157,18 @@ namespace DiGi.GIS
                             {
                                 if (municipalityType.Value == MunicipalityType.Warsaw_district)
                                 {
-                                    return statisticalUnit.Name.ToUpper().StartsWith(administrativeDivision.Name?.ToUpper());
+                                    return statisticalUnit.Name.StartsWith(administrativeDivision.Name?.ToUpper(CultureInfo.CurrentCulture), StringComparison.CurrentCultureIgnoreCase);
                                 }
                                 else
                                 {
-                                    return administrativeDivision.Name != null && administrativeDivision.Name.ToUpper().StartsWith(statisticalUnit.Name.ToUpper());
+                                    return administrativeDivision.Name != null && administrativeDivision.Name.StartsWith(statisticalUnit.Name, StringComparison.CurrentCultureIgnoreCase);
                                 }
                             }
                         }
                     }
                 }
 
-                return statisticalUnit.Name?.ToUpper() == administrativeDivision.Name?.ToUpper();
+                return statisticalUnit.Name?.ToUpper(CultureInfo.CurrentCulture) == administrativeDivision.Name?.ToUpper(CultureInfo.CurrentCulture);
             });
 
             invalidAdministrativeAreal2Ds = [];
@@ -236,7 +237,7 @@ namespace DiGi.GIS
                                     }
                                 }
 
-                                statisticalUnits_Temp_Temp.RemoveAll(x => !(x.Code ?? string.Empty).StartsWith(prefix));
+                                statisticalUnits_Temp_Temp.RemoveAll(x => !(x.Code ?? string.Empty).StartsWith(prefix, StringComparison.CurrentCulture));
                             }
 
                             statisticalUnits_Temp = statisticalUnits_Temp_Temp;
@@ -244,7 +245,7 @@ namespace DiGi.GIS
 
                         if (statisticalUnits_Temp.Count > 1)
                         {
-                            List<string> names = statisticalUnits_Temp.ConvertAll(x => x.Name?.Trim().ToUpper() ?? string.Empty);
+                            List<string> names = statisticalUnits_Temp.ConvertAll(x => x.Name?.Trim().ToUpper(CultureInfo.CurrentCulture) ?? string.Empty);
                             if (names.TrueForAll(x => x.Contains(" OD ") || x.Contains(" DO ")))
                             {
                                 List<StatisticalUnit> statisticalUnits = [];
@@ -257,7 +258,9 @@ namespace DiGi.GIS
                                     statisticalUnits_Temp = statisticalUnits_Temp_Temp;
                                 }
 
-                                statisticalUnits_Temp.Sort((x, y) => (y?.Code ?? string.Empty).CompareTo(x?.Code ?? string.Empty));
+#pragma warning disable CA1309 // the culture order this selection always used
+                                statisticalUnits_Temp.Sort((x, y) => string.Compare(y?.Code ?? string.Empty, x?.Code ?? string.Empty, StringComparison.CurrentCulture));
+#pragma warning restore CA1309
                                 statisticalUnits_Temp = [statisticalUnits_Temp[0]];
                             }
                         }
@@ -280,7 +283,7 @@ namespace DiGi.GIS
 
                             code = code.Substring(0, code.Length - 1);
 
-                            IEnumerable<StatisticalUnit>? statisticalUnits_Code = statisticalUnit.GetStatisticalUnits(true, x => (x?.Code ?? string.Empty).StartsWith(code));
+                            IEnumerable<StatisticalUnit>? statisticalUnits_Code = statisticalUnit.GetStatisticalUnits(true, x => (x?.Code ?? string.Empty).StartsWith(code, StringComparison.CurrentCulture));
                             if (statisticalUnits_Code != null)
                             {
                                 foreach (StatisticalUnit statisticalUnit_Code in statisticalUnits_Code)
@@ -326,7 +329,7 @@ namespace DiGi.GIS
                     return false;
                 }
 
-                return statisticalUnit.Name?.ToUpper() == administrativeSubdivision.Name?.ToUpper();
+                return statisticalUnit.Name?.ToUpper(CultureInfo.CurrentCulture) == administrativeSubdivision.Name?.ToUpper(CultureInfo.CurrentCulture);
             });
 
             foreach (AdministrativeSubdivision administrativeSubdivision in administrativeSubdivisions)
@@ -406,7 +409,9 @@ namespace DiGi.GIS
 
                     if (tuples_StatisticalUnits != null && tuples_StatisticalUnits.Count > 0)
                     {
-                        tuples_StatisticalUnits.Sort((x, y) => y.Item1.CompareTo(x.Item1));
+#pragma warning disable CA1309 // the culture order this selection always used
+                        tuples_StatisticalUnits.Sort((x, y) => string.Compare(y.Item1, x.Item1, StringComparison.CurrentCulture));
+#pragma warning restore CA1309
 
                         statisticalUnits_Temp = tuples_StatisticalUnits.FindAll(x => x.Item1 == tuples_StatisticalUnits[0].Item1).ConvertAll(x => x.Item2);
                     }

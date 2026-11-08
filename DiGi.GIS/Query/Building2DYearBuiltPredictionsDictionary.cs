@@ -1,6 +1,7 @@
 ﻿using DiGi.Core.Classes;
 using DiGi.GIS.Classes;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace DiGi.GIS
@@ -15,7 +16,7 @@ namespace DiGi.GIS
         /// <returns>A dictionary mapping unique IDs to building 2D year built predictions, or null if inputs are invalid or files are missing.</returns>
         public static Dictionary<string, Building2DYearBuiltPredictions>? Building2DYearBuiltPredictionsDictionary(GISModelFile? gISModelFile, IEnumerable<string>? references)
         {
-            if (gISModelFile == null || references == null || references.Count() == 0)
+            if (gISModelFile == null || references == null || !references.Any())
             {
                 return null;
             }
@@ -32,7 +33,7 @@ namespace DiGi.GIS
                 return null;
             }
 
-            path = System.IO.Path.Combine(directory, string.Format("{0}.{1}", System.IO.Path.GetFileNameWithoutExtension(path), Constants.FileExtension.Building2DYearBuiltPredictionsFile));
+            path = System.IO.Path.Combine(directory, string.Format(CultureInfo.CurrentCulture, "{0}.{1}", System.IO.Path.GetFileNameWithoutExtension(path), Constants.FileExtension.Building2DYearBuiltPredictionsFile));
 
             if (!System.IO.File.Exists(path))
             {
@@ -137,7 +138,7 @@ namespace DiGi.GIS
                 return result;
             }
 
-            string[] paths = System.IO.Directory.GetFiles(directory, string.Format("*.{0}", Constants.FileExtension.Building2DYearBuiltPredictionsFile));
+            string[] paths = System.IO.Directory.GetFiles(directory, string.Format(CultureInfo.CurrentCulture, "*.{0}", Constants.FileExtension.Building2DYearBuiltPredictionsFile));
             if (paths == null || paths.Length == 0)
             {
                 return result;

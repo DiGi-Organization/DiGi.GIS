@@ -1,5 +1,6 @@
 ﻿using DiGi.GIS.Enums;
 using System;
+using System.Globalization;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
@@ -81,7 +82,7 @@ namespace DiGi.GIS.Classes
         /// Gets the source identifier for the predicted year built, combining the source type and ticks of the prediction date.
         /// </summary>
         [JsonIgnore]
-        public override string Source => string.Format("{0}_{1}", Core.Query.Description(YearBuiltSource), dateTime.Ticks);
+        public override string Source => string.Format(CultureInfo.CurrentCulture, "{0}_{1}", Core.Query.Description(YearBuiltSource), dateTime.Ticks);
 
         /// <summary>
         /// Gets the source of the year built value, which is always set to prediction.

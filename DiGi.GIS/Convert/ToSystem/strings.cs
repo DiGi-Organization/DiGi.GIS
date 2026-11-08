@@ -97,7 +97,7 @@ namespace DiGi.GIS
 
                 values_Typology[values_Typology.Length - 2] = subTypology.Name is null ? "???" : subTypology.Name;
 
-                values_Typology[values_Typology.Length - 1] = subTypology.References.Count.ToString();
+                values_Typology[values_Typology.Length - 1] = subTypology.References.Count.ToString(CultureInfo.CurrentCulture);
 
                 values.Add(values_Typology);
             }

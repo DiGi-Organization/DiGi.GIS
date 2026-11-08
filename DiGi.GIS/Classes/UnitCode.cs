@@ -134,7 +134,7 @@ namespace DiGi.GIS.Classes
                 return result;
             }
 
-            while (result.EndsWith("0"))
+            while (result.EndsWith("0", StringComparison.CurrentCulture))
             {
                 result = result.Substring(0, result.Length - 1);
             }

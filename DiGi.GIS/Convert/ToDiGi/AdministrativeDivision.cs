@@ -52,14 +52,14 @@ namespace DiGi.GIS
                 string? parentCode = oT_ADJA_A.idTERYTjednostkiNadrzednej;
                 if (!string.IsNullOrWhiteSpace(parentCode))
                 {
-                    if (!code.StartsWith(parentCode))
+                    if (!code.StartsWith(parentCode, StringComparison.CurrentCulture))
                     {
                         if (oT_ADJA_A.identyfikatorPRG is string pRG && !string.IsNullOrWhiteSpace(pRG) && pRG.Length >= code.Length + 2)
                         {
                             code = pRG.Substring(2, code.Length);
-                            if (!code.StartsWith(parentCode))
+                            if (!code.StartsWith(parentCode, StringComparison.CurrentCulture))
                             {
-                                throw new System.Exception($"Code {code} does not start with parent code {parentCode} for OT_ADJA_A with id {oT_ADJA_A.id}");
+                                throw new System.IO.InvalidDataException($"Code {code} does not start with parent code {parentCode} for OT_ADJA_A with id {oT_ADJA_A.id}");
                             }
                         }
                     }

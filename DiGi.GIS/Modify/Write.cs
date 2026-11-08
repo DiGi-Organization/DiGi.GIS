@@ -3,6 +3,7 @@ using DiGi.BDL.Enums;
 using DiGi.Core.Classes;
 using DiGi.GIS.Classes;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -70,7 +71,7 @@ namespace DiGi.GIS
             Dictionary<int, string> dictionary_Path = [];
             for (int i = range.Min; i <= range.Max; i++)
             {
-                string path_Orto = System.IO.Path.Combine(directory_Orto, string.Format("{0}.jpeg", i));
+                string path_Orto = System.IO.Path.Combine(directory_Orto, string.Format(CultureInfo.CurrentCulture, "{0}.jpeg", i));
                 if (path_Orto == null || File.Exists(path_Orto))
                 {
                     continue;
@@ -97,7 +98,7 @@ namespace DiGi.GIS
                     continue;
                 }
 
-                string path_Orto = System.IO.Path.Combine(directory_Orto, string.Format("{0}.jpeg", keyValuePair.Key));
+                string path_Orto = System.IO.Path.Combine(directory_Orto, string.Format(CultureInfo.CurrentCulture, "{0}.jpeg", keyValuePair.Key));
 
                 using Stream memoryStream = new MemoryStream(keyValuePair.Value), fileStream = new FileStream(path_Orto, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true);
 
@@ -123,7 +124,7 @@ namespace DiGi.GIS
             }
 
             string? code = statisticalUnit.Code;
-            if (code == null || variables.Count() == 0 || years.Max - years.Min == 0)
+            if (code == null || !variables.Any() || years.Max - years.Min == 0)
             {
                 return false;
             }
@@ -148,7 +149,7 @@ namespace DiGi.GIS
         /// <returns>A task that represents the asynchronous operation. The task result is true if the file was successfully updated and saved; otherwise, false.</returns>
         public static async Task<bool> Write(this string? code, string? path, IEnumerable<Variable>? variables, IEnumerable<int>? years, bool overrideExisting = false)
         {
-            if (string.IsNullOrWhiteSpace(code) || string.IsNullOrWhiteSpace(path) || variables == null || variables.Count() == 0 || years == null || years.Count() == 0)
+            if (string.IsNullOrWhiteSpace(code) || string.IsNullOrWhiteSpace(path) || variables == null || !variables.Any() || years == null || !years.Any())
             {
                 return false;
             }

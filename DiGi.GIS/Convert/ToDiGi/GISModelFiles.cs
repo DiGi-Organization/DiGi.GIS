@@ -1,5 +1,6 @@
 ﻿using DiGi.GIS.Classes;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 
@@ -77,7 +78,7 @@ namespace DiGi.GIS
                         foreach (ZipArchiveEntry zipArchiveEntry_File in zipArchive_Files.Entries)
                         {
                             //if (zipArchiveEntry_File.Name.EndsWith(Constants.FileNameSufix.OT_ADJA_A) || zipArchiveEntry_File.Name.EndsWith(Constants.FileNameSufix.OT_ADMS_A) || zipArchiveEntry_File.Name.EndsWith(Constants.FileNameSufix.OT_BUBD_A))
-                            if (sufixes.FindIndex(x => zipArchiveEntry_File.Name.EndsWith(x)) != -1)
+                            if (sufixes.FindIndex(x => zipArchiveEntry_File.Name.EndsWith(x, StringComparison.CurrentCulture)) != -1)
                             {
                                 using Stream stream_File = zipArchiveEntry_File.Open();
 
@@ -85,7 +86,7 @@ namespace DiGi.GIS
                             }
                         }
 
-                        string path_Output = Path.Combine(directory_Region, string.Format("{0}.{1}", Path.GetFileNameWithoutExtension(zipArchiveEntry_Zip.Name), Constants.FileExtension.GISModelFile));
+                        string path_Output = Path.Combine(directory_Region, string.Format(CultureInfo.CurrentCulture, "{0}.{1}", Path.GetFileNameWithoutExtension(zipArchiveEntry_Zip.Name), Constants.FileExtension.GISModelFile));
                         using (GISModelFile gISModelFile = new(path_Output))
                         {
                             gISModelFile.Value = gISModel;

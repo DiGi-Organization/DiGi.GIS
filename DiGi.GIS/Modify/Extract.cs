@@ -66,7 +66,7 @@ namespace DiGi.GIS
 
                     foreach (ZipArchiveEntry zipArchiveEntry_File in zipArchive_Files.Entries)
                     {
-                        if (zipArchiveEntry_File.Name.EndsWith(Constants.FileNameSufix.OT_ADMS_A) || zipArchiveEntry_File.Name.EndsWith(Constants.FileNameSufix.OT_BUBD_A))
+                        if (zipArchiveEntry_File.Name.EndsWith(Constants.FileNameSufix.OT_ADMS_A, StringComparison.CurrentCulture) || zipArchiveEntry_File.Name.EndsWith(Constants.FileNameSufix.OT_BUBD_A, StringComparison.CurrentCulture))
                         {
                             using Stream stream_File = zipArchiveEntry_File.Open();
 

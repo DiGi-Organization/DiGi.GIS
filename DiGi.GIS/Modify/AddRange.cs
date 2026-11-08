@@ -8,6 +8,7 @@ using DiGi.GML.Classes;
 using DiGi.GML.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -127,7 +128,7 @@ namespace DiGi.GIS
                         continue;
                     }
 
-                    string reference = id.ToString();
+                    string reference = id.ToString(CultureInfo.CurrentCulture);
 
                     StatisticalYearlyDoubleData? statisticalYearlyDoubleData = statisticalDataCollection.Find<StatisticalYearlyDoubleData>(x => x?.Reference == reference);
                     if (statisticalYearlyDoubleData == null)

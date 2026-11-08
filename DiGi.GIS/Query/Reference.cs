@@ -1,6 +1,7 @@
 ﻿using DiGi.BDOT10k.Classes;
 using DiGi.GML.Classes;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace DiGi.GIS
 {
@@ -196,7 +197,7 @@ namespace DiGi.GIS
                 return result;
             }
 
-            result = Create.Hash(polygon).ToString();
+            result = Create.Hash(polygon).ToString(CultureInfo.CurrentCulture);
             if (!string.IsNullOrWhiteSpace(result))
             {
                 return result;
@@ -225,7 +226,7 @@ namespace DiGi.GIS
                 return result;
             }
 
-            result = Create.Hash(linearRing).ToString();
+            result = Create.Hash(linearRing).ToString(CultureInfo.CurrentCulture);
             if (!string.IsNullOrWhiteSpace(result))
             {
                 return result;

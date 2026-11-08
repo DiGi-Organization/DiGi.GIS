@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Globalization;
+using System.IO;
 
 namespace DiGi.GIS
 {
@@ -27,8 +28,8 @@ namespace DiGi.GIS
 
             do
             {
-                result = string.Format("{0}_{1}", fileName, index);
-                fileInfo = new FileInfo(Path.Combine(directory, string.Format("{0}{1}", result, extension)));
+                result = string.Format(CultureInfo.CurrentCulture, "{0}_{1}", fileName, index);
+                fileInfo = new FileInfo(Path.Combine(directory, string.Format(CultureInfo.CurrentCulture, "{0}{1}", result, extension)));
 
                 index++;
             } while (fileInfo.Exists && fileInfo.Length > maxFileSize);

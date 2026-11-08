@@ -21,7 +21,7 @@ namespace DiGi.GIS
             }
 
             List<string> values = [directory!];
-            if (directoryNames != null && directoryNames.Count() != 0)
+            if (directoryNames != null && directoryNames.Any())
             {
                 values.AddRange(directoryNames);
             }

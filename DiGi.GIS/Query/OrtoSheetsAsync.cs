@@ -2,6 +2,7 @@ using DiGi.Geometry.Planar.Classes;
 using DiGi.GIS.Classes;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
@@ -71,7 +72,7 @@ namespace DiGi.GIS
                     string key = ortoSheets[0].SheetId + "|" + ortoSheets[0].DownloadUrl;
                     if (key_Previous != null && key == key_Previous)
                     {
-                        throw new InvalidOperationException(string.Format("The orthophoto index answered the page starting at {0} with the same first feature as the previous page ({1}); STARTINDEX is not being honoured.", startIndex, key));
+                        throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "The orthophoto index answered the page starting at {0} with the same first feature as the previous page ({1}); STARTINDEX is not being honoured.", startIndex, key));
                     }
 
                     key_Previous = key;

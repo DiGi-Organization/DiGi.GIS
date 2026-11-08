@@ -18,7 +18,7 @@ namespace DiGi.GIS
         /// <returns>A dictionary mapping each building's unique reference to a list of its associated administrative areal objects, or null if the model or buildings collection is null or empty.</returns>
         public static Dictionary<GuidReference, List<UAdministrativeAreal2D>?>? AdministrativeAreal2DsDictionary<UAdministrativeAreal2D>(this GISModel? gISModel, IEnumerable<Building2D>? building2Ds) where UAdministrativeAreal2D : AdministrativeAreal2D
         {
-            if (gISModel == null || building2Ds == null || building2Ds.Count() == 0)
+            if (gISModel == null || building2Ds == null || !building2Ds.Any())
             {
                 return null;
             }

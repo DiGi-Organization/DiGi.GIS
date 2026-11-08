@@ -421,7 +421,7 @@ namespace DiGi.GIS.Classes
                 uniqueObjectRelationCluster.Remove(administrativeAreal2DAdministrativeAreal2DsRelation_Old);
             }
 
-            if (administrativeAreal2Ds == null || administrativeAreal2Ds.Count() == 0)
+            if (administrativeAreal2Ds == null || !administrativeAreal2Ds.Any())
             {
                 return true;
             }
@@ -449,7 +449,7 @@ namespace DiGi.GIS.Classes
                 uniqueObjectRelationCluster.Remove(administrativeAreal2DBuilding2DsRelation_Old);
             }
 
-            if (building2Ds == null || building2Ds.Count() == 0)
+            if (building2Ds == null || !building2Ds.Any())
             {
                 return true;
             }
