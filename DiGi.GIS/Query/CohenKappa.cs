@@ -29,8 +29,8 @@ namespace DiGi.GIS
 
             EqualityComparer<TEnum> equalityComparer = EqualityComparer<TEnum>.Default;
 
-            Dictionary<TEnum, int> counts_Reference = [];
-            Dictionary<TEnum, int> counts_Prediction = [];
+            Dictionary<TEnum, int> dictionary_Reference = [];
+            Dictionary<TEnum, int> dictionary_Prediction = [];
 
             int count = references_Temp.Count;
             int count_Agreement = 0;
@@ -44,19 +44,19 @@ namespace DiGi.GIS
                     count_Agreement++;
                 }
 
-                counts_Reference.TryGetValue(reference, out int count_Reference);
-                counts_Reference[reference] = count_Reference + 1;
+                dictionary_Reference.TryGetValue(reference, out int count_Reference);
+                dictionary_Reference[reference] = count_Reference + 1;
 
-                counts_Prediction.TryGetValue(prediction, out int count_Prediction);
-                counts_Prediction[prediction] = count_Prediction + 1;
+                dictionary_Prediction.TryGetValue(prediction, out int count_Prediction);
+                dictionary_Prediction[prediction] = count_Prediction + 1;
             }
 
             double observedAgreement = (double)count_Agreement / count;
 
             double expectedAgreement = 0;
-            foreach (KeyValuePair<TEnum, int> keyValuePair in counts_Reference)
+            foreach (KeyValuePair<TEnum, int> keyValuePair in dictionary_Reference)
             {
-                if (counts_Prediction.TryGetValue(keyValuePair.Key, out int count_Prediction))
+                if (dictionary_Prediction.TryGetValue(keyValuePair.Key, out int count_Prediction))
                 {
                     expectedAgreement += ((double)keyValuePair.Value / count) * ((double)count_Prediction / count);
                 }

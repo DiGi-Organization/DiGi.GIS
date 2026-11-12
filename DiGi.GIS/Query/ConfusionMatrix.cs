@@ -32,13 +32,13 @@ namespace DiGi.GIS
             Dictionary<TEnum, Dictionary<TEnum, int>> result = [];
             foreach (TEnum value_Reference in values)
             {
-                Dictionary<TEnum, int> row = [];
+                Dictionary<TEnum, int> dictionary_Row = [];
                 foreach (TEnum value_Prediction in values)
                 {
-                    row[value_Prediction] = 0;
+                    dictionary_Row[value_Prediction] = 0;
                 }
 
-                result[value_Reference] = row;
+                result[value_Reference] = dictionary_Row;
             }
 
             for (int i = 0; i < references_Temp.Count; i++)
