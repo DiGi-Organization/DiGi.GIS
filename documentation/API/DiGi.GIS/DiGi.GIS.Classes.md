@@ -3001,6 +3001,360 @@ The reference string
 [DiGi\.Core\.Classes\.UniqueReference](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.uniquereference 'DiGi\.Core\.Classes\.UniqueReference')  
 The unique reference created from the reference string, or null if the reference is null\.
 
+<a name='DiGi.GIS.Classes.BuildingShapeLabel'></a>
+
+## BuildingShapeLabel Class
+
+Represents one annotator's manual building shape label of one [BuildingShapeSampleItem](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeSampleItem 'DiGi\.GIS\.Classes\.BuildingShapeSampleItem')\.
+
+One label is kept per sample item and interpreter; labelling the item again replaces it. The interpreter and timestamp are stamped by the server from the session, never supplied by the client.
+
+```csharp
+public class BuildingShapeLabel : DiGi.Core.Classes.SerializableObject, DiGi.GIS.Interfaces.IGISSerializableObject, DiGi.GIS.Interfaces.IGISObject, DiGi.Core.Interfaces.IObject, DiGi.Core.Interfaces.ISerializableObject, DiGi.Core.Interfaces.ICloneableObject<DiGi.Core.Interfaces.ISerializableObject>, DiGi.Core.Interfaces.ICloneableObject
+```
+
+Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → [DiGi\.Core\.Classes\.Object](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.object 'DiGi\.Core\.Classes\.Object') → [DiGi\.Core\.Classes\.SerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.serializableobject 'DiGi\.Core\.Classes\.SerializableObject') → BuildingShapeLabel
+
+Implements [IGISSerializableObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISSerializableObject 'DiGi\.GIS\.Interfaces\.IGISSerializableObject'), [IGISObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISObject 'DiGi\.GIS\.Interfaces\.IGISObject'), [DiGi\.Core\.Interfaces\.IObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iobject 'DiGi\.Core\.Interfaces\.IObject'), [DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject'), [DiGi\.Core\.Interfaces\.ICloneableObject&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1')[DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1'), [DiGi\.Core\.Interfaces\.ICloneableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject 'DiGi\.Core\.Interfaces\.ICloneableObject')
+### Constructors
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.BuildingShapeLabel(DiGi.GIS.Classes.BuildingShapeLabel)'></a>
+
+## BuildingShapeLabel\(BuildingShapeLabel\) Constructor
+
+Initializes a new instance of the [BuildingShapeLabel](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeLabel 'DiGi\.GIS\.Classes\.BuildingShapeLabel') class by copying an existing instance\.
+
+```csharp
+public BuildingShapeLabel(DiGi.GIS.Classes.BuildingShapeLabel? buildingShapeLabel);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.BuildingShapeLabel(DiGi.GIS.Classes.BuildingShapeLabel).buildingShapeLabel'></a>
+
+`buildingShapeLabel` [BuildingShapeLabel](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeLabel 'DiGi\.GIS\.Classes\.BuildingShapeLabel')
+
+The source label to copy from\.
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.BuildingShapeLabel(string,int,string,DiGi.GIS.Enums.BuildingShape,string,string,System.DateTimeOffset)'></a>
+
+## BuildingShapeLabel\(string, int, string, BuildingShape, string, string, DateTimeOffset\) Constructor
+
+Initializes a new instance of the [BuildingShapeLabel](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeLabel 'DiGi\.GIS\.Classes\.BuildingShapeLabel') class\.
+
+```csharp
+public BuildingShapeLabel(string? sampleKey, int countyId, string? reference, DiGi.GIS.Enums.BuildingShape buildingShape, string? interpreter, string? note, System.DateTimeOffset dateTime);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.BuildingShapeLabel(string,int,string,DiGi.GIS.Enums.BuildingShape,string,string,System.DateTimeOffset).sampleKey'></a>
+
+`sampleKey` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The identity of the sample the labelled item belongs to\.
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.BuildingShapeLabel(string,int,string,DiGi.GIS.Enums.BuildingShape,string,string,System.DateTimeOffset).countyId'></a>
+
+`countyId` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The county id \(not code\) of the part holding the footprint\.
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.BuildingShapeLabel(string,int,string,DiGi.GIS.Enums.BuildingShape,string,string,System.DateTimeOffset).reference'></a>
+
+`reference` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The building reference, unique only within [countyId](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeLabel.BuildingShapeLabel(string,int,string,DiGi.GIS.Enums.BuildingShape,string,string,System.DateTimeOffset).countyId 'DiGi\.GIS\.Classes\.BuildingShapeLabel\.BuildingShapeLabel\(string, int, string, DiGi\.GIS\.Enums\.BuildingShape, string, string, System\.DateTimeOffset\)\.countyId')\.
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.BuildingShapeLabel(string,int,string,DiGi.GIS.Enums.BuildingShape,string,string,System.DateTimeOffset).buildingShape'></a>
+
+`buildingShape` [BuildingShape](DiGi.GIS.Enums.md#DiGi.GIS.Enums.BuildingShape 'DiGi\.GIS\.Enums\.BuildingShape')
+
+The label; [Undefined](DiGi.GIS.Enums.md#DiGi.GIS.Enums.BuildingShape.Undefined 'DiGi\.GIS\.Enums\.BuildingShape\.Undefined') means the annotator could not classify the footprint\.
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.BuildingShapeLabel(string,int,string,DiGi.GIS.Enums.BuildingShape,string,string,System.DateTimeOffset).interpreter'></a>
+
+`interpreter` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+Who recorded the label\.
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.BuildingShapeLabel(string,int,string,DiGi.GIS.Enums.BuildingShape,string,string,System.DateTimeOffset).note'></a>
+
+`note` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+An optional free\-text note\.
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.BuildingShapeLabel(string,int,string,DiGi.GIS.Enums.BuildingShape,string,string,System.DateTimeOffset).dateTime'></a>
+
+`dateTime` [System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')
+
+When the label was recorded \(UTC\)\.
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.BuildingShapeLabel(System.Text.Json.Nodes.JsonObject)'></a>
+
+## BuildingShapeLabel\(JsonObject\) Constructor
+
+Initializes a new instance of the [BuildingShapeLabel](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeLabel 'DiGi\.GIS\.Classes\.BuildingShapeLabel') class from a JSON object\.
+
+```csharp
+public BuildingShapeLabel(System.Text.Json.Nodes.JsonObject? jsonObject);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.BuildingShapeLabel(System.Text.Json.Nodes.JsonObject).jsonObject'></a>
+
+`jsonObject` [System\.Text\.Json\.Nodes\.JsonObject](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.nodes.jsonobject 'System\.Text\.Json\.Nodes\.JsonObject')
+
+The JSON object containing the label data\.
+### Properties
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.BuildingShape'></a>
+
+## BuildingShapeLabel\.BuildingShape Property
+
+Gets the label; [Undefined](DiGi.GIS.Enums.md#DiGi.GIS.Enums.BuildingShape.Undefined 'DiGi\.GIS\.Enums\.BuildingShape\.Undefined') means the annotator could not classify the footprint\.
+
+```csharp
+public DiGi.GIS.Enums.BuildingShape BuildingShape { get; }
+```
+
+#### Property Value
+[BuildingShape](DiGi.GIS.Enums.md#DiGi.GIS.Enums.BuildingShape 'DiGi\.GIS\.Enums\.BuildingShape')
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.CountyId'></a>
+
+## BuildingShapeLabel\.CountyId Property
+
+Gets the county id \(not code\) of the part holding the footprint\.
+
+```csharp
+public int CountyId { get; }
+```
+
+#### Property Value
+[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.DateTime'></a>
+
+## BuildingShapeLabel\.DateTime Property
+
+Gets when the label was recorded \(UTC\)\.
+
+```csharp
+public System.DateTimeOffset DateTime { get; }
+```
+
+#### Property Value
+[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.Interpreter'></a>
+
+## BuildingShapeLabel\.Interpreter Property
+
+Gets who recorded the label\.
+
+```csharp
+public string? Interpreter { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.Note'></a>
+
+## BuildingShapeLabel\.Note Property
+
+Gets the optional free\-text note\.
+
+```csharp
+public string? Note { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.Reference'></a>
+
+## BuildingShapeLabel\.Reference Property
+
+Gets the building reference, unique only within [CountyId](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeLabel.CountyId 'DiGi\.GIS\.Classes\.BuildingShapeLabel\.CountyId')\.
+
+```csharp
+public string? Reference { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.BuildingShapeLabel.SampleKey'></a>
+
+## BuildingShapeLabel\.SampleKey Property
+
+Gets the identity of the sample the labelled item belongs to\.
+
+```csharp
+public string? SampleKey { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem'></a>
+
+## BuildingShapeSampleItem Class
+
+Represents one footprint of a fixed, ordered building shape labelling sample, together with the [BuildingShapeSolver](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeSolver 'DiGi\.GIS\.Classes\.BuildingShapeSolver') result it was drawn under\.
+
+Every annotator labels the items of one sample in the same [Ordinal](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeSampleItem.Ordinal 'DiGi\.GIS\.Classes\.BuildingShapeSampleItem\.Ordinal') order, which inter-annotator agreement (Cohen's kappa) requires. A [Reference](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeSampleItem.Reference 'DiGi\.GIS\.Classes\.BuildingShapeSampleItem\.Reference') is unique only within its [CountyId](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeSampleItem.CountyId 'DiGi\.GIS\.Classes\.BuildingShapeSampleItem\.CountyId').
+
+```csharp
+public class BuildingShapeSampleItem : DiGi.Core.Classes.SerializableObject, DiGi.GIS.Interfaces.IGISSerializableObject, DiGi.GIS.Interfaces.IGISObject, DiGi.Core.Interfaces.IObject, DiGi.Core.Interfaces.ISerializableObject, DiGi.Core.Interfaces.ICloneableObject<DiGi.Core.Interfaces.ISerializableObject>, DiGi.Core.Interfaces.ICloneableObject
+```
+
+Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → [DiGi\.Core\.Classes\.Object](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.object 'DiGi\.Core\.Classes\.Object') → [DiGi\.Core\.Classes\.SerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.serializableobject 'DiGi\.Core\.Classes\.SerializableObject') → BuildingShapeSampleItem
+
+Implements [IGISSerializableObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISSerializableObject 'DiGi\.GIS\.Interfaces\.IGISSerializableObject'), [IGISObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISObject 'DiGi\.GIS\.Interfaces\.IGISObject'), [DiGi\.Core\.Interfaces\.IObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iobject 'DiGi\.Core\.Interfaces\.IObject'), [DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject'), [DiGi\.Core\.Interfaces\.ICloneableObject&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1')[DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1'), [DiGi\.Core\.Interfaces\.ICloneableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject 'DiGi\.Core\.Interfaces\.ICloneableObject')
+### Constructors
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem.BuildingShapeSampleItem(DiGi.GIS.Classes.BuildingShapeSampleItem)'></a>
+
+## BuildingShapeSampleItem\(BuildingShapeSampleItem\) Constructor
+
+Initializes a new instance of the [BuildingShapeSampleItem](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeSampleItem 'DiGi\.GIS\.Classes\.BuildingShapeSampleItem') class by copying an existing instance\.
+
+```csharp
+public BuildingShapeSampleItem(DiGi.GIS.Classes.BuildingShapeSampleItem? buildingShapeSampleItem);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem.BuildingShapeSampleItem(DiGi.GIS.Classes.BuildingShapeSampleItem).buildingShapeSampleItem'></a>
+
+`buildingShapeSampleItem` [BuildingShapeSampleItem](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeSampleItem 'DiGi\.GIS\.Classes\.BuildingShapeSampleItem')
+
+The source item to copy from\.
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem.BuildingShapeSampleItem(string,int,int,string,DiGi.GIS.Enums.BuildingShape)'></a>
+
+## BuildingShapeSampleItem\(string, int, int, string, BuildingShape\) Constructor
+
+Initializes a new instance of the [BuildingShapeSampleItem](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeSampleItem 'DiGi\.GIS\.Classes\.BuildingShapeSampleItem') class\.
+
+```csharp
+public BuildingShapeSampleItem(string? sampleKey, int ordinal, int countyId, string? reference, DiGi.GIS.Enums.BuildingShape solverShape);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem.BuildingShapeSampleItem(string,int,int,string,DiGi.GIS.Enums.BuildingShape).sampleKey'></a>
+
+`sampleKey` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The identity of the sample the item belongs to\.
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem.BuildingShapeSampleItem(string,int,int,string,DiGi.GIS.Enums.BuildingShape).ordinal'></a>
+
+`ordinal` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The zero\-based position of the item in the labelling order of the sample\.
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem.BuildingShapeSampleItem(string,int,int,string,DiGi.GIS.Enums.BuildingShape).countyId'></a>
+
+`countyId` [System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+The county id \(not code\) of the part holding the footprint\.
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem.BuildingShapeSampleItem(string,int,int,string,DiGi.GIS.Enums.BuildingShape).reference'></a>
+
+`reference` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The building reference, unique only within [countyId](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeSampleItem.BuildingShapeSampleItem(string,int,int,string,DiGi.GIS.Enums.BuildingShape).countyId 'DiGi\.GIS\.Classes\.BuildingShapeSampleItem\.BuildingShapeSampleItem\(string, int, int, string, DiGi\.GIS\.Enums\.BuildingShape\)\.countyId')\.
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem.BuildingShapeSampleItem(string,int,int,string,DiGi.GIS.Enums.BuildingShape).solverShape'></a>
+
+`solverShape` [BuildingShape](DiGi.GIS.Enums.md#DiGi.GIS.Enums.BuildingShape 'DiGi\.GIS\.Enums\.BuildingShape')
+
+The [BuildingShapeSolver](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeSolver 'DiGi\.GIS\.Classes\.BuildingShapeSolver') result with default thresholds at sampling time\.
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem.BuildingShapeSampleItem(System.Text.Json.Nodes.JsonObject)'></a>
+
+## BuildingShapeSampleItem\(JsonObject\) Constructor
+
+Initializes a new instance of the [BuildingShapeSampleItem](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeSampleItem 'DiGi\.GIS\.Classes\.BuildingShapeSampleItem') class from a JSON object\.
+
+```csharp
+public BuildingShapeSampleItem(System.Text.Json.Nodes.JsonObject? jsonObject);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem.BuildingShapeSampleItem(System.Text.Json.Nodes.JsonObject).jsonObject'></a>
+
+`jsonObject` [System\.Text\.Json\.Nodes\.JsonObject](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.nodes.jsonobject 'System\.Text\.Json\.Nodes\.JsonObject')
+
+The JSON object containing the item data\.
+### Properties
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem.CountyId'></a>
+
+## BuildingShapeSampleItem\.CountyId Property
+
+Gets the county id \(not code\) of the part holding the footprint\.
+
+```csharp
+public int CountyId { get; }
+```
+
+#### Property Value
+[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem.Ordinal'></a>
+
+## BuildingShapeSampleItem\.Ordinal Property
+
+Gets the zero\-based position of the item in the labelling order of the sample\.
+
+```csharp
+public int Ordinal { get; }
+```
+
+#### Property Value
+[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem.Reference'></a>
+
+## BuildingShapeSampleItem\.Reference Property
+
+Gets the building reference, unique only within [CountyId](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeSampleItem.CountyId 'DiGi\.GIS\.Classes\.BuildingShapeSampleItem\.CountyId')\.
+
+```csharp
+public string? Reference { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem.SampleKey'></a>
+
+## BuildingShapeSampleItem\.SampleKey Property
+
+Gets the identity of the sample the item belongs to\.
+
+```csharp
+public string? SampleKey { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Classes.BuildingShapeSampleItem.SolverShape'></a>
+
+## BuildingShapeSampleItem\.SolverShape Property
+
+Gets the [BuildingShapeSolver](DiGi.GIS.Classes.md#DiGi.GIS.Classes.BuildingShapeSolver 'DiGi\.GIS\.Classes\.BuildingShapeSolver') result with default thresholds at sampling time\. It is never shown to an annotator before labelling\.
+
+```csharp
+public DiGi.GIS.Enums.BuildingShape SolverShape { get; }
+```
+
+#### Property Value
+[BuildingShape](DiGi.GIS.Enums.md#DiGi.GIS.Enums.BuildingShape 'DiGi\.GIS\.Enums\.BuildingShape')
+
 <a name='DiGi.GIS.Classes.BuildingShapeSolver'></a>
 
 ## BuildingShapeSolver Class

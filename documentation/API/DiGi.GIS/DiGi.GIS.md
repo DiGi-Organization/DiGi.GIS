@@ -2416,6 +2416,43 @@ public static class Query
 Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → Query
 ### Methods
 
+<a name='DiGi.GIS.Query.Accuracy_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_)'></a>
+
+## Query\.Accuracy\<TEnum\>\(this IEnumerable\<TEnum\>, IEnumerable\<TEnum\>\) Method
+
+Returns the overall accuracy of a classification: the share of items whose prediction equals the reference\.
+
+The two sequences are paired by position.
+
+```csharp
+public static System.Nullable<double> Accuracy<TEnum>(this System.Collections.Generic.IEnumerable<TEnum>? references, System.Collections.Generic.IEnumerable<TEnum>? predictions)
+    where TEnum : struct, System.Enum;
+```
+#### Type parameters
+
+<a name='DiGi.GIS.Query.Accuracy_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).TEnum'></a>
+
+`TEnum`
+
+The class enumeration\.
+#### Parameters
+
+<a name='DiGi.GIS.Query.Accuracy_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).references'></a>
+
+`references` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[TEnum](DiGi.GIS.md#DiGi.GIS.Query.Accuracy_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).TEnum 'DiGi\.GIS\.Query\.Accuracy\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>\)\.TEnum')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The reference \(true\) class of each item\.
+
+<a name='DiGi.GIS.Query.Accuracy_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).predictions'></a>
+
+`predictions` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[TEnum](DiGi.GIS.md#DiGi.GIS.Query.Accuracy_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).TEnum 'DiGi\.GIS\.Query\.Accuracy\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>\)\.TEnum')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The predicted class of each item, in the order of [references](DiGi.GIS.md#DiGi.GIS.Query.Accuracy_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).references 'DiGi\.GIS\.Query\.Accuracy\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>\)\.references')\.
+
+#### Returns
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')  
+The accuracy in \[0, 1\], or null when either sequence is null or empty or their lengths differ\.
+
 <a name='DiGi.GIS.Query.AcquisitionOrtoSheet(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.OrtoSheet_,DiGi.Geometry.Planar.Classes.Point2D,int)'></a>
 
 ## Query\.AcquisitionOrtoSheet\(this IEnumerable\<OrtoSheet\>, Point2D, int\) Method
@@ -3035,6 +3072,43 @@ The azimuth angle in degrees, typically ranging from 0 to 360\.
 [CardinalDirection](DiGi.GIS.Enums.md#DiGi.GIS.Enums.CardinalDirection 'DiGi\.GIS\.Enums\.CardinalDirection')  
 The corresponding [CardinalDirection](DiGi.GIS.Enums.md#DiGi.GIS.Enums.CardinalDirection 'DiGi\.GIS\.Enums\.CardinalDirection') based on the provided azimuth\.
 
+<a name='DiGi.GIS.Query.CohenKappa_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_)'></a>
+
+## Query\.CohenKappa\<TEnum\>\(this IEnumerable\<TEnum\>, IEnumerable\<TEnum\>\) Method
+
+Returns Cohen's kappa between two classifications of the same items: κ = \(p\_o − p\_e\) / \(1 − p\_e\)\.
+
+The two sequences are paired by position. p_o is the observed agreement and p_e the agreement expected by chance from the two marginal distributions. When p_e is 1 (both sides use one and the same class for every item) the agreement is complete and 1 is returned.
+
+```csharp
+public static System.Nullable<double> CohenKappa<TEnum>(this System.Collections.Generic.IEnumerable<TEnum>? references, System.Collections.Generic.IEnumerable<TEnum>? predictions)
+    where TEnum : struct, System.Enum;
+```
+#### Type parameters
+
+<a name='DiGi.GIS.Query.CohenKappa_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).TEnum'></a>
+
+`TEnum`
+
+The class enumeration\.
+#### Parameters
+
+<a name='DiGi.GIS.Query.CohenKappa_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).references'></a>
+
+`references` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[TEnum](DiGi.GIS.md#DiGi.GIS.Query.CohenKappa_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).TEnum 'DiGi\.GIS\.Query\.CohenKappa\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>\)\.TEnum')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The first classification \(reference or first annotator\) of each item\.
+
+<a name='DiGi.GIS.Query.CohenKappa_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).predictions'></a>
+
+`predictions` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[TEnum](DiGi.GIS.md#DiGi.GIS.Query.CohenKappa_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).TEnum 'DiGi\.GIS\.Query\.CohenKappa\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>\)\.TEnum')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The second classification \(prediction or second annotator\) of each item, in the order of [references](DiGi.GIS.md#DiGi.GIS.Query.CohenKappa_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).references 'DiGi\.GIS\.Query\.CohenKappa\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>\)\.references')\.
+
+#### Returns
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')  
+Kappa in \[\-1, 1\], or null when either sequence is null or empty or their lengths differ\.
+
 <a name='DiGi.GIS.Query.ColumnUniqueIds(thisDiGi.Typology.Classes.ColumnTypologyFilter_DiGi.Core.IO.Table.Classes.Column_)'></a>
 
 ## Query\.ColumnUniqueIds\(this ColumnTypologyFilter\<Column\>\) Method
@@ -3059,6 +3133,43 @@ The root of the filter chain\.
 #### Returns
 [System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')  
 The column unique ids in chain order, or null when the chain is null or names no column at all\.
+
+<a name='DiGi.GIS.Query.ConfusionMatrix_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_)'></a>
+
+## Query\.ConfusionMatrix\<TEnum\>\(this IEnumerable\<TEnum\>, IEnumerable\<TEnum\>\) Method
+
+Returns the confusion matrix of a classification, keyed reference value then predicted value\.
+
+The two sequences are paired by position. Every value that occurs on either side becomes both a row and a column, and missing cells are present with a count of 0, so the matrix is square. Pairs are counted as given; filtering (for example of undefined labels) is left to the caller.
+
+```csharp
+public static System.Collections.Generic.Dictionary<TEnum,System.Collections.Generic.Dictionary<TEnum,int>>? ConfusionMatrix<TEnum>(this System.Collections.Generic.IEnumerable<TEnum>? references, System.Collections.Generic.IEnumerable<TEnum>? predictions)
+    where TEnum : struct, System.Enum;
+```
+#### Type parameters
+
+<a name='DiGi.GIS.Query.ConfusionMatrix_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).TEnum'></a>
+
+`TEnum`
+
+The class enumeration\.
+#### Parameters
+
+<a name='DiGi.GIS.Query.ConfusionMatrix_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).references'></a>
+
+`references` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[TEnum](DiGi.GIS.md#DiGi.GIS.Query.ConfusionMatrix_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).TEnum 'DiGi\.GIS\.Query\.ConfusionMatrix\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>\)\.TEnum')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The reference \(true\) class of each item\.
+
+<a name='DiGi.GIS.Query.ConfusionMatrix_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).predictions'></a>
+
+`predictions` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[TEnum](DiGi.GIS.md#DiGi.GIS.Query.ConfusionMatrix_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).TEnum 'DiGi\.GIS\.Query\.ConfusionMatrix\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>\)\.TEnum')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The predicted class of each item, in the order of [references](DiGi.GIS.md#DiGi.GIS.Query.ConfusionMatrix_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).references 'DiGi\.GIS\.Query\.ConfusionMatrix\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>\)\.references')\.
+
+#### Returns
+[System\.Collections\.Generic\.Dictionary&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[TEnum](DiGi.GIS.md#DiGi.GIS.Query.ConfusionMatrix_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).TEnum 'DiGi\.GIS\.Query\.ConfusionMatrix\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>\)\.TEnum')[,](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[System\.Collections\.Generic\.Dictionary&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[TEnum](DiGi.GIS.md#DiGi.GIS.Query.ConfusionMatrix_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_).TEnum 'DiGi\.GIS\.Query\.ConfusionMatrix\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>\)\.TEnum')[,](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')  
+The counts keyed reference then prediction, or null when either sequence is null or their lengths differ\.
 
 <a name='DiGi.GIS.Query.Contains(thisDiGi.GIS.Classes.StatisticalDataCollection,DiGi.BDL.Enums.Variable)'></a>
 
@@ -4767,6 +4878,92 @@ The measured fraction of the probed image lost to shadow, snow, haze or cloud, o
 #### Returns
 [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')  
 The score, or null when the sheet is null\.
+
+<a name='DiGi.GIS.Query.Precision_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum)'></a>
+
+## Query\.Precision\<TEnum\>\(this IEnumerable\<TEnum\>, IEnumerable\<TEnum\>, TEnum\) Method
+
+Returns the precision of one class: of the items predicted as [value](DiGi.GIS.md#DiGi.GIS.Query.Precision_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).value 'DiGi\.GIS\.Query\.Precision\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>, TEnum\)\.value'), the share whose reference is also [value](DiGi.GIS.md#DiGi.GIS.Query.Precision_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).value 'DiGi\.GIS\.Query\.Precision\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>, TEnum\)\.value')\.
+
+The two sequences are paired by position.
+
+```csharp
+public static System.Nullable<double> Precision<TEnum>(this System.Collections.Generic.IEnumerable<TEnum>? references, System.Collections.Generic.IEnumerable<TEnum>? predictions, TEnum value)
+    where TEnum : struct, System.Enum;
+```
+#### Type parameters
+
+<a name='DiGi.GIS.Query.Precision_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).TEnum'></a>
+
+`TEnum`
+
+The class enumeration\.
+#### Parameters
+
+<a name='DiGi.GIS.Query.Precision_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).references'></a>
+
+`references` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[TEnum](DiGi.GIS.md#DiGi.GIS.Query.Precision_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).TEnum 'DiGi\.GIS\.Query\.Precision\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>, TEnum\)\.TEnum')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The reference \(true\) class of each item\.
+
+<a name='DiGi.GIS.Query.Precision_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).predictions'></a>
+
+`predictions` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[TEnum](DiGi.GIS.md#DiGi.GIS.Query.Precision_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).TEnum 'DiGi\.GIS\.Query\.Precision\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>, TEnum\)\.TEnum')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The predicted class of each item, in the order of [references](DiGi.GIS.md#DiGi.GIS.Query.Precision_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).references 'DiGi\.GIS\.Query\.Precision\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>, TEnum\)\.references')\.
+
+<a name='DiGi.GIS.Query.Precision_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).value'></a>
+
+`value` [TEnum](DiGi.GIS.md#DiGi.GIS.Query.Precision_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).TEnum 'DiGi\.GIS\.Query\.Precision\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>, TEnum\)\.TEnum')
+
+The class to measure\.
+
+#### Returns
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')  
+The precision in \[0, 1\], or null when either sequence is null, their lengths differ, or nothing was predicted as [value](DiGi.GIS.md#DiGi.GIS.Query.Precision_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).value 'DiGi\.GIS\.Query\.Precision\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>, TEnum\)\.value')\.
+
+<a name='DiGi.GIS.Query.Recall_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum)'></a>
+
+## Query\.Recall\<TEnum\>\(this IEnumerable\<TEnum\>, IEnumerable\<TEnum\>, TEnum\) Method
+
+Returns the recall of one class: of the items whose reference is [value](DiGi.GIS.md#DiGi.GIS.Query.Recall_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).value 'DiGi\.GIS\.Query\.Recall\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>, TEnum\)\.value'), the share also predicted as [value](DiGi.GIS.md#DiGi.GIS.Query.Recall_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).value 'DiGi\.GIS\.Query\.Recall\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>, TEnum\)\.value')\.
+
+The two sequences are paired by position.
+
+```csharp
+public static System.Nullable<double> Recall<TEnum>(this System.Collections.Generic.IEnumerable<TEnum>? references, System.Collections.Generic.IEnumerable<TEnum>? predictions, TEnum value)
+    where TEnum : struct, System.Enum;
+```
+#### Type parameters
+
+<a name='DiGi.GIS.Query.Recall_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).TEnum'></a>
+
+`TEnum`
+
+The class enumeration\.
+#### Parameters
+
+<a name='DiGi.GIS.Query.Recall_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).references'></a>
+
+`references` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[TEnum](DiGi.GIS.md#DiGi.GIS.Query.Recall_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).TEnum 'DiGi\.GIS\.Query\.Recall\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>, TEnum\)\.TEnum')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The reference \(true\) class of each item\.
+
+<a name='DiGi.GIS.Query.Recall_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).predictions'></a>
+
+`predictions` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[TEnum](DiGi.GIS.md#DiGi.GIS.Query.Recall_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).TEnum 'DiGi\.GIS\.Query\.Recall\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>, TEnum\)\.TEnum')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The predicted class of each item, in the order of [references](DiGi.GIS.md#DiGi.GIS.Query.Recall_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).references 'DiGi\.GIS\.Query\.Recall\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>, TEnum\)\.references')\.
+
+<a name='DiGi.GIS.Query.Recall_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).value'></a>
+
+`value` [TEnum](DiGi.GIS.md#DiGi.GIS.Query.Recall_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).TEnum 'DiGi\.GIS\.Query\.Recall\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>, TEnum\)\.TEnum')
+
+The class to measure\.
+
+#### Returns
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')  
+The recall in \[0, 1\], or null when either sequence is null, their lengths differ, or no reference is [value](DiGi.GIS.md#DiGi.GIS.Query.Recall_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_,TEnum).value 'DiGi\.GIS\.Query\.Recall\<TEnum\>\(this System\.Collections\.Generic\.IEnumerable\<TEnum\>, System\.Collections\.Generic\.IEnumerable\<TEnum\>, TEnum\)\.value')\.
 
 <a name='DiGi.GIS.Query.Reference(thisDiGi.BDOT10k.Classes.OT_ADJA_A)'></a>
 
