@@ -16,6 +16,7 @@ namespace DiGi.GIS
         /// Assigns PRG address points to the building footprints of one county and returns one <see cref="AddressPointMatch"/> per address point, in input order.
         /// <para>Rules: a point inside a footprint, or on its boundary within <paramref name="tolerance"/>, is assigned to it (<see cref="AddressPointMatchType.Inside"/>); otherwise it is assigned to the nearest footprint within <paramref name="maxDistance"/> (<see cref="AddressPointMatchType.Nearest"/>); otherwise, or when it has no location, it is reported as <see cref="AddressPointMatchType.Unmatched"/>. A point belongs to at most one building; a building receives any number of points.</para>
         /// <para>Ties are deterministic and independent of input order: when the point is inside several (overlapping) footprints, or several footprints lie at distances equal within <paramref name="tolerance"/>, the building with the ordinally smallest <see cref="GISGuidObject2D.Reference"/> wins, then the smallest guid.</para>
+        /// <para>The matches carry no <see cref="AddressPointMatch.CountyId"/>: an assignment runs in memory and never reads the address point table. The county part is filled in by the reads of <c>AddressPointPostgreSQLConverter</c>, which take it from the row's <c>county_id</c> column.</para>
         /// <para>The footprints are indexed in an NTS <see cref="STRtree{TItem}"/> built inside the call; nothing is cached between calls.</para>
         /// </summary>
         /// <param name="addressPoints">The address points to assign. Null items are skipped.</param>
@@ -152,7 +153,7 @@ namespace DiGi.GIS
                 Point2D? point2D = addressPoint.Location;
                 if (point2D == null)
                 {
-                    addressPointMatches.Add(new AddressPointMatch(addressPoint, AddressPointMatchType.Unmatched, null, null, null));
+                    addressPointMatches.Add(new AddressPointMatch(addressPoint, AddressPointMatchType.Unmatched, null, null, null, null));
                     continue;
                 }
 
@@ -196,16 +197,16 @@ namespace DiGi.GIS
                 if (index_Inside != -1)
                 {
                     Building2D building2D = building2Ds_Valid[index_Inside];
-                    addressPointMatches.Add(new AddressPointMatch(addressPoint, AddressPointMatchType.Inside, building2D.Reference, building2D.Guid, 0));
+                    addressPointMatches.Add(new AddressPointMatch(addressPoint, AddressPointMatchType.Inside, building2D.Reference, building2D.Guid, 0, null));
                 }
                 else if (index_Nearest != -1)
                 {
                     Building2D building2D = building2Ds_Valid[index_Nearest];
-                    addressPointMatches.Add(new AddressPointMatch(addressPoint, AddressPointMatchType.Nearest, building2D.Reference, building2D.Guid, distance_Nearest));
+                    addressPointMatches.Add(new AddressPointMatch(addressPoint, AddressPointMatchType.Nearest, building2D.Reference, building2D.Guid, distance_Nearest, null));
                 }
                 else
                 {
-                    addressPointMatches.Add(new AddressPointMatch(addressPoint, AddressPointMatchType.Unmatched, null, null, null));
+                    addressPointMatches.Add(new AddressPointMatch(addressPoint, AddressPointMatchType.Unmatched, null, null, null, null));
                 }
             }
 

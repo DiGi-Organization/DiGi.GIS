@@ -254,46 +254,52 @@ Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system
 Implements [IGISSerializableObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISSerializableObject 'DiGi\.GIS\.Interfaces\.IGISSerializableObject'), [IGISObject](DiGi.GIS.Interfaces.md#DiGi.GIS.Interfaces.IGISObject 'DiGi\.GIS\.Interfaces\.IGISObject'), [DiGi\.Core\.Interfaces\.IObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iobject 'DiGi\.Core\.Interfaces\.IObject'), [DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject'), [DiGi\.Core\.Interfaces\.ICloneableObject&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1')[DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1'), [DiGi\.Core\.Interfaces\.ICloneableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject 'DiGi\.Core\.Interfaces\.ICloneableObject')
 ### Constructors
 
-<a name='DiGi.GIS.Classes.AddressPointMatch.AddressPointMatch(DiGi.GIS.Classes.AddressPoint,DiGi.GIS.Enums.AddressPointMatchType,string,System.Nullable_System.Guid_,System.Nullable_double_)'></a>
+<a name='DiGi.GIS.Classes.AddressPointMatch.AddressPointMatch(DiGi.GIS.Classes.AddressPoint,DiGi.GIS.Enums.AddressPointMatchType,string,System.Nullable_System.Guid_,System.Nullable_double_,System.Nullable_int_)'></a>
 
-## AddressPointMatch\(AddressPoint, AddressPointMatchType, string, Nullable\<Guid\>, Nullable\<double\>\) Constructor
+## AddressPointMatch\(AddressPoint, AddressPointMatchType, string, Nullable\<Guid\>, Nullable\<double\>, Nullable\<int\>\) Constructor
 
 Initializes a new instance of the [AddressPointMatch](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPointMatch 'DiGi\.GIS\.Classes\.AddressPointMatch') class\.
 
 ```csharp
-public AddressPointMatch(DiGi.GIS.Classes.AddressPoint? addressPoint, DiGi.GIS.Enums.AddressPointMatchType addressPointMatchType, string? reference, System.Nullable<System.Guid> guid, System.Nullable<double> distance);
+public AddressPointMatch(DiGi.GIS.Classes.AddressPoint? addressPoint, DiGi.GIS.Enums.AddressPointMatchType addressPointMatchType, string? reference, System.Nullable<System.Guid> guid, System.Nullable<double> distance, System.Nullable<int> countyId);
 ```
 #### Parameters
 
-<a name='DiGi.GIS.Classes.AddressPointMatch.AddressPointMatch(DiGi.GIS.Classes.AddressPoint,DiGi.GIS.Enums.AddressPointMatchType,string,System.Nullable_System.Guid_,System.Nullable_double_).addressPoint'></a>
+<a name='DiGi.GIS.Classes.AddressPointMatch.AddressPointMatch(DiGi.GIS.Classes.AddressPoint,DiGi.GIS.Enums.AddressPointMatchType,string,System.Nullable_System.Guid_,System.Nullable_double_,System.Nullable_int_).addressPoint'></a>
 
 `addressPoint` [AddressPoint](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPoint 'DiGi\.GIS\.Classes\.AddressPoint')
 
 The matched address point\. It is cloned\.
 
-<a name='DiGi.GIS.Classes.AddressPointMatch.AddressPointMatch(DiGi.GIS.Classes.AddressPoint,DiGi.GIS.Enums.AddressPointMatchType,string,System.Nullable_System.Guid_,System.Nullable_double_).addressPointMatchType'></a>
+<a name='DiGi.GIS.Classes.AddressPointMatch.AddressPointMatch(DiGi.GIS.Classes.AddressPoint,DiGi.GIS.Enums.AddressPointMatchType,string,System.Nullable_System.Guid_,System.Nullable_double_,System.Nullable_int_).addressPointMatchType'></a>
 
 `addressPointMatchType` [AddressPointMatchType](DiGi.GIS.Enums.md#DiGi.GIS.Enums.AddressPointMatchType 'DiGi\.GIS\.Enums\.AddressPointMatchType')
 
 How the point was assigned\.
 
-<a name='DiGi.GIS.Classes.AddressPointMatch.AddressPointMatch(DiGi.GIS.Classes.AddressPoint,DiGi.GIS.Enums.AddressPointMatchType,string,System.Nullable_System.Guid_,System.Nullable_double_).reference'></a>
+<a name='DiGi.GIS.Classes.AddressPointMatch.AddressPointMatch(DiGi.GIS.Classes.AddressPoint,DiGi.GIS.Enums.AddressPointMatchType,string,System.Nullable_System.Guid_,System.Nullable_double_,System.Nullable_int_).reference'></a>
 
 `reference` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The reference of the assigned building, or null when unmatched\.
 
-<a name='DiGi.GIS.Classes.AddressPointMatch.AddressPointMatch(DiGi.GIS.Classes.AddressPoint,DiGi.GIS.Enums.AddressPointMatchType,string,System.Nullable_System.Guid_,System.Nullable_double_).guid'></a>
+<a name='DiGi.GIS.Classes.AddressPointMatch.AddressPointMatch(DiGi.GIS.Classes.AddressPoint,DiGi.GIS.Enums.AddressPointMatchType,string,System.Nullable_System.Guid_,System.Nullable_double_,System.Nullable_int_).guid'></a>
 
 `guid` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Guid](https://learn.microsoft.com/en-us/dotnet/api/system.guid 'System\.Guid')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
 
 The guid of the assigned building, or null when unmatched\.
 
-<a name='DiGi.GIS.Classes.AddressPointMatch.AddressPointMatch(DiGi.GIS.Classes.AddressPoint,DiGi.GIS.Enums.AddressPointMatchType,string,System.Nullable_System.Guid_,System.Nullable_double_).distance'></a>
+<a name='DiGi.GIS.Classes.AddressPointMatch.AddressPointMatch(DiGi.GIS.Classes.AddressPoint,DiGi.GIS.Enums.AddressPointMatchType,string,System.Nullable_System.Guid_,System.Nullable_double_,System.Nullable_int_).distance'></a>
 
 `distance` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Double](https://learn.microsoft.com/en-us/dotnet/api/system.double 'System\.Double')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
 
 The distance, in m, from the point to the assigned footprint \(0 for [Inside](DiGi.GIS.Enums.md#DiGi.GIS.Enums.AddressPointMatchType.Inside 'DiGi\.GIS\.Enums\.AddressPointMatchType\.Inside')\), or null when unmatched\.
+
+<a name='DiGi.GIS.Classes.AddressPointMatch.AddressPointMatch(DiGi.GIS.Classes.AddressPoint,DiGi.GIS.Enums.AddressPointMatchType,string,System.Nullable_System.Guid_,System.Nullable_double_,System.Nullable_int_).countyId'></a>
+
+`countyId` [System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
+
+The county part the match is filed under, or null when it is not known\.
 
 <a name='DiGi.GIS.Classes.AddressPointMatch.AddressPointMatch(DiGi.GIS.Classes.AddressPointMatch)'></a>
 
@@ -355,6 +361,21 @@ public DiGi.GIS.Enums.AddressPointMatchType AddressPointMatchType { get; }
 
 #### Property Value
 [AddressPointMatchType](DiGi.GIS.Enums.md#DiGi.GIS.Enums.AddressPointMatchType 'DiGi\.GIS\.Enums\.AddressPointMatchType')
+
+<a name='DiGi.GIS.Classes.AddressPointMatch.CountyId'></a>
+
+## AddressPointMatch\.CountyId Property
+
+Gets the county part the match is filed under: the `county_id` column of the address point row it was read from, or null when the match was not read from the table \(one built by `Create.AddressPointMatchResult`, for instance\) or when the row holds none\.
+
+A county part is one polygon row of a county; a county with disconnected territory has several (`Coding - GIS Administrative Data.md`). The matched building lies in the same part, so this is the partition its building data is read from.
+
+```csharp
+public System.Nullable<int> CountyId { get; }
+```
+
+#### Property Value
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')
 
 <a name='DiGi.GIS.Classes.AddressPointMatch.Distance'></a>
 

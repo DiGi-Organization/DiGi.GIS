@@ -820,6 +820,8 @@ Rules: a point inside a footprint, or on its boundary within [tolerance](DiGi.GI
 
 Ties are deterministic and independent of input order: when the point is inside several (overlapping) footprints, or several footprints lie at distances equal within [tolerance](DiGi.GIS.md#DiGi.GIS.Create.AddressPointMatchResult(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.AddressPoint_,System.Collections.Generic.IEnumerable_DiGi.GIS.Classes.Building2D_,double,double).tolerance 'DiGi\.GIS\.Create\.AddressPointMatchResult\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.AddressPoint\>, System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.Building2D\>, double, double\)\.tolerance'), the building with the ordinally smallest [Reference](DiGi.GIS.Classes.md#DiGi.GIS.Classes.GISGuidObject2D.Reference 'DiGi\.GIS\.Classes\.GISGuidObject2D\.Reference') wins, then the smallest guid.
 
+The matches carry no [CountyId](DiGi.GIS.Classes.md#DiGi.GIS.Classes.AddressPointMatch.CountyId 'DiGi\.GIS\.Classes\.AddressPointMatch\.CountyId'): an assignment runs in memory and never reads the address point table. The county part is filled in by the reads of `AddressPointPostgreSQLConverter`, which take it from the row's `county_id` column.
+
 The footprints are indexed in an NTS [NetTopologySuite\.Index\.Strtree\.STRtree&lt;&gt;](https://learn.microsoft.com/en-us/dotnet/api/nettopologysuite.index.strtree.strtree-1 'NetTopologySuite\.Index\.Strtree\.STRtree\`1') built inside the call; nothing is cached between calls.
 
 ```csharp

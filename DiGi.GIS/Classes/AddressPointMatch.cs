@@ -16,6 +16,9 @@ namespace DiGi.GIS.Classes
         [JsonInclude, JsonPropertyName(nameof(AddressPoint))]
         private readonly AddressPoint? addressPoint;
 
+        [JsonInclude, JsonPropertyName(nameof(CountyId))]
+        private readonly int? countyId;
+
         [JsonInclude, JsonPropertyName(nameof(AddressPointMatchType))]
         private readonly AddressPointMatchType addressPointMatchType = AddressPointMatchType.Undefined;
 
@@ -36,13 +39,15 @@ namespace DiGi.GIS.Classes
         /// <param name="reference">The reference of the assigned building, or null when unmatched.</param>
         /// <param name="guid">The guid of the assigned building, or null when unmatched.</param>
         /// <param name="distance">The distance, in m, from the point to the assigned footprint (0 for <see cref="AddressPointMatchType.Inside"/>), or null when unmatched.</param>
-        public AddressPointMatch(AddressPoint? addressPoint, AddressPointMatchType addressPointMatchType, string? reference, Guid? guid, double? distance)
+        /// <param name="countyId">The county part the match is filed under, or null when it is not known.</param>
+        public AddressPointMatch(AddressPoint? addressPoint, AddressPointMatchType addressPointMatchType, string? reference, Guid? guid, double? distance, int? countyId)
         {
             this.addressPoint = Core.Query.Clone(addressPoint);
             this.addressPointMatchType = addressPointMatchType;
             this.reference = reference;
             this.guid = guid;
             this.distance = distance;
+            this.countyId = countyId;
         }
 
         /// <summary>
@@ -59,6 +64,7 @@ namespace DiGi.GIS.Classes
                 reference = addressPointMatch.reference;
                 guid = addressPointMatch.guid;
                 distance = addressPointMatch.distance;
+                countyId = addressPointMatch.countyId;
             }
         }
 
@@ -92,6 +98,19 @@ namespace DiGi.GIS.Classes
             get
             {
                 return addressPointMatchType;
+            }
+        }
+
+        /// <summary>
+        /// Gets the county part the match is filed under: the <c>county_id</c> column of the address point row it was read from, or null when the match was not read from the table (one built by <c>Create.AddressPointMatchResult</c>, for instance) or when the row holds none.
+        /// <para>A county part is one polygon row of a county; a county with disconnected territory has several (<c>Coding - GIS Administrative Data.md</c>). The matched building lies in the same part, so this is the partition its building data is read from.</para>
+        /// </summary>
+        [JsonIgnore]
+        public int? CountyId
+        {
+            get
+            {
+                return countyId;
             }
         }
 
