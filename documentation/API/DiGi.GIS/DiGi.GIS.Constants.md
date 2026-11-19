@@ -1215,3 +1215,31 @@ public const string TrueOrthoLayer = "PrawdziwaOrtofotomapa";
 
 #### Field Value
 [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.GIS.Constants.YearBuiltPrediction'></a>
+
+## YearBuiltPrediction Class
+
+Provides the constants that bound a predicted year built \([Prediction](DiGi.GIS.Enums.md#DiGi.GIS.Enums.YearBuiltSource.Prediction 'DiGi\.GIS\.Enums\.YearBuiltSource\.Prediction')\)\.
+
+```csharp
+public static class YearBuiltPrediction
+```
+
+Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → YearBuiltPrediction
+### Fields
+
+<a name='DiGi.GIS.Constants.YearBuiltPrediction.FirstYear'></a>
+
+## YearBuiltPrediction\.FirstYear Field
+
+The first year the orthophoto sequence of the year built predictor covers\.
+
+The predictor answers the first year it confidently sees a building, so a building already standing in this year is predicted as this year: a prediction at or before it means "built in this year or earlier", not "built in this year" (DiGi-Organization/DiGi.GIS.Analytical#16). DiGi.GIS.ML dates its detection columns from it, so it has to move with the sequence.
+
+```csharp
+public const short FirstYear = 2008;
+```
+
+#### Field Value
+[System\.Int16](https://learn.microsoft.com/en-us/dotnet/api/system.int16 'System\.Int16')

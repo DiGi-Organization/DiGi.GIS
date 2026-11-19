@@ -21,5 +21,10 @@ namespace DiGi.GIS.Enums
         /// Indicates that the year built was obtained from another source.
         /// </summary>
         [Description("Other")] Other,
+
+        /// <summary>
+        /// Indicates that the year built is a stated fallback standing in for a year no source gives, such as a prediction of <see cref="Constants.YearBuiltPrediction.FirstYear"/>, which only bounds the year (DiGi-Organization/DiGi.GIS.Analytical#16).
+        /// </summary>
+        [Description("Fallback")] Fallback,
     }
 }

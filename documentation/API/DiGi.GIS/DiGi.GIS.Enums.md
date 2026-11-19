@@ -1894,3 +1894,9 @@ Indicates that the year built was generated via a prediction model\.
 `Other` 2
 
 Indicates that the year built was obtained from another source\.
+
+<a name='DiGi.GIS.Enums.YearBuiltSource.Fallback'></a>
+
+`Fallback` 3
+
+Indicates that the year built is a stated fallback standing in for a year no source gives, such as a prediction of [FirstYear](DiGi.GIS.Constants.md#DiGi.GIS.Constants.YearBuiltPrediction.FirstYear 'DiGi\.GIS\.Constants\.YearBuiltPrediction\.FirstYear'), which only bounds the year \(DiGi\-Organization/DiGi\.GIS\.Analytical\#16\)\.
