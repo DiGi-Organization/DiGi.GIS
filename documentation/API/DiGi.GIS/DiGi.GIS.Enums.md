@@ -1900,3 +1900,9 @@ Indicates that the year built was obtained from another source\.
 `Fallback` 3
 
 Indicates that the year built is a stated fallback standing in for a year no source gives, such as a prediction of [FirstYear](DiGi.GIS.Constants.md#DiGi.GIS.Constants.YearBuiltPrediction.FirstYear 'DiGi\.GIS\.Constants\.YearBuiltPrediction\.FirstYear'), which only bounds the year \(DiGi\-Organization/DiGi\.GIS\.Analytical\#16\)\.
+
+<a name='DiGi.GIS.Enums.YearBuiltSource.Census'></a>
+
+`Census` 4
+
+Indicates that the year built is the census year built of the building's area \([CensusYearBuilt\(this StatisticalDataCollection, short, short\)](DiGi.GIS.md#DiGi.GIS.Query.CensusYearBuilt(thisDiGi.GIS.Classes.StatisticalDataCollection,short,short) 'DiGi\.GIS\.Query\.CensusYearBuilt\(this DiGi\.GIS\.Classes\.StatisticalDataCollection, short, short\)')\), standing in for a year no source gives, such as a prediction of [FirstYear](DiGi.GIS.Constants.md#DiGi.GIS.Constants.YearBuiltPrediction.FirstYear 'DiGi\.GIS\.Constants\.YearBuiltPrediction\.FirstYear') \(DiGi\-Organization/DiGi\.GIS\.Analytical\#17\)\.

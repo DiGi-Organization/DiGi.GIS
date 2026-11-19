@@ -3074,6 +3074,45 @@ The azimuth angle in degrees, typically ranging from 0 to 360\.
 [CardinalDirection](DiGi.GIS.Enums.md#DiGi.GIS.Enums.CardinalDirection 'DiGi\.GIS\.Enums\.CardinalDirection')  
 The corresponding [CardinalDirection](DiGi.GIS.Enums.md#DiGi.GIS.Enums.CardinalDirection 'DiGi\.GIS\.Enums\.CardinalDirection') based on the provided azimuth\.
 
+<a name='DiGi.GIS.Query.CensusYearBuilt(thisDiGi.GIS.Classes.StatisticalDataCollection,short,short)'></a>
+
+## Query\.CensusYearBuilt\(this StatisticalDataCollection, short, short\) Method
+
+Returns the census year built of an area: the median construction year of its inhabited dwellings built up to [lastYear](DiGi.GIS.md#DiGi.GIS.Query.CensusYearBuilt(thisDiGi.GIS.Classes.StatisticalDataCollection,short,short).lastYear 'DiGi\.GIS\.Query\.CensusYearBuilt\(this DiGi\.GIS\.Classes\.StatisticalDataCollection, short, short\)\.lastYear'), weighted by dwelling count \(DiGi\-Organization/DiGi\.GIS\#23\)\.
+
+The counts are the NSP 2021 dwellings by construction period: every [DiGi\.BDL\.Enums\.Variable](https://learn.microsoft.com/en-us/dotnet/api/digi.bdl.enums.variable 'DiGi\.BDL\.Enums\.Variable') with a `BDL.Query.YearBuiltRange`, read for [year](DiGi.GIS.md#DiGi.GIS.Query.CensusYearBuilt(thisDiGi.GIS.Classes.StatisticalDataCollection,short,short).year 'DiGi\.GIS\.Query\.CensusYearBuilt\(this DiGi\.GIS\.Classes\.StatisticalDataCollection, short, short\)\.year'). A missing, negative or zero count is skipped. A period starting after [lastYear](DiGi.GIS.md#DiGi.GIS.Query.CensusYearBuilt(thisDiGi.GIS.Classes.StatisticalDataCollection,short,short).lastYear 'DiGi\.GIS\.Query\.CensusYearBuilt\(this DiGi\.GIS\.Classes\.StatisticalDataCollection, short, short\)\.lastYear') is dropped; a period running past it keeps the share of its count that falls up to [lastYear](DiGi.GIS.md#DiGi.GIS.Query.CensusYearBuilt(thisDiGi.GIS.Classes.StatisticalDataCollection,short,short).lastYear 'DiGi\.GIS\.Query\.CensusYearBuilt\(this DiGi\.GIS\.Classes\.StatisticalDataCollection, short, short\)\.lastYear'), the count taken as uniform over the period's years.
+
+The median is interpolated linearly within the period holding half the weight and rounded down. A median that falls in the period open towards the past ("before 1918") has no width to interpolate in and is that period's last year; a median exactly on a period boundary is the last year of the earlier period.
+
+It stands in for a predicted year built that only bounds the year (DiGi-Organization/DiGi.GIS.Analytical#17); the default [lastYear](DiGi.GIS.md#DiGi.GIS.Query.CensusYearBuilt(thisDiGi.GIS.Classes.StatisticalDataCollection,short,short).lastYear 'DiGi\.GIS\.Query\.CensusYearBuilt\(this DiGi\.GIS\.Classes\.StatisticalDataCollection, short, short\)\.lastYear') is [FirstYear](DiGi.GIS.Constants.md#DiGi.GIS.Constants.YearBuiltPrediction.FirstYear 'DiGi\.GIS\.Constants\.YearBuiltPrediction\.FirstYear'), because the predictor dates every building it saw appear after it.
+
+```csharp
+public static System.Nullable<short> CensusYearBuilt(this DiGi.GIS.Classes.StatisticalDataCollection? statisticalDataCollection, short lastYear=2008, short year=2021);
+```
+#### Parameters
+
+<a name='DiGi.GIS.Query.CensusYearBuilt(thisDiGi.GIS.Classes.StatisticalDataCollection,short,short).statisticalDataCollection'></a>
+
+`statisticalDataCollection` [StatisticalDataCollection](DiGi.GIS.Classes.md#DiGi.GIS.Classes.StatisticalDataCollection 'DiGi\.GIS\.Classes\.StatisticalDataCollection')
+
+The statistical data of the area's statistical unit\.
+
+<a name='DiGi.GIS.Query.CensusYearBuilt(thisDiGi.GIS.Classes.StatisticalDataCollection,short,short).lastYear'></a>
+
+`lastYear` [System\.Int16](https://learn.microsoft.com/en-us/dotnet/api/system.int16 'System\.Int16')
+
+The last construction year counted\.
+
+<a name='DiGi.GIS.Query.CensusYearBuilt(thisDiGi.GIS.Classes.StatisticalDataCollection,short,short).year'></a>
+
+`year` [System\.Int16](https://learn.microsoft.com/en-us/dotnet/api/system.int16 'System\.Int16')
+
+The year the census counts are read for\.
+
+#### Returns
+[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[System\.Int16](https://learn.microsoft.com/en-us/dotnet/api/system.int16 'System\.Int16')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')  
+The census year built, or null when the collection is null or holds no positive count up to [lastYear](DiGi.GIS.md#DiGi.GIS.Query.CensusYearBuilt(thisDiGi.GIS.Classes.StatisticalDataCollection,short,short).lastYear 'DiGi\.GIS\.Query\.CensusYearBuilt\(this DiGi\.GIS\.Classes\.StatisticalDataCollection, short, short\)\.lastYear')\.
+
 <a name='DiGi.GIS.Query.CohenKappa_TEnum_(thisSystem.Collections.Generic.IEnumerable_TEnum_,System.Collections.Generic.IEnumerable_TEnum_)'></a>
 
 ## Query\.CohenKappa\<TEnum\>\(this IEnumerable\<TEnum\>, IEnumerable\<TEnum\>\) Method
