@@ -27,7 +27,7 @@ namespace DiGi.GIS
         /// <param name="unitYearlyValuesDictionaryFunc">The fetch of one variable for one unit level, keyed by unit id, null on failure; null for <c>BDL.Create.UnitYearlyValuesDictionary</c>.</param>
         /// <param name="progress">Receives the number of variable and unit level pairs fetched so far, failed ones included.</param>
         /// <param name="cancellationToken">Checked before every fetch; a cancelled run writes nothing.</param>
-        /// <returns>The number of collections written and the variable and unit level pairs that failed or were not attempted; null when the inputs are invalid.</returns>
+        /// <returns>The number of collections written and the variable and unit level pairs that failed or were not attempted; null when the inputs are invalid or the file holds collections it cannot read (keyed in a former reference format - see <c>StorageFile.GetUndecodableEntryNames</c>), with nothing fetched.</returns>
         public static async Task<(int CollectionCount, List<(Variable Variable, int UnitLevel)> Failures)?> WriteByVariableAsync(
             this IEnumerable<StatisticalUnit>? statisticalUnits,
             string? path,
@@ -57,6 +57,15 @@ namespace DiGi.GIS
             using (StatisticalDataCollectionFile statisticalDataCollectionFile = new(path))
             {
                 statisticalDataCollectionFile.Open();
+
+                // A collection keyed in a former reference format reads as missing: every unit would look empty, every
+                // variable would be fetched again, and the save would leave the old entries beside the new ones.
+                List<string>? undecodableEntryNames = statisticalDataCollectionFile.GetUndecodableEntryNames();
+                if (undecodableEntryNames != null && undecodableEntryNames.Count != 0)
+                {
+                    return null;
+                }
+
                 foreach (StatisticalUnit statisticalUnit in statisticalUnits)
                 {
                     if (statisticalUnit?.Code is not string code || statisticalUnit.GetStatisticalUnitType() is not StatisticalUnitType statisticalUnitType || statisticalUnitType == StatisticalUnitType.statistical_towns || units_ByCode.ContainsKey(code))
