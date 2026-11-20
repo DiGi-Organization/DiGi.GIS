@@ -16,7 +16,7 @@ namespace DiGi.GIS
         /// <summary>
         /// Writes the BDL values of the given variables for the given statistical units to a statistical data collection file, fetching each variable for a whole unit level at once (DiGi-Organization/DiGi.GIS.PostgreSQL#149).
         /// <para>One <c>data/by-variable</c> request per page of a level - about 40 for the 4 000 gmina-level units - replaces one request per unit: the per-unit writer sent about 4 700 requests for one missing variable and was stopped by the BDL limits after 8, every later unit failing in silence.</para>
-        /// <para>A variable is fetched for a level only when a unit of that level in <paramref name="statisticalUnits"/> lacks it (always with <paramref name="overrideExisting"/>), and - when some unit already holds the variable - only at a level some unit holds it at: the other levels are ones the variable is not published at. Levels go deepest first. A failed fetch is reported, not skipped in silence; after three failures in a row nothing more is requested - a blocked address or an exhausted quota fails every request - and the pairs not attempted are reported as failed too. Only the units given are written; the file is read once and saved once.</para>
+        /// <para>A variable is fetched for a level only when a unit of that level in <paramref name="statisticalUnits"/> lacks it (always with <paramref name="overrideExisting"/>), and - when some unit already holds the variable - only at a level some unit holds it at: the other levels are ones the variable is not published at. Levels go deepest first; within a level the variable the most units lack goes first, so a run the limits stop has filled the most collections (DiGi-Organization/DiGi.GIS.PostgreSQL#149: the census variables, missing from every gmina, came last in the given order and were never reached). A failed fetch is reported, not skipped in silence; after three failures in a row nothing more is requested - a blocked address or an exhausted quota fails every request - and the pairs not attempted are reported as failed too. Only the units given are written; the file is read once and saved once.</para>
         /// </summary>
         /// <param name="statisticalUnits">The statistical units to write, of any level; a statistical town is skipped.</param>
         /// <param name="path">The path to the statistical data collection file.</param>
@@ -106,9 +106,12 @@ namespace DiGi.GIS
                 }
             }
 
+            // Within a level, the variable most units lack goes first: a run the BDL limits stop spends its requests
+            // where they fill the most collections - a new variable missing from every unit before one a few units lack.
             List<(Variable Variable, int UnitLevel)> pairs = [];
             foreach (int unitLevel in unitCounts_ByLevel.Keys.OrderByDescending(x => x))
             {
+                List<(Variable Variable, int MissingCount)> pairs_Level = [];
                 foreach (Variable variable in variables.Distinct())
                 {
                     string reference = ((int)variable).ToString(System.Globalization.CultureInfo.CurrentCulture);
@@ -121,9 +124,12 @@ namespace DiGi.GIS
 
                     if (overrideExisting || heldCount_Level < unitCounts_ByLevel[unitLevel])
                     {
-                        pairs.Add((variable, unitLevel));
+                        pairs_Level.Add((variable, unitCounts_ByLevel[unitLevel] - heldCount_Level));
                     }
                 }
+
+                // OrderByDescending is stable: equally missing variables keep the order they were given in.
+                pairs.AddRange(pairs_Level.OrderByDescending(x => x.MissingCount).Select(x => (x.Variable, unitLevel)));
             }
 
             List<(Variable Variable, int UnitLevel)> failures = [];
