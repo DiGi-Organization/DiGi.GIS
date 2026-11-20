@@ -115,8 +115,9 @@ namespace DiGi.GIS
         /// <param name="path">The file path where the statistical data collection is stored.</param>
         /// <param name="variables">The collection of <see cref="Variable"/> objects to write.</param>
         /// <param name="years">The range of years for which data should be written.</param>
+        /// <param name="clientId">The BDL API client identifier, or null for the anonymous limits (DiGi-Organization/DiGi.GIS.PostgreSQL#149).</param>
         /// <returns>A task that represents the asynchronous operation. The task result is true if the data was successfully written; otherwise, false.</returns>
-        public static async Task<bool> Write(this StatisticalUnit? statisticalUnit, string? path, IEnumerable<Variable>? variables, Range<int>? years)
+        public static async Task<bool> Write(this StatisticalUnit? statisticalUnit, string? path, IEnumerable<Variable>? variables, Range<int>? years, string? clientId = null)
         {
             if (statisticalUnit == null || variables == null || years == null || string.IsNullOrWhiteSpace(path))
             {
@@ -135,7 +136,7 @@ namespace DiGi.GIS
                 years_Temp.Add(i);
             }
 
-            return await Write(code, path, variables, years_Temp);
+            return await Write(code, path, variables, years_Temp, clientId: clientId);
         }
 
         /// <summary>
@@ -146,8 +147,9 @@ namespace DiGi.GIS
         /// <param name="variables">The collection of variables to be processed and written.</param>
         /// <param name="years">The list of years for which values should be retrieved and saved.</param>
         /// <param name="overrideExisting">If set to true, existing data in the collection will be overwritten; otherwise, only new variables are added.</param>
+        /// <param name="clientId">The BDL API client identifier, or null for the anonymous limits (DiGi-Organization/DiGi.GIS.PostgreSQL#149).</param>
         /// <returns>A task that represents the asynchronous operation. The task result is true if the file was successfully updated and saved; otherwise, false.</returns>
-        public static async Task<bool> Write(this string? code, string? path, IEnumerable<Variable>? variables, IEnumerable<int>? years, bool overrideExisting = false)
+        public static async Task<bool> Write(this string? code, string? path, IEnumerable<Variable>? variables, IEnumerable<int>? years, bool overrideExisting = false, string? clientId = null)
         {
             if (string.IsNullOrWhiteSpace(code) || string.IsNullOrWhiteSpace(path) || variables == null || !variables.Any() || years == null || !years.Any())
             {
@@ -186,7 +188,7 @@ namespace DiGi.GIS
                 return false;
             }
 
-            UnitYearlyValues? unitYearlyValues = await BDL.Create.UnitYearlyValues(code, variables_Temp, years);
+            UnitYearlyValues? unitYearlyValues = await BDL.Create.UnitYearlyValues(code, variables_Temp, years, clientId: clientId);
             if (unitYearlyValues == null)
             {
                 return false;

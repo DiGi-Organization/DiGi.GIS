@@ -2290,85 +2290,97 @@ The range of image indices to retrieve and save\.
 [System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
 A task that represents the asynchronous operation\. The task result is true if the files were written or already existed; otherwise, false\.
 
-<a name='DiGi.GIS.Modify.Write(thisDiGi.GIS.Classes.StatisticalUnit,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,DiGi.Core.Classes.Range_int_)'></a>
+<a name='DiGi.GIS.Modify.Write(thisDiGi.GIS.Classes.StatisticalUnit,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,DiGi.Core.Classes.Range_int_,string)'></a>
 
-## Modify\.Write\(this StatisticalUnit, string, IEnumerable\<Variable\>, Range\<int\>\) Method
+## Modify\.Write\(this StatisticalUnit, string, IEnumerable\<Variable\>, Range\<int\>, string\) Method
 
 Asynchronously writes statistical data for a specific unit to the specified path for a range of years\.
 
 ```csharp
-public static System.Threading.Tasks.Task<bool> Write(this DiGi.GIS.Classes.StatisticalUnit? statisticalUnit, string? path, System.Collections.Generic.IEnumerable<DiGi.BDL.Enums.Variable>? variables, DiGi.Core.Classes.Range<int>? years);
+public static System.Threading.Tasks.Task<bool> Write(this DiGi.GIS.Classes.StatisticalUnit? statisticalUnit, string? path, System.Collections.Generic.IEnumerable<DiGi.BDL.Enums.Variable>? variables, DiGi.Core.Classes.Range<int>? years, string? clientId=null);
 ```
 #### Parameters
 
-<a name='DiGi.GIS.Modify.Write(thisDiGi.GIS.Classes.StatisticalUnit,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,DiGi.Core.Classes.Range_int_).statisticalUnit'></a>
+<a name='DiGi.GIS.Modify.Write(thisDiGi.GIS.Classes.StatisticalUnit,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,DiGi.Core.Classes.Range_int_,string).statisticalUnit'></a>
 
 `statisticalUnit` [StatisticalUnit](DiGi.GIS.Classes.md#DiGi.GIS.Classes.StatisticalUnit 'DiGi\.GIS\.Classes\.StatisticalUnit')
 
 The [StatisticalUnit](DiGi.GIS.Classes.md#DiGi.GIS.Classes.StatisticalUnit 'DiGi\.GIS\.Classes\.StatisticalUnit') object containing the unit code\.
 
-<a name='DiGi.GIS.Modify.Write(thisDiGi.GIS.Classes.StatisticalUnit,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,DiGi.Core.Classes.Range_int_).path'></a>
+<a name='DiGi.GIS.Modify.Write(thisDiGi.GIS.Classes.StatisticalUnit,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,DiGi.Core.Classes.Range_int_,string).path'></a>
 
 `path` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The file path where the statistical data collection is stored\.
 
-<a name='DiGi.GIS.Modify.Write(thisDiGi.GIS.Classes.StatisticalUnit,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,DiGi.Core.Classes.Range_int_).variables'></a>
+<a name='DiGi.GIS.Modify.Write(thisDiGi.GIS.Classes.StatisticalUnit,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,DiGi.Core.Classes.Range_int_,string).variables'></a>
 
 `variables` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[DiGi\.BDL\.Enums\.Variable](https://learn.microsoft.com/en-us/dotnet/api/digi.bdl.enums.variable 'DiGi\.BDL\.Enums\.Variable')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
 
 The collection of [DiGi\.BDL\.Enums\.Variable](https://learn.microsoft.com/en-us/dotnet/api/digi.bdl.enums.variable 'DiGi\.BDL\.Enums\.Variable') objects to write\.
 
-<a name='DiGi.GIS.Modify.Write(thisDiGi.GIS.Classes.StatisticalUnit,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,DiGi.Core.Classes.Range_int_).years'></a>
+<a name='DiGi.GIS.Modify.Write(thisDiGi.GIS.Classes.StatisticalUnit,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,DiGi.Core.Classes.Range_int_,string).years'></a>
 
 `years` [DiGi\.Core\.Classes\.Range&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.range-1 'DiGi\.Core\.Classes\.Range\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.range-1 'DiGi\.Core\.Classes\.Range\`1')
 
 The range of years for which data should be written\.
 
+<a name='DiGi.GIS.Modify.Write(thisDiGi.GIS.Classes.StatisticalUnit,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,DiGi.Core.Classes.Range_int_,string).clientId'></a>
+
+`clientId` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The BDL API client identifier, or null for the anonymous limits \(DiGi\-Organization/DiGi\.GIS\.PostgreSQL\#149\)\.
+
 #### Returns
 [System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
 A task that represents the asynchronous operation\. The task result is true if the data was successfully written; otherwise, false\.
 
-<a name='DiGi.GIS.Modify.Write(thisstring,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,bool)'></a>
+<a name='DiGi.GIS.Modify.Write(thisstring,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,bool,string)'></a>
 
-## Modify\.Write\(this string, string, IEnumerable\<Variable\>, IEnumerable\<int\>, bool\) Method
+## Modify\.Write\(this string, string, IEnumerable\<Variable\>, IEnumerable\<int\>, bool, string\) Method
 
 Asynchronously writes statistical data for a given code to the specified collection file\.
 
 ```csharp
-public static System.Threading.Tasks.Task<bool> Write(this string? code, string? path, System.Collections.Generic.IEnumerable<DiGi.BDL.Enums.Variable>? variables, System.Collections.Generic.IEnumerable<int>? years, bool overrideExisting=false);
+public static System.Threading.Tasks.Task<bool> Write(this string? code, string? path, System.Collections.Generic.IEnumerable<DiGi.BDL.Enums.Variable>? variables, System.Collections.Generic.IEnumerable<int>? years, bool overrideExisting=false, string? clientId=null);
 ```
 #### Parameters
 
-<a name='DiGi.GIS.Modify.Write(thisstring,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,bool).code'></a>
+<a name='DiGi.GIS.Modify.Write(thisstring,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,bool,string).code'></a>
 
 `code` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The unique identifier code of the statistical unit\.
 
-<a name='DiGi.GIS.Modify.Write(thisstring,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,bool).path'></a>
+<a name='DiGi.GIS.Modify.Write(thisstring,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,bool,string).path'></a>
 
 `path` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The path to the statistical data collection file\.
 
-<a name='DiGi.GIS.Modify.Write(thisstring,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,bool).variables'></a>
+<a name='DiGi.GIS.Modify.Write(thisstring,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,bool,string).variables'></a>
 
 `variables` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[DiGi\.BDL\.Enums\.Variable](https://learn.microsoft.com/en-us/dotnet/api/digi.bdl.enums.variable 'DiGi\.BDL\.Enums\.Variable')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
 
 The collection of variables to be processed and written\.
 
-<a name='DiGi.GIS.Modify.Write(thisstring,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,bool).years'></a>
+<a name='DiGi.GIS.Modify.Write(thisstring,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,bool,string).years'></a>
 
 `years` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
 
 The list of years for which values should be retrieved and saved\.
 
-<a name='DiGi.GIS.Modify.Write(thisstring,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,bool).overrideExisting'></a>
+<a name='DiGi.GIS.Modify.Write(thisstring,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,bool,string).overrideExisting'></a>
 
 `overrideExisting` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
 
 If set to true, existing data in the collection will be overwritten; otherwise, only new variables are added\.
+
+<a name='DiGi.GIS.Modify.Write(thisstring,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,bool,string).clientId'></a>
+
+`clientId` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The BDL API client identifier, or null for the anonymous limits \(DiGi\-Organization/DiGi\.GIS\.PostgreSQL\#149\)\.
 
 #### Returns
 [System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
@@ -2406,6 +2418,79 @@ The range of indices to process for each building\.
 #### Returns
 [System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
 A task that represents the asynchronous operation\. The task result is true if the operation completed successfully; otherwise, false\.
+
+<a name='DiGi.GIS.Modify.WriteByVariableAsync(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.StatisticalUnit_,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,string,bool,System.Func_DiGi.BDL.Enums.Variable,int,System.Threading.Tasks.Task_System.Collections.Generic.Dictionary_string,DiGi.BDL.Classes.UnitYearlyValues___,System.IProgress_long_,System.Threading.CancellationToken)'></a>
+
+## Modify\.WriteByVariableAsync\(this IEnumerable\<StatisticalUnit\>, string, IEnumerable\<Variable\>, IEnumerable\<int\>, string, bool, Func\<Variable,int,Task\<Dictionary\<string,UnitYearlyValues\>\>\>, IProgress\<long\>, CancellationToken\) Method
+
+Writes the BDL values of the given variables for the given statistical units to a statistical data collection file, fetching each variable for a whole unit level at once \(DiGi\-Organization/DiGi\.GIS\.PostgreSQL\#149\)\.
+
+One `data/by-variable` request per page of a level - about 40 for the 4 000 gmina-level units - replaces one request per unit: the per-unit writer sent about 4 700 requests for one missing variable and was stopped by the BDL limits after 8, every later unit failing in silence.
+
+A variable is fetched for a level only when a unit of that level in [statisticalUnits](DiGi.GIS.md#DiGi.GIS.Modify.WriteByVariableAsync(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.StatisticalUnit_,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,string,bool,System.Func_DiGi.BDL.Enums.Variable,int,System.Threading.Tasks.Task_System.Collections.Generic.Dictionary_string,DiGi.BDL.Classes.UnitYearlyValues___,System.IProgress_long_,System.Threading.CancellationToken).statisticalUnits 'DiGi\.GIS\.Modify\.WriteByVariableAsync\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.StatisticalUnit\>, string, System\.Collections\.Generic\.IEnumerable\<DiGi\.BDL\.Enums\.Variable\>, System\.Collections\.Generic\.IEnumerable\<int\>, string, bool, System\.Func\<DiGi\.BDL\.Enums\.Variable,int,System\.Threading\.Tasks\.Task\<System\.Collections\.Generic\.Dictionary\<string,DiGi\.BDL\.Classes\.UnitYearlyValues\>\>\>, System\.IProgress\<long\>, System\.Threading\.CancellationToken\)\.statisticalUnits') lacks it (always with [overrideExisting](DiGi.GIS.md#DiGi.GIS.Modify.WriteByVariableAsync(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.StatisticalUnit_,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,string,bool,System.Func_DiGi.BDL.Enums.Variable,int,System.Threading.Tasks.Task_System.Collections.Generic.Dictionary_string,DiGi.BDL.Classes.UnitYearlyValues___,System.IProgress_long_,System.Threading.CancellationToken).overrideExisting 'DiGi\.GIS\.Modify\.WriteByVariableAsync\(this System\.Collections\.Generic\.IEnumerable\<DiGi\.GIS\.Classes\.StatisticalUnit\>, string, System\.Collections\.Generic\.IEnumerable\<DiGi\.BDL\.Enums\.Variable\>, System\.Collections\.Generic\.IEnumerable\<int\>, string, bool, System\.Func\<DiGi\.BDL\.Enums\.Variable,int,System\.Threading\.Tasks\.Task\<System\.Collections\.Generic\.Dictionary\<string,DiGi\.BDL\.Classes\.UnitYearlyValues\>\>\>, System\.IProgress\<long\>, System\.Threading\.CancellationToken\)\.overrideExisting')), and - when some unit already holds the variable - only at a level some unit holds it at: the other levels are ones the variable is not published at. Levels go deepest first. A failed fetch is reported, not skipped in silence; after three failures in a row nothing more is requested - a blocked address or an exhausted quota fails every request - and the pairs not attempted are reported as failed too. Only the units given are written; the file is read once and saved once.
+
+```csharp
+public static System.Threading.Tasks.Task<System.Nullable<(int CollectionCount,System.Collections.Generic.List<(DiGi.BDL.Enums.Variable Variable,int UnitLevel)> Failures)>> WriteByVariableAsync(this System.Collections.Generic.IEnumerable<DiGi.GIS.Classes.StatisticalUnit>? statisticalUnits, string? path, System.Collections.Generic.IEnumerable<DiGi.BDL.Enums.Variable>? variables, System.Collections.Generic.IEnumerable<int>? years, string? clientId=null, bool overrideExisting=false, System.Func<DiGi.BDL.Enums.Variable,int,System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string,DiGi.BDL.Classes.UnitYearlyValues>?>>? unitYearlyValuesDictionaryFunc=null, System.IProgress<long>? progress=null, System.Threading.CancellationToken cancellationToken=default(System.Threading.CancellationToken));
+```
+#### Parameters
+
+<a name='DiGi.GIS.Modify.WriteByVariableAsync(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.StatisticalUnit_,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,string,bool,System.Func_DiGi.BDL.Enums.Variable,int,System.Threading.Tasks.Task_System.Collections.Generic.Dictionary_string,DiGi.BDL.Classes.UnitYearlyValues___,System.IProgress_long_,System.Threading.CancellationToken).statisticalUnits'></a>
+
+`statisticalUnits` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[StatisticalUnit](DiGi.GIS.Classes.md#DiGi.GIS.Classes.StatisticalUnit 'DiGi\.GIS\.Classes\.StatisticalUnit')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The statistical units to write, of any level; a statistical town is skipped\.
+
+<a name='DiGi.GIS.Modify.WriteByVariableAsync(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.StatisticalUnit_,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,string,bool,System.Func_DiGi.BDL.Enums.Variable,int,System.Threading.Tasks.Task_System.Collections.Generic.Dictionary_string,DiGi.BDL.Classes.UnitYearlyValues___,System.IProgress_long_,System.Threading.CancellationToken).path'></a>
+
+`path` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The path to the statistical data collection file\.
+
+<a name='DiGi.GIS.Modify.WriteByVariableAsync(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.StatisticalUnit_,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,string,bool,System.Func_DiGi.BDL.Enums.Variable,int,System.Threading.Tasks.Task_System.Collections.Generic.Dictionary_string,DiGi.BDL.Classes.UnitYearlyValues___,System.IProgress_long_,System.Threading.CancellationToken).variables'></a>
+
+`variables` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[DiGi\.BDL\.Enums\.Variable](https://learn.microsoft.com/en-us/dotnet/api/digi.bdl.enums.variable 'DiGi\.BDL\.Enums\.Variable')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The variables to write\.
+
+<a name='DiGi.GIS.Modify.WriteByVariableAsync(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.StatisticalUnit_,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,string,bool,System.Func_DiGi.BDL.Enums.Variable,int,System.Threading.Tasks.Task_System.Collections.Generic.Dictionary_string,DiGi.BDL.Classes.UnitYearlyValues___,System.IProgress_long_,System.Threading.CancellationToken).years'></a>
+
+`years` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
+
+The years to retrieve\.
+
+<a name='DiGi.GIS.Modify.WriteByVariableAsync(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.StatisticalUnit_,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,string,bool,System.Func_DiGi.BDL.Enums.Variable,int,System.Threading.Tasks.Task_System.Collections.Generic.Dictionary_string,DiGi.BDL.Classes.UnitYearlyValues___,System.IProgress_long_,System.Threading.CancellationToken).clientId'></a>
+
+`clientId` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The BDL API client identifier, or null for the anonymous limits\.
+
+<a name='DiGi.GIS.Modify.WriteByVariableAsync(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.StatisticalUnit_,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,string,bool,System.Func_DiGi.BDL.Enums.Variable,int,System.Threading.Tasks.Task_System.Collections.Generic.Dictionary_string,DiGi.BDL.Classes.UnitYearlyValues___,System.IProgress_long_,System.Threading.CancellationToken).overrideExisting'></a>
+
+`overrideExisting` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+True to fetch a variable for a level even when every unit already holds it\.
+
+<a name='DiGi.GIS.Modify.WriteByVariableAsync(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.StatisticalUnit_,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,string,bool,System.Func_DiGi.BDL.Enums.Variable,int,System.Threading.Tasks.Task_System.Collections.Generic.Dictionary_string,DiGi.BDL.Classes.UnitYearlyValues___,System.IProgress_long_,System.Threading.CancellationToken).unitYearlyValuesDictionaryFunc'></a>
+
+`unitYearlyValuesDictionaryFunc` [System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-3 'System\.Func\`3')[DiGi\.BDL\.Enums\.Variable](https://learn.microsoft.com/en-us/dotnet/api/digi.bdl.enums.variable 'DiGi\.BDL\.Enums\.Variable')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-3 'System\.Func\`3')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-3 'System\.Func\`3')[System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Collections\.Generic\.Dictionary&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')[,](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[DiGi\.BDL\.Classes\.UnitYearlyValues](https://learn.microsoft.com/en-us/dotnet/api/digi.bdl.classes.unityearlyvalues 'DiGi\.BDL\.Classes\.UnitYearlyValues')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2 'System\.Collections\.Generic\.Dictionary\`2')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-3 'System\.Func\`3')
+
+The fetch of one variable for one unit level, keyed by unit id, null on failure; null for `BDL.Create.UnitYearlyValuesDictionary`\.
+
+<a name='DiGi.GIS.Modify.WriteByVariableAsync(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.StatisticalUnit_,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,string,bool,System.Func_DiGi.BDL.Enums.Variable,int,System.Threading.Tasks.Task_System.Collections.Generic.Dictionary_string,DiGi.BDL.Classes.UnitYearlyValues___,System.IProgress_long_,System.Threading.CancellationToken).progress'></a>
+
+`progress` [System\.IProgress&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.iprogress-1 'System\.IProgress\`1')[System\.Int64](https://learn.microsoft.com/en-us/dotnet/api/system.int64 'System\.Int64')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.iprogress-1 'System\.IProgress\`1')
+
+Receives the number of variable and unit level pairs fetched so far, failed ones included\.
+
+<a name='DiGi.GIS.Modify.WriteByVariableAsync(thisSystem.Collections.Generic.IEnumerable_DiGi.GIS.Classes.StatisticalUnit_,string,System.Collections.Generic.IEnumerable_DiGi.BDL.Enums.Variable_,System.Collections.Generic.IEnumerable_int_,string,bool,System.Func_DiGi.BDL.Enums.Variable,int,System.Threading.Tasks.Task_System.Collections.Generic.Dictionary_string,DiGi.BDL.Classes.UnitYearlyValues___,System.IProgress_long_,System.Threading.CancellationToken).cancellationToken'></a>
+
+`cancellationToken` [System\.Threading\.CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken 'System\.Threading\.CancellationToken')
+
+Checked before every fetch; a cancelled run writes nothing\.
+
+#### Returns
+[System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Nullable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.valuetuple 'System\.ValueTuple')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[,](https://learn.microsoft.com/en-us/dotnet/api/system.valuetuple 'System\.ValueTuple')[System\.Collections\.Generic\.List&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.valuetuple 'System\.ValueTuple')[DiGi\.BDL\.Enums\.Variable](https://learn.microsoft.com/en-us/dotnet/api/digi.bdl.enums.variable 'DiGi\.BDL\.Enums\.Variable')[,](https://learn.microsoft.com/en-us/dotnet/api/system.valuetuple 'System\.ValueTuple')[System\.Int32](https://learn.microsoft.com/en-us/dotnet/api/system.int32 'System\.Int32')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.valuetuple 'System\.ValueTuple')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1 'System\.Collections\.Generic\.List\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.valuetuple 'System\.ValueTuple')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1 'System\.Nullable\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')  
+The number of collections written and the variable and unit level pairs that failed or were not attempted; null when the inputs are invalid\.
 
 <a name='DiGi.GIS.Query'></a>
 
